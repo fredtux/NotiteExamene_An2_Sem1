@@ -29,7 +29,9 @@
 \usepackage{listings}
 \usepackage{fontspec}
 \usepackage{xcolor}
-\usepackage{textcomp}
+\usepackage{textcomp}\usepackage{graphicx}
+
+\graphicspath{ {./img/} }
 
 \newfontfamily{\ttconsolas}{Consolas}
 \lstset{
@@ -79,6 +81,14 @@ extendedchars=true,
         minimum size = 4mm,
         circle
     ]
+
+\tikzstyle{blue state}=[
+    draw = blue,
+    thick,
+    fill = white,
+    minimum size = 4mm,
+    circle
+]
 
 \tikzstyle{green state}=[
     draw = green,
@@ -403,6 +413,313 @@ int main() {
     w la u deci w este în componenta tare conexă.
 
     \section{APM - arbori partiali de cost minim}
-    \subsection*{Kruskal}
+    \subsection*{Kruskal} $O(E*log E+ E*log V)$ Algoritmul are 3 pasi:
+    \begin{itemize}
+        \item Sorteaza toate muchiile in oridinea crescatoare a greutatii
+        \item Alege muchia cea mai mica, daca formeaza un ciclu, treci la urmatoarea, daca nu, adaug-o.
+        \item Repeta pasul anterior pana ai $V - 1$ muchii.
+    \end{itemize}
+
+    \paragraph*{Exemplu} Fie graful
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[main] (1) {1};
+            \node[main] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[-] (1) -- (2) node [midway,left] {10};
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[-] (3) -- (4) node [midway, right] {12};
+            \draw[-] (1) -- (4) node [midway, right, above] {11};
+            \draw[-] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \subparagraph*{Pasul 1.} Sortam ASC muchiile: $\{(2,4,5), (1,2,10), (1,4,11), (1,3,12), (3,4,12)\}$. Am folosit notatia $(nod1, nod2, greutate)$.
+    \subparagraph*{Pasii 2 \& 3.} 
+    \subparagraph*{1.} Incepem recursia alegand cea mai mica muchie $(2,4,5)$.
+    
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[main] (1) {1};
+            \node[main] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[blue] (2) -- (4) node [midway, below] {5};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \subparagraph*{2.} Continuam cu $(1,2,10)$.
+    
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[main] (1) {1};
+            \node[main] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[blue] (1) -- (2) node [midway,left] {10};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \subparagraph*{3.} Continuam cu $(1,4,11)$.
+    
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[main] (1) {1};
+            \node[main] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[-] (1) -- (2) node [midway,left] {10};
+            \draw[red] (1) -- (4) node [midway, right, above] {11};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \begin{center}
+        \textbf{Observam ca face ciclu, deci o ignoram}
+    \end{center}
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[main] (1) {1};
+            \node[main] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[-] (1) -- (2) node [midway,left] {10};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \subparagraph*{4.} Continuam cu $(1,3,12)$.
+    
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[main] (1) {1};
+            \node[main] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[-] (1) -- (2) node [midway,left] {10};
+            \draw[blue] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \begin{center}
+        \textbf{Observam ca avem $V-1$ muchii, deci ramanem cu acest graf}
+    \end{center}
+    
+    \subparagraph*{K-clustering (aplicatie)} Imparte in k clustere (are $n-k$ pasi)
+    \begin{center}
+        \includegraphics[scale=0.3]{1_kclustering.png}
+    \end{center}
+
+    \subsection*{Prim} Complexitate $O(V^2)$ sau $O(V*logV + E*logV)$ daca folosim minheap. Algoritmul are 6 pasi:
+    \begin{itemize}
+        \item Alegem un nod $n$ aleatoriu si il scoatem din lista nodurilor de ales
+        \item Adaugam in structura de date toti vecinii sai impreuna cu greutatea muchiilor
+        \item Actualizam eticheta pentru fiecare varf cu distanta minima fata de cele incluse in graf
+        \item Adaugam nodul cu distanta minima cea mai mica, il scaotem din lista nodurilor de ales si ii facem parintele nodul de care se leaga
+        \item Adaugam in structura de date toti vecinii sai impreuna cu greutatea muchiilor
+        \item Repetam al 4-lea pas.
+    \end{itemize}
+
+    \begin{center}
+        \includegraphics*[scale=0.3]{2_prim.png}
+    \end{center}
+    \begin{center}
+        \textbf{$\uparrow$ Prim prin vector vizitat $\uparrow$}
+    \end{center}
+
+
+    \paragraph*{Exemplu} Fie graful
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[main] (1) {1};
+            \node[main] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[-] (1) -- (2) node [midway,left] {10};
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[-] (3) -- (4) node [midway, right] {12};
+            \draw[-] (1) -- (4) node [midway, right, above] {11};
+            \draw[-] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \subparagraph*{Pasul 1.} Plecam de la nodul 1 si facem urmatoarea structura
+
+    \begin{center}
+        $[(d/tata)] = \{(0,0),(\infty,0),(\infty,0),(\infty,0)\}$
+    \end{center}
+
+    \subparagraph*{Pasul 2.}
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[blue state] (1) {1};
+            \node[red state] (2) [below of = 1] {2};
+            \node[red state] (3) [right of = 1] {3};
+            \node[red state] (4) [below of = 3]{4};
+    
+            \draw[red] (1) -- (2) node [midway,left] {10};
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[-] (3) -- (4) node [midway, right] {12};
+            \draw[red] (1) -- (4) node [midway, right, above] {11};
+            \draw[red] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \subparagraph*{Pasul 3.}
+    \begin{center}
+        $[(d/tata)] = \{(0,0),(10,0),(12,0),(11,0)\}$
+    \end{center}
+
+    \subparagraph*{Pasul 4.}
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[blue state] (1) {1};
+            \node[blue state] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[blue] (1) -- (2) node [midway,left] {10};
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[-] (3) -- (4) node [midway, right] {12};
+            \draw[-] (1) -- (4) node [midway, right, above] {11};
+            \draw[-] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \subparagraph*{Pasul 5.}
+
+    \begin{center}
+        $[(d/tata)] = \{(0,0),(10,1),(12,0),(5,0)\}$
+    \end{center}
+
+    \subparagraph*{Pasul 6. Repetam}
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[blue state] (1) {1};
+            \node[blue state] (2) [below of = 1] {2};
+            \node[red state] (3) [right of = 1] {3};
+            \node[red state] (4) [below of = 3]{4};
+    
+            \draw[blue] (1) -- (2) node [midway,left] {10};
+            \draw[red] (2) -- (4) node [midway, below] {5};
+            \draw[red] (3) -- (4) node [midway, right] {12};
+            \draw[red] (1) -- (4) node [midway, right, above] {11};
+            \draw[red] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \begin{center}
+        $[(d/tata)] = \{(0,0),(10,1),(12,0),(5,0)\}$
+    \end{center}
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[blue state] (1) {1};
+            \node[blue state] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[blue state] (4) [below of = 3]{4};
+    
+            \draw[blue] (1) -- (2) node [midway,left] {10};
+            \draw[blue] (2) -- (4) node [midway, below] {5};
+            \draw[-] (3) -- (4) node [midway, right] {12};
+            \draw[-] (1) -- (4) node [midway, right, above] {11};
+            \draw[-] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \begin{center}
+        $[(d/tata)] = \{(0,0),(10,1),(12,0),(5,2)\}$
+    \end{center}
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[blue state] (1) {1};
+            \node[blue state] (2) [below of = 1] {2};
+            \node[red state] (3) [right of = 1] {3};
+            \node[blue state] (4) [below of = 3]{4};
+    
+            \draw[blue] (1) -- (2) node [midway,left] {10};
+            \draw[blue] (2) -- (4) node [midway, below] {5};
+            \draw[red] (3) -- (4) node [midway, right] {12};
+            \draw[-] (1) -- (4) node [midway, right, above] {11};
+            \draw[red] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \begin{center}
+        $[(d/tata)] = \{(0,0),(10,1),(12,0),(5,2)\}$
+    \end{center}
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[blue state] (1) {1};
+            \node[blue state] (2) [below of = 1] {2};
+            \node[blue state] (3) [right of = 1] {3};
+            \node[blue state] (4) [below of = 3]{4};
+    
+            \draw[blue] (1) -- (2) node [midway,left] {10};
+            \draw[blue] (2) -- (4) node [midway, below] {5};
+            \draw[-] (3) -- (4) node [midway, right] {12};
+            \draw[-] (1) -- (4) node [midway, right, above] {11};
+            \draw[blue] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+
+    \begin{center}
+        $[(d/tata)] = \{(0,0),(10,1),(12,1),(5,2)\}$
+    \end{center}
+
+    \begin{center}
+        \textbf{APM final}
+    \end{center}
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+            \node[main] (1) {1};
+            \node[main] (2) [below of = 1] {2};
+            \node[main] (3) [right of = 1] {3};
+            \node[main] (4) [below of = 3]{4};
+    
+            \draw[-] (1) -- (2) node [midway,left] {10};
+            \draw[-] (2) -- (4) node [midway, below] {5};
+            \draw[-] (1) -- (3) node [midway, above] {12};
+    
+        \end{tikzpicture} 
+    \end{center}
+    
+    \begin{center}
+        \includegraphics*[scale=0.3]{3_prim_minheap.png}
+    \end{center}
+    \begin{center}
+        \textbf{$\uparrow$ Prim prin minheap $\uparrow$}
+    \end{center}
+
 
 \end{document}

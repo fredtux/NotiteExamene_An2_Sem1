@@ -1,0 +1,408 @@
+% !TEX program = xelatex
+\documentclass{article}
+
+\title{Notite examen - Algoritmi Fundamentali}
+\date{}
+\author{Dinu Florin-Silviu \\ grupa 231}
+
+\newcommand{\prim}{^\ensuremath{\prime}}
+\newcommand{\secund}{^{\ensuremath{\prime\prime}}}
+
+\makeatletter
+\renewcommand{\@seccntformat}[1]{}
+\makeatother
+
+\newenvironment{textColor}[1]{%
+    \leavevmode\color{#1}\ignorespaces%
+}{%
+}%
+
+
+\usepackage{tikz}
+\usepackage{forest}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage[a4paper, margin=3cm]{geometry}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{textcomp}
+
+\newfontfamily{\ttconsolas}{Consolas}
+\lstset{
+%  tabsize=4,
+extendedchars=true,
+        basicstyle=\ttconsolas,
+        % %upquote=false,
+        % aboveskip=\baselineskip,
+        columns=fixed,
+        showstringspaces=false,
+        extendedchars=true,
+        breaklines=true,
+        % prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        showtabs=false,
+        showspaces=false,
+        identifierstyle=\ttfamily,
+        % keywordstyle=\color[rgb]{0,0,1},
+        % commentstyle=\color[rgb]{0.133,0.545,0.133},
+        % stringstyle=\color[rgb]{0.627,0.126,0.941},
+        % language=SQL
+        frame=lines,
+        literate=%
+    {€}{\euro}1%
+    {§}{\S}1%
+    {°}{\textdegree{}}1%
+    {ä}{{\"a}}1%
+    {ö}{{\"o}}1%
+    {ü}{{\"u}}1%
+    {ß}{{\ss}}1%
+    {Ä}{{\"A}}1%
+    {Ö}{{\"O}}1%
+    {Ü}{{\"U}}1%
+    {µ}{\textmu}1%
+    {¹}{{\textsuperscript{1}}}1%
+    {²}{{\textsuperscript{2}}}1%
+    {³}{{\textsuperscript{3}}}1%
+    {¼}{\textonequarter}1%
+    {½}{\textonehalf}1%
+    {¢}{\textcent}1%
+}
+
+
+\tikzstyle{red state}=[
+        draw = red,
+        thick,
+        fill = white,
+        minimum size = 4mm,
+        circle
+    ]
+
+\tikzstyle{green state}=[
+    draw = green,
+    thick,
+    fill = white,
+    minimum size = 4mm,
+    circle
+]
+
+\newtheorem*{theorem}{Teorema}
+\renewcommand\qedsymbol{QED}
+
+\begin{document}
+    \pagenumbering{gobble}
+    \maketitle
+    \tableofcontents
+
+    \newpage
+    \pagenumbering{arabic}
+
+    \section{Notiuni fundamentale}
+    \subsection*{Grafuri izomorfe} Daca 2 grafuri:
+    \begin{itemize}
+        \item Au acelasi numar de noduri
+        \item Au acelasi numar de muchii
+        \item Nodurile formeaza o secventa cu acelasi grad
+        \item Daca un graf are un ciclu de lungime k, si celalalt graf are la fel
+    \end{itemize} 
+
+    \subsection*{Grafuri bipartite} Daca un graf:
+    \begin{itemize}
+        \item Neorientat
+        \item Putem imparti nodurile in 2 multimi $V=V_1 \cup V_2$ cu $V_1 \cap V_2 = \varnothing$
+        \item Fiecare muchie are o extremitate intr-o parte si cealalta in cealalta parte, adica $|e \cap V_1| = |e \cap V_2| = 1$
+    \end{itemize}
+
+    \subsection*{Construire graf cu secventa gradelor (Havel-Hakimi)} Ordonam descrescator gradele si incepem sa trasam muchii catre urmatoarele, scazand din gradele lor pana cand ajungem sa avem doar 0. Daca avem $d_i<0$ sau $d_i>n-1$ sau $(\sum_{i=0}^{n} d_i) \% 2 = 1$ atunci nu are solutie.
+
+    \section{Parcurgeri}
+    \subsection*{BFS} Se iau toti vecinii nevizitati, se pun in coada, se continua cu urmatorul din coada. Complexitate $O(V+E)$. Se foloseste pentru iesirea din labirint cu drum minim si calcul nivel.
+    \begin{lstlisting}
+void bfs(vector<vector<int>> &lista, vector<int> &pbfs, queue<int> &q) {
+    int s = q.front();
+    q.pop();
+
+    int nivel = pbfs[s] + 1;
+
+    for (auto x: lista[s]) {
+        if (pbfs[x] == -1) {
+            pbfs[x] = nivel;
+            q.push(x);
+        }
+    }
+
+    if (q.empty()) return;
+
+    bfs(lista, pbfs, q);
+}
+    \end{lstlisting}
+
+    \begin{itemize}
+        \item Muchiile de arbore sunt muchii din pădurea de adâncime $G_\pi$. Muchia (u, v) este o muchie de arbore dacă v a fost descoperit explorând muchia (u, v).
+        \item Muchiile înapoi sunt acele muchii (u, v) care unesc un vârf u cu un strămoş v într-un arbore de adâncime. Buclele (muchii de la un vârf la el însuşi) care pot apărea într-un graf orientat sunt considerate muchii înapoi.
+        \item Muchiile înainte sunt acele muchii (u, v) ce nu sunt muchii de arbore şi conectează un vârf u cu un descendent v într-un arbore de adâncime.
+        \item Muchiile transversale sunt toate celelalte muchii. Ele pot uni vârfuri din acelaşi arbore de adâncime, cu condiţia ca unul să nu fie strămoşul celuilalt, sau pot uni vârfuri din arbori, de adâncime, diferiţi.
+    \end{itemize}
+
+    \subsection*{DFS} Complexitate $O(V+E)$.
+    \begin{lstlisting}
+void Graph::DFS(int v)
+{
+    // Mark the current node as visited and
+    // print it
+    visited[v] = true;
+    cout << v << " ";
+ 
+    // Recur for all the vertices adjacent
+    // to this vertex
+    list<int>::iterator i;
+    for (i = adj[v].begin(); i != adj[v].end(); ++i)
+        if (!visited[*i])
+            DFS(*i);
+}
+    \end{lstlisting}
+
+    \section{Sortare topologica} 
+    Se face pe DAG (directed acyclic graph)
+    \subsection*{Cu BFS} Incepe de la toate nodurile care au $indegree == 0$ (DAG garanteaza cel putin 1 astfel de nod). Dupa ce scoatem nodul din coada, il punem in vector.
+    \begin{lstlisting}
+vector<int> topo(int N, vector<int> adj[]) {
+    queue<int> q; 
+    vector<int> indegree(N, 0); 
+    for(int i = 0;i<N;i++) {
+        for(auto it: adj[i]) {
+            indegree[it]++; 
+        }
+    }
+    
+    for(int i = 0;i<N;i++) {
+        if(indegree[i] == 0) {
+            q.push(i); 
+        }
+    }
+    vector<int> topo;
+    while(!q.empty()) {
+        int node = q.front(); 
+        q.pop(); 
+        topo.push_back(node);
+        for(auto it : adj[node]) {
+            indegree[it]--;
+            if(indegree[it] == 0) {
+                q.push(it); 
+            }
+        }
+    }
+    return topo;
+}
+    \end{lstlisting}
+    \subsection*{Cu DFS} Diferentea fata de DFS e ca pun la sfarsit nodul pe stack. Diferentele fata de anterior sunt ca iau tot ce nu e vizitat si ca e mai eficient dpdv al memoriei, cat timp lantul cel mai lung nu da stackoverflow. Complexitate $O(V+E)$
+
+    \begin{lstlisting}
+void Graph::topologicalSortUtil(int v, bool visited[],
+                                stack<int>& Stack)
+{
+    // Mark the current node as visited.
+    visited[v] = true;
+ 
+    // Recur for all the vertices
+    // adjacent to this vertex
+    list<int>::iterator i;
+    for (i = adj[v].begin(); i != adj[v].end(); ++i)
+        if (!visited[*i])
+            topologicalSortUtil(*i, visited, Stack);
+ 
+    // Push current vertex to stack
+    // which stores result
+    Stack.push(v);
+}
+    \end{lstlisting}
+
+    \section{Muchii critice} Acele muchii care nu fac parte dintr-un ciclu. Facem un DFS si tinem 2 valori: low si disc. Pentru fiecare nod, mai intai punem disc ca fiind $disc_anterior + 1$, trecem la copil, pentru el memoram parintele, apoi facem DFS, apoi actualizam low ca fiind $min(low[copil], low[parinte])$. Daca este critica, atunci $low[copil]>disc[parinte]$.
+    \begin{lstlisting}
+void Graph::bridgeUtil(int u, bool visited[], int disc[],
+                                  int low[], int parent[])
+{
+    // A static variable is used for simplicity, we can
+    // avoid use of static variable by passing a pointer.
+    static int time = 0;
+ 
+    // Mark the current node as visited
+    visited[u] = true;
+ 
+    // Initialize discovery time and low value
+    disc[u] = low[u] = ++time;
+ 
+    // Go through all vertices adjacent to this
+    list<int>::iterator i;
+    for (i = adj[u].begin(); i != adj[u].end(); ++i)
+    {
+        int v = *i;  // v is current adjacent of u
+ 
+        // If v is not visited yet, then recur for it
+        if (!visited[v])
+        {
+            parent[v] = u;
+            bridgeUtil(v, visited, disc, low, parent);
+ 
+            // Check if the subtree rooted with v has a
+            // connection to one of the ancestors of u
+            low[u]  = min(low[u], low[v]);
+ 
+            // If the lowest vertex reachable from subtree
+            // under v is  below u in DFS tree, then u-v
+            // is a bridge
+            if (low[v] > disc[u])
+              cout << u <<" " << v << endl;
+        }
+ 
+        // Update low value of u for parent function calls.
+        else if (v != parent[u])
+            low[u]  = min(low[u], disc[v]);
+    }
+}
+    \end{lstlisting}
+
+    \section{Puncte critice} V este punct critic, daca exista 2 noduri x si y, cu $x,y \neq v$, pentru care v apartine oricarui $x,y-lant$
+
+    \begin{lstlisting}
+void APUtil(vector<int> adj[], int u, bool visited[],
+            int disc[], int low[], int& time, int parent,
+            bool isAP[])
+{
+    // Count of children in DFS Tree
+    int children = 0;
+ 
+    // Mark the current node as visited
+    visited[u] = true;
+ 
+    // Initialize discovery time and low value
+    disc[u] = low[u] = ++time;
+ 
+    // Go through all vertices adjacent to this
+    for (auto v : adj[u]) {
+        // If v is not visited yet, then make it a child of u
+        // in DFS tree and recur for it
+        if (!visited[v]) {
+            children++;
+            APUtil(adj, v, visited, disc, low, time, u, isAP);
+ 
+            // Check if the subtree rooted with v has
+            // a connection to one of the ancestors of u
+            low[u] = min(low[u], low[v]);
+ 
+            // If u is not root and low value of one of
+            // its child is more than discovery value of u.
+            if (parent != -1 && low[v] >= disc[u])
+                isAP[u] = true;
+        }
+ 
+        // Update low value of u for parent function calls.
+        else if (v != parent)
+            low[u] = min(low[u], disc[v]);
+    }
+ 
+    // If u is root of DFS tree and has two or more children.
+    if (parent == -1 && children > 1)
+        isAP[u] = true;
+}
+    \end{lstlisting}
+
+    \section{Conexitate in graf orientat} Exista 2 tipuri de conexitati intr-un graf orientat:
+    \begin{itemize}
+        \item Slab conex: Drum de intre $\forall$ 2 noduri daca consideram graful neorientat
+        \item Tare conex: Drum intre $\forall$ 2 noduri
+    \end{itemize}
+
+    \subsection*{Kosaraju} Fac un DFS in care adaug pe stack nodurile. Transpun graful. Popuiesc stackul, fac DFS pe acel nod in care marchez elementele ca vizitate, apoi popuiesc urmatorul element si fac DFS daca e nevizitat. Complexitate $O(V+E)$.
+
+    \begin{lstlisting}
+#include <bits/stdc++.h>
+
+#define MAX_N 20001
+#define ll long long int
+using namespace std;
+int n, m;
+
+struct Node {
+  vector < int > adj;
+  vector < int > rev_adj;
+};
+
+Node g[MAX_N];
+
+stack < int > S;
+bool visited[MAX_N];
+
+int component[MAX_N];
+vector < int > components[MAX_N];
+int numComponents;
+
+void dfs_1(int x) {
+  visited[x] = true;
+  for (int i = 0; i < g[x].adj.size(); i++) {
+    if (!visited[g[x].adj[i]]) dfs_1(g[x].adj[i]);
+  }
+  S.push(x);
+}
+
+void dfs_2(int x) {
+  printf("%d ", x);
+  component[x] = numComponents;
+  components[numComponents].push_back(x);
+  visited[x] = true;
+  for (int i = 0; i < g[x].rev_adj.size(); i++) {
+    if (!visited[g[x].rev_adj[i]]) dfs_2(g[x].rev_adj[i]);
+  }
+}
+
+void Kosaraju() {
+  for (int i = 0; i < n; i++)
+    if (!visited[i]) dfs_1(i);
+
+  for (int i = 0; i < n; i++)
+    visited[i] = false;
+
+  while (!S.empty()) {
+    int v = S.top();
+    S.pop();
+    if (!visited[v]) {
+      printf("Component %d: ", numComponents);
+      dfs_2(v);
+      numComponents++;
+      printf("\n");
+    }
+  }
+}
+
+int main() {
+
+  cin >> n >> m;
+  int a, b;
+  while (m--) {
+    cin >> a >> b;
+    g[a].adj.push_back(b);
+    g[b].rev_adj.push_back(a);
+  }
+
+  Kosaraju();
+  printf("Total number of components: %d\n", numComponents);
+
+  return 0;
+}
+
+    \end{lstlisting}
+
+    \subsection*{Lema} Dacă două vârfuri se află în aceeaşi componentă tare conexă, atunci
+    nici un drum între ele nu părăseşte, vreodată, componentă tare conexă.
+    \\
+    \textbf{Demonstrație:} Fie u și v două noduri din componenta tare conexă.
+    Presupunem ca exista w în afara componentei și există drum u - > v prin w.
+    Atunci avem drum de la u la w dar avem și drumul w->v->u deci și drum de la
+    w la u deci w este în componenta tare conexă.
+
+    \section{APM - arbori partiali de cost minim}
+    \subsection*{Kruskal}
+
+\end{document}

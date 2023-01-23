@@ -1,0 +1,8 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Notiuni fundamentale}{1}{section.1}%
+\contentsline {section}{\numberline {2}Parcurgeri}{1}{section.2}%
+\contentsline {section}{\numberline {3}Sortare topologica}{2}{section.3}%
+\contentsline {section}{\numberline {4}Muchii critice}{3}{section.4}%
+\contentsline {section}{\numberline {5}Puncte critice}{4}{section.5}%
+\contentsline {section}{\numberline {6}Conexitate in graf orientat}{5}{section.6}%
+\contentsline {section}{\numberline {7}APM - arbori partiali de cost minim}{7}{section.7}%

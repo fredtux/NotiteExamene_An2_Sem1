@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  24 JAN 2023 02:02
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  24 JAN 2023 02:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -799,17 +799,17 @@ File: ./img//8_drumminim_sursaunica.png Graphic file (type bmp)
  [16] [17]
 File: ./img//9_floydwarshall.png Graphic file (type bmp)
 <./img//9_floydwarshall.png>
- [18] (./NotiteExamen.aux)
+ [18] [19] [20] [21] (./NotiteExamen.aux)
 Package rerunfilecheck Info: File `NotiteExamen.out' has not changed.
 (rerunfilecheck)             Checksum: 9CE50D05FCBAA8BF5B9979059366CCD0;1604.
  ) 
 Here is how much of TeX's memory you used:
- 34919 strings out of 478158
- 797395 string characters out of 5853401
- 1406857 words of memory out of 5000000
- 55027 multiletter control sequences out of 15000+600000
+ 34963 strings out of 478158
+ 797939 string characters out of 5853401
+ 1422709 words of memory out of 5000000
+ 55071 multiletter control sequences out of 15000+600000
  476171 words of font info for 81 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  100i,9n,104p,1691b,1691s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on NotiteExamen.pdf (19 pages).
+Output written on NotiteExamen.pdf (22 pages).

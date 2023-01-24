@@ -1197,10 +1197,216 @@ for(k=1;k<=n;k++)
 \end{center}
 
 \section{Flow}
-\subsection*{Ford Fulkerson}
-\paragraph*{Exemplu}
+\subsection*{Definitii}
+\paragraph*{Fie N = (G, {s}, {t}, I, c) o rețea.'}
+\paragraph*{Lant.} Un s-t lanț este o succesiune de vârfuri distincte și arce din G
+\begin{center}
+    $P = [ s=v_0, e_1, v_1, …, v_{k-1}, e_k, v_k=t ]$
+\end{center}
+\paragraph*{Capacitate reziduala a arcului.} Asociem fiecărui arc e din P o pondere, numită capacitate reziduală în P = cu cat mai poate fi modificat fluxul pe arcul e de-a lungul lantului P
+\begin{center}
+    \[ 
+    i_P(e) = \left\{
+    \begin{array}{ll}
+            c(e) - f(e), e \ este \ arc \ direct \ in \ P \\ 
+            f(e), e \ este \ arc \ invers \ in \ P
+    \end{array} 
+    \right. 
+    \]
+\end{center}
 
+\paragraph*{Capacitatea reziduala a lantului.} Cu cat poate fi modificat fluxul de-a lungul lantului P.
+\begin{center}
+    $i(P) = min \{i_P(e) | e \in E(P)\}$
+\end{center}
+\begin{itemize}
+    \item \textbf{f-saturat} daca $i(P)=0$
+    \item \textbf{f-nesaturat} daca $i(P) \neq 0$
+\end{itemize}
 
+\paragraph*{Flux revizuit de-a lungul lantului P.} Fie P un lant f-nesaturat, definim fluxul revizuit ca $f_P : E \to \mathbb{N}$
+\begin{center}
+    \[ 
+    f_P(e) = \left\{
+    \begin{array}{ll}
+            f(e) + i(P), e \ este \ arc \ direct \ in \ P \\ 
+            f(e) - i(P), e \ este \ arc \ invers \ in \ P \\
+            f(e), altfel
+    \end{array} 
+    \right. 
+    \]
+\end{center}
+\subparagraph*{Proprietate} $val(f_P) = val(f) + i(P) \geq val(f) + 1$
 
+\paragraph*{Taietura in retea.} Fie N = (G, {s}, {t}, I, c) o rețea.\\
+O tăietură K = (X, Y) în rețea este o (bi)partiție (X, Y) a mulțimii vârfurilor V, astfel încât $s \in X$ și $t \in Y$.
+\subparagraph*{Fie K = (X, Y) o tăietură.} Capacitaeta taieturii = suma arcelor care ies din X catre Y.
+\begin{center}
+    $c(K) = c(X, Y) = \sum_{x \in X, y \in Y, xy \in E}c(xy)$
+\end{center}
 
+\paragraph*{Taietura minima.} Fie N o retea. O taietura $\widetilde{K}$ se numeste \textbf{taietura minima in N} daca
+\begin{center}
+    $c(\widetilde{K}) = min \{c(K) | K \ este \ taietura \ in \ N\}$
+\end{center}
+\subparagraph*{Se poate demonstra: } $val(f) \leq c(\widetilde{K})$
+
+\subsection*{Ford Fulkerson} Complexitate $O(f*E)$
+\paragraph*{Exemplu} Fie graful
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[main] (S) {S};
+        \node[main] (A) [above right of = S]{A};
+        \node[main] (C) [below right of = S]{C};
+        \node[main] (B) [right of = A]{B};
+        \node[main] (D) [right of = C]{D};
+        \node[main] (T) [above right of = D]{T};
+
+        \draw[->] (S) -- (A) node [midway,left] {0/10};
+        \draw[->] (S) -- (C) node [midway,left] {0/10};
+        \draw[->] (A) -- (C) node [midway,left] {0/2};
+        \draw[->] (A) -- (B) node [midway,above] {0/4};
+        \draw[->] (C) -- (D) node [midway,below] {0/9};
+        \draw[->] (A) -- (D) node [midway,right] {0/8};
+        \draw[->] (D) -- (B) node [midway,right] {0/6};
+        \draw[->] (B) -- (T) node [midway,right] {0/10};
+        \draw[->] (D) -- (T) node [midway,right] {0/10};
+    \end{tikzpicture}
+\end{center}
+
+\subparagraph*{Fie lantul} S - A - B - T (flow = 4, total = 4)
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[main] (S) {S};
+        \node[main] (A) [above right of = S]{A};
+        \node[main] (C) [below right of = S]{C};
+        \node[main] (B) [right of = A]{B};
+        \node[main] (D) [right of = C]{D};
+        \node[main] (T) [above right of = D]{T};
+
+        \draw[->, red] (S) -- (A) node [midway,left] {4/10};
+        \draw[->] (S) -- (C) node [midway,left] {0/10};
+        \draw[->] (A) -- (C) node [midway,left] {0/2};
+        \draw[->, red] (A) -- (B) node [midway,above] {4/4};
+        \draw[->] (C) -- (D) node [midway,below] {0/9};
+        \draw[->] (A) -- (D) node [midway,right] {0/8};
+        \draw[->] (D) -- (B) node [midway,right] {0/6};
+        \draw[->, red] (B) -- (T) node [midway,right] {4/10};
+        \draw[->] (D) -- (T) node [midway,right] {0/10};
+    \end{tikzpicture}
+\end{center}
+
+\subparagraph*{Fie lantul} S - A - C - D - T (flow = 2, total = 6)
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[main] (S) {S};
+        \node[main] (A) [above right of = S]{A};
+        \node[main] (C) [below right of = S]{C};
+        \node[main] (B) [right of = A]{B};
+        \node[main] (D) [right of = C]{D};
+        \node[main] (T) [above right of = D]{T};
+
+        \draw[->, red] (S) -- (A) node [midway,left] {6/10};
+        \draw[->] (S) -- (C) node [midway,left] {0/10};
+        \draw[->, red] (A) -- (C) node [midway,left] {2/2};
+        \draw[->] (A) -- (B) node [midway,above] {4/4};
+        \draw[->, red] (C) -- (D) node [midway,below] {2/9};
+        \draw[->] (A) -- (D) node [midway,right] {0/8};
+        \draw[->] (D) -- (B) node [midway,right] {0/6};
+        \draw[->] (B) -- (T) node [midway,right] {4/10};
+        \draw[->, red] (D) -- (T) node [midway,right] {2/10};
+    \end{tikzpicture}
+\end{center}
+
+\subparagraph*{Fie lantul} S - C - D - T (flow = 7, total = 13)
+    \begin{center}
+        \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+            \node[main] (S) {S};
+            \node[main] (A) [above right of = S]{A};
+            \node[main] (C) [below right of = S]{C};
+            \node[main] (B) [right of = A]{B};
+            \node[main] (D) [right of = C]{D};
+            \node[main] (T) [above right of = D]{T};
+    
+            \draw[->] (S) -- (A) node [midway,left] {6/10};
+            \draw[->, red] (S) -- (C) node [midway,left] {7/10};
+            \draw[->] (A) -- (C) node [midway,left] {2/2};
+            \draw[->] (A) -- (B) node [midway,above] {4/4};
+            \draw[->, red] (C) -- (D) node [midway,below] {9/9};
+            \draw[->] (A) -- (D) node [midway,right] {0/8};
+            \draw[->] (D) -- (B) node [midway,right] {0/6};
+            \draw[->] (B) -- (T) node [midway,right] {4/10};
+            \draw[->, red] (D) -- (T) node [midway,right] {9/10};
+        \end{tikzpicture}
+    \end{center}
+
+\subparagraph*{Fie lantul} S - C - A - D - T (flow = 1, total = 14)
+    \begin{center}
+        \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+            \node[main] (S) {S};
+            \node[main] (A) [above right of = S]{A};
+            \node[main] (C) [below right of = S]{C};
+            \node[main] (B) [right of = A]{B};
+            \node[main] (D) [right of = C]{D};
+            \node[main] (T) [above right of = D]{T};
+    
+            \draw[->] (S) -- (A) node [midway,left] {6/10};
+            \draw[->, red] (S) -- (C) node [midway,left] {8/10};
+            \draw[->, red] (A) -- (C) node [midway,left] {1/2};
+            \draw[->] (A) -- (B) node [midway,above] {4/4};
+            \draw[->] (C) -- (D) node [midway,below] {9/9};
+            \draw[->, red] (A) -- (D) node [midway,right] {1/8};
+            \draw[->] (D) -- (B) node [midway,right] {0/6};
+            \draw[->] (B) -- (T) node [midway,right] {4/10};
+            \draw[->, red] (D) -- (T) node [midway,right] {10/10};
+        \end{tikzpicture}
+    \end{center}
+
+\subparagraph*{Fie lantul} S - A - D - B - T (flow = 4, total = 18)
+    \begin{center}
+        \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+            \node[main] (S) {S};
+            \node[main] (A) [above right of = S]{A};
+            \node[main] (C) [below right of = S]{C};
+            \node[main] (B) [right of = A]{B};
+            \node[main] (D) [right of = C]{D};
+            \node[main] (T) [above right of = D]{T};
+    
+            \draw[->, red] (S) -- (A) node [midway,left] {10/10};
+            \draw[->] (S) -- (C) node [midway,left] {8/10};
+            \draw[->] (A) -- (C) node [midway,left] {1/2};
+            \draw[->] (A) -- (B) node [midway,above] {4/4};
+            \draw[->] (C) -- (D) node [midway,below] {9/9};
+            \draw[->, red] (A) -- (D) node [midway,right] {5/8};
+            \draw[->, red] (D) -- (B) node [midway,right] {4/6};
+            \draw[->, red] (B) -- (T) node [midway,right] {8/10};
+            \draw[->] (D) -- (T) node [midway,right] {10/10};
+        \end{tikzpicture}
+    \end{center}
+
+\subparagraph*{Fie lantul} S - C - A - D - B - T (flow = 1, total = 19)
+    \begin{center}
+        \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+            \node[main] (S) {S};
+            \node[main] (A) [above right of = S]{A};
+            \node[main] (C) [below right of = S]{C};
+            \node[main] (B) [right of = A]{B};
+            \node[main] (D) [right of = C]{D};
+            \node[main] (T) [above right of = D]{T};
+    
+            \draw[->] (S) -- (A) node [midway,left] {10/10};
+            \draw[->, red] (S) -- (C) node [midway,left] {9/10};
+            \draw[->, red] (A) -- (C) node [midway,left] {0/2};
+            \draw[->] (A) -- (B) node [midway,above] {4/4};
+            \draw[->] (C) -- (D) node [midway,below] {9/9};
+            \draw[->, red] (A) -- (D) node [midway,right] {6/8};
+            \draw[->, red] (D) -- (B) node [midway,right] {5/6};
+            \draw[->, red] (B) -- (T) node [midway,right] {9/10};
+            \draw[->] (D) -- (T) node [midway,right] {10/10};
+        \end{tikzpicture}
+    \end{center}
+
+    \subparagraph*{Nu mai avem drumuri de la S la T, deci flow total = 19}
+
+\subsection*{Edmonds-Karp}
 \end{document}

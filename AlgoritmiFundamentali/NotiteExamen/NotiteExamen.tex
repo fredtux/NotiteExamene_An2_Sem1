@@ -1638,4 +1638,20 @@ graf conex+ vârfuri izolate) cu toate vârfurile de grad par
     \includegraphics[scale=0.3]{14_grafplanar_6colorabil.png}
 \end{center}
 
+\section{Grafuri Hamiltoniene}
+\paragraph*{Definitie.} Un graf este hamiltonian dacă admite un ciclu hamiltonian adică un ciclu care contine toate nodurile grafului.
+\paragraph*{Conditie necesara.} Grafurile hamiltoniene sunt biconexe(nu are noduri critice). Inversa nu este adevarata.
+\paragraph*{Teorema lui Dirac.} Fie G un graf cu ordinul $n \geq 3$. Dacă $\delta (G) \geq n/2$ atunci G este hamiltonian.
+
+\paragraph*{Teorema lui Ore.} Fie G un graf cu ordinul $n \geq 3$, dacă avem pentru oricare pereche de noduri neadiacente $deg(x) + deg(y) \geq n$ $\rightarrow$ atunci graful este Hamiltonian.
+
+\paragraph*{Definitii ajutatoare.} Conectivitatea $K(G)$ unui graf G este este marimea minima a unei mulțimi de tăiere a lui G.\\
+Se calculeaza prin: Flux maxim = taietura minima
+\subparagraph*{} O mulțime de noduri a unui graf G este independentă dacă nu contine
+noduri adiacente. Numărul de independență $\alpha (G)$ al unui graf G este marimea cea mai mare posibila a unei mulțimi independente a lui G
+
+\paragraph*{Teorema lui Chvatal si Erdos.} Fie G un graf conectat cu ordinal $n \geq 3$, conectivitatea $K(G)$, și numărul de independență $\alpha(G)$. Daca $K(G) \geq \alpha(G)$, atunci G este hamiltonian.
+
+\paragraph*{Teorema lui Goodman si Hedetniemi.} Daca G este un graf 2-conectat ¸si liber de $\{K1,3, Z1\}$ atunci G este hamiltonian
+
 \end{document}

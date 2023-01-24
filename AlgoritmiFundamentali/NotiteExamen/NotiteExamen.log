@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  23 JAN 2023 17:49
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  24 JAN 2023 02:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -584,6 +584,25 @@ Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec.cfg))) (/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+ (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
+\col@sep=\dimen274
+\ar@mcellbox=\box87
+\extrarowheight=\dimen275
+\NC@list=\toks54
+\extratabsurround=\skip54
+\backup@length=\skip55
+\ar@cellbox=\box88
+)
+\TX@col@width=\dimen276
+\TX@old@table=\dimen277
+\TX@old@col=\dimen278
+\TX@target=\dimen279
+\TX@delta=\dimen280
+\TX@cols=\count351
+\TX@ftn=\toks55
 )
 
 Package fontspec Info: Font family 'Consolas(0)' created for font 'Consolas'
@@ -608,31 +627,31 @@ Package fontspec Info: Font family 'Consolas(0)' created for font 'Consolas'
  (./NotiteExamen.aux)
 \openout1 = `NotiteExamen.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 104.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 104.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 106.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 106.
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-Package hyperref Info: Link coloring OFF on input line 104.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+Package hyperref Info: Link coloring OFF on input line 106.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -640,11 +659,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count351
+\c@section@level=\count352
 )
-LaTeX Info: Redefining \ref on input line 104.
-LaTeX Info: Redefining \pageref on input line 104.
-LaTeX Info: Redefining \nameref on input line 104.
+LaTeX Info: Redefining \ref on input line 106.
+LaTeX Info: Redefining \pageref on input line 106.
+LaTeX Info: Redefining \nameref on input line 106.
  (./NotiteExamen.out) (./NotiteExamen.out)
 \@outlinefile=\write5
 \openout5 = `NotiteExamen.out'.
@@ -684,69 +703,69 @@ LaTeX Info: Redefining \nameref on input line 104.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count352
+\c@lstlisting=\count353
 
 Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
 (fontspec)             this).
 
 \symlegacymaths=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 104.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 104.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 104.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 104.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 104.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 104.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 104.
-LaTeX Font Info:    Redeclaring math accent \check on input line 104.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 104.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 104.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \colon on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 104.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 104.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 104.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 106.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 106.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 106.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 106.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 106.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 106.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 106.
+LaTeX Font Info:    Redeclaring math accent \check on input line 106.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 106.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 106.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \colon on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 106.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 106.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 106.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 104.
+(Font)              `operators' in the math version `normal' on input line 106.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 104.
+(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 106.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 104.
+(Font)              `operators' in the math version `bold' on input line 106.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 104.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 106.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 104.
+(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 106.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 104.
+(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 106.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 104.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 106.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 104.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 106.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 104.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 106.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 104.
+(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 106.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 104.
+(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 106.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 104.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 106.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 104.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 107.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 106.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 109.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 107.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 109.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (./NotiteExamen.toc)
@@ -763,17 +782,34 @@ File: ./img//2_prim.png Graphic file (type bmp)
  [8] [9]
 File: ./img//3_prim_minheap.png Graphic file (type bmp)
 <./img//3_prim_minheap.png>
- [10] [11] (./NotiteExamen.aux)
+ [10]
+File: ./img//4_dijkstra.png Graphic file (type bmp)
+<./img//4_dijkstra.png>
+ [11]
+File: ./img//5_dijkstra_vector.png Graphic file (type bmp)
+<./img//5_dijkstra_vector.png>
+ [12]
+File: ./img//6_bellmanford.png Graphic file (type bmp)
+<./img//6_bellmanford.png>
+ [13] [14] [15]
+File: ./img//7_bellmanford_circneg.png Graphic file (type bmp)
+<./img//7_bellmanford_circneg.png>
+File: ./img//8_drumminim_sursaunica.png Graphic file (type bmp)
+<./img//8_drumminim_sursaunica.png>
+ [16] [17]
+File: ./img//9_floydwarshall.png Graphic file (type bmp)
+<./img//9_floydwarshall.png>
+ [18] (./NotiteExamen.aux)
 Package rerunfilecheck Info: File `NotiteExamen.out' has not changed.
-(rerunfilecheck)             Checksum: 09009C8D773C728F685D8C6676A5F51F;1030.
+(rerunfilecheck)             Checksum: 9CE50D05FCBAA8BF5B9979059366CCD0;1604.
  ) 
 Here is how much of TeX's memory you used:
- 34703 strings out of 478158
- 792913 string characters out of 5853401
- 1404915 words of memory out of 5000000
- 54826 multiletter control sequences out of 15000+600000
- 476155 words of font info for 79 fonts, out of 8000000 for 9000
+ 34919 strings out of 478158
+ 797395 string characters out of 5853401
+ 1406857 words of memory out of 5000000
+ 55027 multiletter control sequences out of 15000+600000
+ 476171 words of font info for 81 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 100i,6n,104p,1691b,1691s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 100i,9n,104p,1691b,1691s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on NotiteExamen.pdf (12 pages).
+Output written on NotiteExamen.pdf (19 pages).

@@ -1523,4 +1523,77 @@ O tăietură K = (X, Y) în rețea este o (bi)partiție (X, Y) a mulțimii vârf
     \textbf{Nu mai putem parcurge BFS, asa ca avem flow total 19}
 \end{center}
 
+\section{Grafuri bipartite}
+\paragraph*{Definitie.}G = (V, E) graf neorientat s.n. bipartit $\Leftrightarrow$ există o partiție a lui V în două submulțimi V1, V2 (bipartiție):
+\begin{center}
+    $V = V_1 \cup V_2$\\
+    $V_1 \cap V_2 = \varnothing$
+\end{center}
+astfel încât orice muchie $e \in E$ are o extremitate în $V_1$ și cealaltă în $V_2$
+\begin{center}
+    Notăm $G = (V1 \cup V2, E)$
+\end{center}
+\paragraph*{Bipartit complet.} $G=(V,E)$ este bipartit complet $\Leftrightarrow$ este bipartit si $E=\{xy | x \in V_1, y \in V_2 \}$
+\begin{center}
+    Notam cu $K_{p,q}$ daca $p = |V_1|$ si $q = |V_2|$
+\end{center}
+
+\paragraph*{Observatie.} G = (V, E) bipartit $\Leftrightarrow$ există o 2-colorare proprie a vârfurilor (bicolorare): $c:V \rightarrow \{1,2\}$ (adica pentru orice muchie $e = xy \in E$, avem $c(x) \neq c(y)$)
+
+\paragraph*{Teorema König.} Fie $G = (V, E)$ un graf cu $n \geq 2$ vârfuri. Avem G este bipartit $\Leftrightarrow$ toate ciclurile elementare din G sunt pare.
+\subparagraph*{Algoritm pentru testare.} 
+\begin{itemize}
+    \item Colorăm cu 2 culori un arbore parțial al său printr-o parcurgere (colorăm orice vecin j nevizitat al vârfului curent i cu o culoare
+    diferită de cea a lui i)
+    \item Testăm dacă celelalte muchii – de la i la vecini j deja vizitați (colorați) au extremitățile i și j colorate diferit
+\end{itemize}
+
+\subsection*{Cuplaj maxim in grafuri bipartite}
+\paragraph*{Definitii.} Fie $G = (V, E)$ un graf şi $M \subseteq E$.
+\begin{itemize}
+    \item M s.n cuplaj dacă orice două muchii din M sunt neadiacente
+    \item V(M) = mulţimea vârfurilor M-saturate
+    \item V(G) - V(M) = mulţimea vârfurilor M-nesaturate
+\end{itemize}
+
+\subparagraph*{} Un cuplaj $M^*$ s.n cuplaj de cardinal maxim (cuplaj maxim):
+\begin{center}
+    $| M^*| \geq |M|,  \forall M \subseteq E\ cuplaj$
+\end{center}
+
+\paragraph*{Algoritm de determinare.} 
+\begin{itemize}
+    \item Reducem problema determinării unui cuplaj maxim într-un cuplaj bipartit G la determinarea unui flux maxim într-o rețea de transport asociată lui G
+    \item Construim rețeaua de transport $N_G$ asociată lui G
+    \item Adăugăm două noduri noi s şi t
+    \item Adăugăm arce $(s,x_i)$, pentru $x_i \in X$ şi $(y_j, t)$, $y_j \in Y$
+    \item Transformăm muchiile $x_iy_j$ în arce (de la X la Y)
+    \item Asociem fiecărui arc capacitatea 1
+    \item Cuplaj M în G $\Leftrightarrow$ flux f în rețea
+    \item $|M|=val(f)$
+\end{itemize}
+
+\paragraph*{Proprietati}
+\subparagraph*{Proprietatea 1.} Fie $G=(X \cup Y, E)$ un graf bipartit şi M un cuplaj în G. Atunci există un flux f în reţeaua de transport asociată $N_G$ cu
+\begin{center}
+    $val(f) = |M|$
+\end{center}
+
+\subparagraph*{Proprietatea 2.} Fie $G=(X \cup Y, E)$ un graf bipartit şi f un flux în reţeaua de transport $N_G$ asociată. Atunci există M un cuplaj în G cu
+\begin{center}
+    $val(f) = |M|$
+\end{center}
+
+\paragraph*{Consecinta.} $f^*$ flux maxim în N $\Rightarrow$ cuplajul corespunzător $M^*$ este cuplaj maxim în G \\
+A determina un cuplaj maxim într-un graf bipartit $\Leftrightarrow$ a determina un flux maxim în reţeaua asociată
+
+\paragraph*{Algoritm.} Complexitate: C=1 (sau $L \leq c^+(s) \leq n$) $\Rightarrow$ O(mn). Fie $G = (X \cup Y, E)$
+\begin{itemize}
+    \item Construim N reţeaua de transport asociată
+    \item Determinăm $f^*$ flux maxim în N
+    \item Considerăm $M = \{xy| f^*(xy)=1, x \in X, y \in Y, xy \in N \}$ (pentru fiecare arc cu flux nenul xy din N care nu este incident în s sau t, muchia xy corespunzătoare din G se adaugă la M)
+    \item return M
+\end{itemize}
+
+
 \end{document}

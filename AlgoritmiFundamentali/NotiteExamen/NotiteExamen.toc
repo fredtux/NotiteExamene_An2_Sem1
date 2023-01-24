@@ -9,3 +9,4 @@
 \contentsline {section}{\numberline {8}Drumuri minime de sursa unica \textit {s}}{11}{section.8}%
 \contentsline {section}{\numberline {9}Drumuri minime intre toate perechile de varfuri}{17}{section.9}%
 \contentsline {section}{\numberline {10}Flow}{18}{section.10}%
+\contentsline {section}{\numberline {11}Grafuri bipartite}{23}{section.11}%

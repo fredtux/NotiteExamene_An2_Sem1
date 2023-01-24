@@ -1595,5 +1595,47 @@ A determina un cuplaj maxim într-un graf bipartit $\Leftrightarrow$ a determina
     \item return M
 \end{itemize}
 
+\section{Grafuri Euleriene}
+\paragraph*{Ciclu eulerian:} traseu închis care trece o singură dată prin toate muchiile
+\paragraph*{Graf eulerian:} conține un ciclu eulerian
+\paragraph*{Lant eulerian:} Lanț eulerian al lui G = lanț simplu P în G cu $E(P) = E(G)$
+
+\paragraph*{Lema} Fie $G=(V,E)$ un graf neorientat, conex, cu toate vârfurile de
+grad par și $E \neq \varnothing$. Atunci pentru orice $x \in V$ există un ciclu C în G cu $x \in V(C)$ (ciclu care conține x, nu neapărat eulerian, nici neapărat elementar).
+
+\begin{center}
+    \includegraphics[scale=0.3]{10_grafeulerian.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[scale=0.3]{11_determinare_ciclueulerian.png}
+\end{center}
+
+\paragraph*{Teorema lui Euler.} Fie $G=(V, E)$ un (multi)graf neorientat, conex, cu $E \neq \varnothing$. Atunci G este eulerian $\Leftrightarrow$ orice varf din G are grad par.
+
+\paragraph*{Hierholzer.} Complexitate $O(m)$. Determinarea unui ciclu eulerian într-un graf conex (sau un
+graf conex+ vârfuri izolate) cu toate vârfurile de grad par
+\begin{center}
+    \includegraphics[scale=0.3]{12_hierholzer.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.3]{13_hierholzer_graf.png}
+\end{center}
+
+\section{Grafuri planare}
+\paragraph*{Definitie.} $G = (V, E)$ graf neorientat s.n. planar $\Leftrightarrow$ admite o reprezentare în plan a.î. muchiilor le corespund segmente de curbe continue care nu se intersectează în interior unele pe altele
+\paragraph*{Harta.} Fie $G = (V, E)$ graf planar, M o hartă a sa. M induce o împărțire a planului într-o mulțime F de părți convexe numite fețe. Una dintre acestea este fața infinită (exterioară).
+\begin{itemize}
+    \item $M = (V, E, F)$ hartă
+    \item Pentru o față $f \in F$ definim: $d_M(f)$ = gradul feței f = numărul muchiilor lanțului închis (frontierei) care delimitează f (câte muchii sunt parcurse atunci când traversăm frontiera)
+    \item $\sum_{f \in F} d_M(f) = 2 * |E|$
+\end{itemize}
+
+\paragraph*{Teorema poliedrală a lui Euler.} Fie $G=(V, E)$ un graf planar conex și $M = (V, E, F)$ o harta a lui. Are loc relația $|V| - |E| + |F| = 2$
+\subparagraph*{Consecinta:} Orice hartă M a lui G are $2 - |V| + |E|$ fețe
+\paragraph*{Teorema celor 6 culori.} Orice graf planar conex este 6 – colorabil.
+\begin{center}
+    \includegraphics[scale=0.3]{14_grafplanar_6colorabil.png}
+\end{center}
 
 \end{document}

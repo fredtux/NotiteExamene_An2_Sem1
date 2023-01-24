@@ -1205,13 +1205,13 @@ for(k=1;k<=n;k++)
 \end{center}
 \paragraph*{Capacitate reziduala a arcului.} Asociem fiecărui arc e din P o pondere, numită capacitate reziduală în P = cu cat mai poate fi modificat fluxul pe arcul e de-a lungul lantului P
 \begin{center}
-    \[ 
-    i_P(e) = \left\{
-    \begin{array}{ll}
-            c(e) - f(e), e \ este \ arc \ direct \ in \ P \\ 
+    \[
+        i_P(e) = \left\{
+        \begin{array}{ll}
+            c(e) - f(e), e \ este \ arc \ direct \ in \ P \\
             f(e), e \ este \ arc \ invers \ in \ P
-    \end{array} 
-    \right. 
+        \end{array}
+        \right.
     \]
 \end{center}
 
@@ -1226,14 +1226,14 @@ for(k=1;k<=n;k++)
 
 \paragraph*{Flux revizuit de-a lungul lantului P.} Fie P un lant f-nesaturat, definim fluxul revizuit ca $f_P : E \to \mathbb{N}$
 \begin{center}
-    \[ 
-    f_P(e) = \left\{
-    \begin{array}{ll}
-            f(e) + i(P), e \ este \ arc \ direct \ in \ P \\ 
+    \[
+        f_P(e) = \left\{
+        \begin{array}{ll}
+            f(e) + i(P), e \ este \ arc \ direct \ in \ P \\
             f(e) - i(P), e \ este \ arc \ invers \ in \ P \\
             f(e), altfel
-    \end{array} 
-    \right. 
+        \end{array}
+        \right.
     \]
 \end{center}
 \subparagraph*{Proprietate} $val(f_P) = val(f) + i(P) \geq val(f) + 1$
@@ -1319,94 +1319,208 @@ O tăietură K = (X, Y) în rețea este o (bi)partiție (X, Y) a mulțimii vârf
 \end{center}
 
 \subparagraph*{Fie lantul} S - C - D - T (flow = 7, total = 13)
-    \begin{center}
-        \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
-            \node[main] (S) {S};
-            \node[main] (A) [above right of = S]{A};
-            \node[main] (C) [below right of = S]{C};
-            \node[main] (B) [right of = A]{B};
-            \node[main] (D) [right of = C]{D};
-            \node[main] (T) [above right of = D]{T};
-    
-            \draw[->] (S) -- (A) node [midway,left] {6/10};
-            \draw[->, red] (S) -- (C) node [midway,left] {7/10};
-            \draw[->] (A) -- (C) node [midway,left] {2/2};
-            \draw[->] (A) -- (B) node [midway,above] {4/4};
-            \draw[->, red] (C) -- (D) node [midway,below] {9/9};
-            \draw[->] (A) -- (D) node [midway,right] {0/8};
-            \draw[->] (D) -- (B) node [midway,right] {0/6};
-            \draw[->] (B) -- (T) node [midway,right] {4/10};
-            \draw[->, red] (D) -- (T) node [midway,right] {9/10};
-        \end{tikzpicture}
-    \end{center}
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[main] (S) {S};
+        \node[main] (A) [above right of = S]{A};
+        \node[main] (C) [below right of = S]{C};
+        \node[main] (B) [right of = A]{B};
+        \node[main] (D) [right of = C]{D};
+        \node[main] (T) [above right of = D]{T};
+
+        \draw[->] (S) -- (A) node [midway,left] {6/10};
+        \draw[->, red] (S) -- (C) node [midway,left] {7/10};
+        \draw[->] (A) -- (C) node [midway,left] {2/2};
+        \draw[->] (A) -- (B) node [midway,above] {4/4};
+        \draw[->, red] (C) -- (D) node [midway,below] {9/9};
+        \draw[->] (A) -- (D) node [midway,right] {0/8};
+        \draw[->] (D) -- (B) node [midway,right] {0/6};
+        \draw[->] (B) -- (T) node [midway,right] {4/10};
+        \draw[->, red] (D) -- (T) node [midway,right] {9/10};
+    \end{tikzpicture}
+\end{center}
 
 \subparagraph*{Fie lantul} S - C - A - D - T (flow = 1, total = 14)
-    \begin{center}
-        \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
-            \node[main] (S) {S};
-            \node[main] (A) [above right of = S]{A};
-            \node[main] (C) [below right of = S]{C};
-            \node[main] (B) [right of = A]{B};
-            \node[main] (D) [right of = C]{D};
-            \node[main] (T) [above right of = D]{T};
-    
-            \draw[->] (S) -- (A) node [midway,left] {6/10};
-            \draw[->, red] (S) -- (C) node [midway,left] {8/10};
-            \draw[->, red] (A) -- (C) node [midway,left] {1/2};
-            \draw[->] (A) -- (B) node [midway,above] {4/4};
-            \draw[->] (C) -- (D) node [midway,below] {9/9};
-            \draw[->, red] (A) -- (D) node [midway,right] {1/8};
-            \draw[->] (D) -- (B) node [midway,right] {0/6};
-            \draw[->] (B) -- (T) node [midway,right] {4/10};
-            \draw[->, red] (D) -- (T) node [midway,right] {10/10};
-        \end{tikzpicture}
-    \end{center}
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[main] (S) {S};
+        \node[main] (A) [above right of = S]{A};
+        \node[main] (C) [below right of = S]{C};
+        \node[main] (B) [right of = A]{B};
+        \node[main] (D) [right of = C]{D};
+        \node[main] (T) [above right of = D]{T};
+
+        \draw[->] (S) -- (A) node [midway,left] {6/10};
+        \draw[->, red] (S) -- (C) node [midway,left] {8/10};
+        \draw[->, red] (A) -- (C) node [midway,left] {1/2};
+        \draw[->] (A) -- (B) node [midway,above] {4/4};
+        \draw[->] (C) -- (D) node [midway,below] {9/9};
+        \draw[->, red] (A) -- (D) node [midway,right] {1/8};
+        \draw[->] (D) -- (B) node [midway,right] {0/6};
+        \draw[->] (B) -- (T) node [midway,right] {4/10};
+        \draw[->, red] (D) -- (T) node [midway,right] {10/10};
+    \end{tikzpicture}
+\end{center}
 
 \subparagraph*{Fie lantul} S - A - D - B - T (flow = 4, total = 18)
-    \begin{center}
-        \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
-            \node[main] (S) {S};
-            \node[main] (A) [above right of = S]{A};
-            \node[main] (C) [below right of = S]{C};
-            \node[main] (B) [right of = A]{B};
-            \node[main] (D) [right of = C]{D};
-            \node[main] (T) [above right of = D]{T};
-    
-            \draw[->, red] (S) -- (A) node [midway,left] {10/10};
-            \draw[->] (S) -- (C) node [midway,left] {8/10};
-            \draw[->] (A) -- (C) node [midway,left] {1/2};
-            \draw[->] (A) -- (B) node [midway,above] {4/4};
-            \draw[->] (C) -- (D) node [midway,below] {9/9};
-            \draw[->, red] (A) -- (D) node [midway,right] {5/8};
-            \draw[->, red] (D) -- (B) node [midway,right] {4/6};
-            \draw[->, red] (B) -- (T) node [midway,right] {8/10};
-            \draw[->] (D) -- (T) node [midway,right] {10/10};
-        \end{tikzpicture}
-    \end{center}
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[main] (S) {S};
+        \node[main] (A) [above right of = S]{A};
+        \node[main] (C) [below right of = S]{C};
+        \node[main] (B) [right of = A]{B};
+        \node[main] (D) [right of = C]{D};
+        \node[main] (T) [above right of = D]{T};
+
+        \draw[->, red] (S) -- (A) node [midway,left] {10/10};
+        \draw[->] (S) -- (C) node [midway,left] {8/10};
+        \draw[->] (A) -- (C) node [midway,left] {1/2};
+        \draw[->] (A) -- (B) node [midway,above] {4/4};
+        \draw[->] (C) -- (D) node [midway,below] {9/9};
+        \draw[->, red] (A) -- (D) node [midway,right] {5/8};
+        \draw[->, red] (D) -- (B) node [midway,right] {4/6};
+        \draw[->, red] (B) -- (T) node [midway,right] {8/10};
+        \draw[->] (D) -- (T) node [midway,right] {10/10};
+    \end{tikzpicture}
+\end{center}
 
 \subparagraph*{Fie lantul} S - C - A - D - B - T (flow = 1, total = 19)
-    \begin{center}
-        \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
-            \node[main] (S) {S};
-            \node[main] (A) [above right of = S]{A};
-            \node[main] (C) [below right of = S]{C};
-            \node[main] (B) [right of = A]{B};
-            \node[main] (D) [right of = C]{D};
-            \node[main] (T) [above right of = D]{T};
-    
-            \draw[->] (S) -- (A) node [midway,left] {10/10};
-            \draw[->, red] (S) -- (C) node [midway,left] {9/10};
-            \draw[->, red] (A) -- (C) node [midway,left] {0/2};
-            \draw[->] (A) -- (B) node [midway,above] {4/4};
-            \draw[->] (C) -- (D) node [midway,below] {9/9};
-            \draw[->, red] (A) -- (D) node [midway,right] {6/8};
-            \draw[->, red] (D) -- (B) node [midway,right] {5/6};
-            \draw[->, red] (B) -- (T) node [midway,right] {9/10};
-            \draw[->] (D) -- (T) node [midway,right] {10/10};
-        \end{tikzpicture}
-    \end{center}
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[main] (S) {S};
+        \node[main] (A) [above right of = S]{A};
+        \node[main] (C) [below right of = S]{C};
+        \node[main] (B) [right of = A]{B};
+        \node[main] (D) [right of = C]{D};
+        \node[main] (T) [above right of = D]{T};
 
-    \subparagraph*{Nu mai avem drumuri de la S la T, deci flow total = 19}
+        \draw[->] (S) -- (A) node [midway,left] {10/10};
+        \draw[->, red] (S) -- (C) node [midway,left] {9/10};
+        \draw[->, red] (A) -- (C) node [midway,left] {0/2};
+        \draw[->] (A) -- (B) node [midway,above] {4/4};
+        \draw[->] (C) -- (D) node [midway,below] {9/9};
+        \draw[->, red] (A) -- (D) node [midway,right] {6/8};
+        \draw[->, red] (D) -- (B) node [midway,right] {5/6};
+        \draw[->, red] (B) -- (T) node [midway,right] {9/10};
+        \draw[->] (D) -- (T) node [midway,right] {10/10};
+    \end{tikzpicture}
+\end{center}
 
-\subsection*{Edmonds-Karp}
+\subparagraph*{Nu mai avem drumuri de la S la T, deci flow total = 19}
+
+\subsection*{Edmonds-Karp} Complexitate $O(V*E^2)$
+\paragraph*{Exemplu} Fie graful
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[main] (S) {S};
+        \node[main] (A) [above right of = S]{A};
+        \node[main] (C) [below right of = S]{C};
+        \node[main] (B) [right of = A]{B};
+        \node[main] (D) [right of = C]{D};
+        \node[main] (T) [above right of = D]{T};
+
+        \draw[->] (S) -- (A) node [midway,left] {0/10};
+        \draw[->] (S) -- (C) node [midway,left] {0/10};
+        \draw[->] (A) -- (C) node [midway,left] {0/2};
+        \draw[->] (A) -- (B) node [midway,above] {0/4};
+        \draw[->] (C) -- (D) node [midway,below] {0/9};
+        \draw[->] (A) -- (D) node [midway,right] {0/8};
+        \draw[->] (D) -- (B) node [midway,right] {0/6};
+        \draw[->] (B) -- (T) node [midway,right] {0/10};
+        \draw[->] (D) -- (T) node [midway,right] {0/10};
+    \end{tikzpicture}
+\end{center}
+
+\subparagraph*{Parcurgerea BFS} Flow = 4, Total = 4
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[red state] (S) {S};
+        \node[red state] (A) [above right of = S]{A};
+        \node[red state] (C) [below right of = S]{C};
+        \node[red state] (B) [right of = A]{B};
+        \node[red state] (D) [right of = C]{D};
+        \node[red state] (T) [above right of = D]{T};
+
+        \draw[->, blue] (S) -- (A) node [midway,left] {4/10};
+        \draw[->, red] (S) -- (C) node [midway,left] {0/10};
+        \draw[->] (A) -- (C) node [midway,left] {0/2};
+        \draw[->, blue] (A) -- (B) node [midway,above] {4/4};
+        \draw[->] (C) -- (D) node [midway,below] {0/9};
+        \draw[->, red] (A) -- (D) node [midway,right] {0/8};
+        \draw[->] (D) -- (B) node [midway,right] {0/6};
+        \draw[->, blue] (B) -- (T) node [midway,right] {4/10};
+        \draw[->] (D) -- (T) node [midway,right] {0/10};
+    \end{tikzpicture}
+\end{center}
+
+\subparagraph*{Parcurgerea BFS} Flow = 6, Total = 10
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[red state] (S) {S};
+        \node[red state] (A) [above right of = S]{A};
+        \node[red state] (C) [below right of = S]{C};
+        \node[red state] (B) [right of = A]{B};
+        \node[red state] (D) [right of = C]{D};
+        \node[red state] (T) [above right of = D]{T};
+
+        \draw[->, blue] (S) -- (A) node [midway,left] {10/10};
+        \draw[->, red] (S) -- (C) node [midway,left] {0/10};
+        \draw[->] (A) -- (C) node [midway,left] {0/2};
+        \draw[->] (A) -- (B) node [midway,above] {4/4};
+        \draw[->] (C) -- (D) node [midway,below] {0/9};
+        \draw[->, blue] (A) -- (D) node [midway,right] {6/8};
+        \draw[->, red] (D) -- (B) node [midway,right] {0/6};
+        \draw[->] (B) -- (T) node [midway,right] {4/10};
+        \draw[->, blue] (D) -- (T) node [midway,right] {6/10};
+    \end{tikzpicture}
+\end{center}
+
+\subparagraph*{Parcurgerea BFS} Flow = 4, Total = 14
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[red state] (S) {S};
+        \node[red state] (A) [above right of = S]{A};
+        \node[red state] (C) [below right of = S]{C};
+        \node[red state] (B) [right of = A]{B};
+        \node[red state] (D) [right of = C]{D};
+        \node[red state] (T) [above right of = D]{T};
+
+        \draw[->] (S) -- (A) node [midway,left] {10/10};
+        \draw[->, blue] (S) -- (C) node [midway,left] {4/10};
+        \draw[->] (A) -- (C) node [midway,left] {0/2};
+        \draw[->] (A) -- (B) node [midway,above] {4/4};
+        \draw[->, blue] (C) -- (D) node [midway,below] {4/9};
+        \draw[->, red] (A) -- (D) node [midway,right] {6/8};
+        \draw[->, red] (D) -- (B) node [midway,right] {0/6};
+        \draw[->] (B) -- (T) node [midway,right] {4/10};
+        \draw[->, blue] (D) -- (T) node [midway,right] {10/10};
+    \end{tikzpicture}
+\end{center}
+
+\subparagraph*{Parcurgerea BFS} Flow = 5, Total = 19
+\begin{center}
+    \begin{tikzpicture}[node distance={3cm}, thick, main/.style = {draw, circle}]
+        \node[red state] (S) {S};
+        \node[red state] (A) [above right of = S]{A};
+        \node[red state] (C) [below right of = S]{C};
+        \node[red state] (B) [right of = A]{B};
+        \node[red state] (D) [right of = C]{D};
+        \node[red state] (T) [above right of = D]{T};
+
+        \draw[->] (S) -- (A) node [midway,left] {10/10};
+        \draw[->, blue] (S) -- (C) node [midway,left] {9/10};
+        \draw[->] (A) -- (C) node [midway,left] {0/2};
+        \draw[->] (A) -- (B) node [midway,above] {4/4};
+        \draw[->, blue] (C) -- (D) node [midway,below] {9/9};
+        \draw[->, red] (A) -- (D) node [midway,right] {6/8};
+        \draw[->, blue] (D) -- (B) node [midway,right] {5/6};
+        \draw[->, blue] (B) -- (T) node [midway,right] {9/10};
+        \draw[->] (D) -- (T) node [midway,right] {10/10};
+    \end{tikzpicture}
+\end{center}
+
+\begin{center}
+    \textbf{Nu mai putem parcurge BFS, asa ca avem flow total 19}
+\end{center}
+
 \end{document}

@@ -1,0 +1,3 @@
+break /home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema2/Retea2/main.cpp:60
+
+set exec-wrapper logging enabled

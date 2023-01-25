@@ -1,0 +1,3 @@
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/1_maxflow/cmake-build-debug/CMakeFiles/1_maxflow.dir
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/1_maxflow/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/1_maxflow/cmake-build-debug/CMakeFiles/rebuild_cache.dir

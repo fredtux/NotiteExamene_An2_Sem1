@@ -1,0 +1,3 @@
+break /home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/4_Eulerian/main.cpp:43
+
+set exec-wrapper logging enabled

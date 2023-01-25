@@ -1,0 +1,3 @@
+break /home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/2_cuplaj/main.cpp:88
+
+set exec-wrapper logging enabled

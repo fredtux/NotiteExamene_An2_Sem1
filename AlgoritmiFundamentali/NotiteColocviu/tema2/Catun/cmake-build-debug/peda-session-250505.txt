@@ -1,0 +1,3 @@
+break /home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema2/Catun/main.cpp:98
+
+set exec-wrapper logging enabled

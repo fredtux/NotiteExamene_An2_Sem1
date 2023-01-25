@@ -1,0 +1,4 @@
+break /home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/3_taram/main.cpp:24
+break /home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/3_taram/main.cpp:32
+
+set exec-wrapper logging enabled

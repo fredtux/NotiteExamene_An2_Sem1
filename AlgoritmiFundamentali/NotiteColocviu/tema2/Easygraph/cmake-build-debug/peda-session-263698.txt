@@ -1,0 +1,3 @@
+break /home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema2/Easygraph/main.cpp:63
+
+set exec-wrapper logging enabled

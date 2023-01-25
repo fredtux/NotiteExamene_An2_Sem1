@@ -1,0 +1,3 @@
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/3_taram/cmake-build-debug/CMakeFiles/3_taram.dir
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/3_taram/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/3_taram/cmake-build-debug/CMakeFiles/rebuild_cache.dir

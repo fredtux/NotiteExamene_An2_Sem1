@@ -1,0 +1,3 @@
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema2/Retea2/cmake-build-debug/CMakeFiles/Retea2.dir
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema2/Retea2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema2/Retea2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

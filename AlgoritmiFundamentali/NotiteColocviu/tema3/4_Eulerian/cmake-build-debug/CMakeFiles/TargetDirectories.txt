@@ -1,0 +1,3 @@
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/4_Eulerian/cmake-build-debug/CMakeFiles/4_Eulerian.dir
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/4_Eulerian/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/tux/Desktop/Facultate/AlgoritmiFundamentali/Tema3/4_Eulerian/cmake-build-debug/CMakeFiles/rebuild_cache.dir

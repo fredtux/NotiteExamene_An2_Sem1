@@ -748,7 +748,8 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
         \node [gray box=3, right=of p1] (p2) {\(P_{2}\)};
         \node [gray box=3, right=of p2] (p3) {\(P_{3}\)};
         \node [gray box=4, right=of p3] (p11) {\(P_{1}\)};
-        \node [gray box=4, right=of p11] (p111) {\(P_{1}\)};
+        \node [gray box=4, right=of p11] (p112) {\(P_{1}\)};
+        \node [gray box=4, right=of p112] (p111) {\(P_{1}\)};
         \node [gray box=4, right=of p111] (p1111) {\(P_{1}\)};
         \node [gray box=4, right=of p1111] (p11111) {\(P_{1}\)};
       
@@ -757,14 +758,226 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
         \node [annotation] at (p2.south east) {7};
         \node [annotation] at (p3.south east) {10};
         \node [annotation] at (p11.south east) {14};
+        \node [annotation] at (p112.south east) {18};
         \node [annotation] at (p111.south east) {22};
         \node [annotation] at (p1111.south east) {26};
         \node [annotation] at (p11111.south east) {30};
     \end{tikzpicture}
 \end{center}
+\begin{center}
+    \textbf{A fost folosit time quantum = 4}
+\end{center}
 
 \paragraph*{De obicei $TAT \ge SJF$, dar raspuns mai bun}
 \paragraph*{q trebuie sa fie mai mare decat timpul de context switch.} De obicei q intre 10ms si 100ms, iar context switch $\le 10 \mu s$
+
+\subsection*{Priority Scheduling}
+\paragraph*{Priority number} - integer asociat fiecarui proces (nr mic - prioritate mare)
+\paragraph*{SJF} este un priority scheduling unde prioritatea este inversul timpului urmator de CPU burst prezis
+\paragraph*{Problema} Starvation $\Rightarrow$ \textbf{Solutie} Aging
+
+\begin{center}
+    \begin{tabularx}{0.8\textwidth} {
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            |}
+        \hline
+          Process & Burst Time & Priority \\
+        \hline
+        $P_1$ & 10 & 3 \\
+        $P_2$ & 1 & 1 \\
+        $P_3$ & 2 & 4 \\
+        $P_4$ & 1 & 5 \\
+        $P_5$ & 5 & 2 \\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\begin{center}
+    \begin{tikzpicture}[node distance=-0.3pt]
+        \node [gray box=1] (p2) {\(P_{2}\)};
+        \node [gray box=5, right=of p2] (p5) {\(P_{5}\)};
+        \node [gray box=10, right=of p5] (p1) {\(P_{1}\)};
+        \node [gray box=2, right=of p1] (p3) {\(P_{3}\)};
+        \node [gray box=1, right=of p3] (p4) {\(P_{4}\)};
+      
+        \node [annotation] at (p2.south west) {0};
+        \node [annotation] at (p2.south east) {1};
+        \node [annotation] at (p5.south east) {6};
+        \node [annotation] at (p1.south east) {16};
+        \node [annotation] at (p3.south east) {18};
+        \node [annotation] at (p4.south east) {19};
+    \end{tikzpicture}
+\end{center}
+
+\paragraph*{Priority Scheduling cu Round-Robin (time quantum = 2)}
+\begin{center}
+    \begin{tabularx}{0.8\textwidth} {
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            |}
+        \hline
+          Process & Burst Time & Priority \\
+        \hline
+        $P_1$ & 4 & 3 \\
+        $P_2$ & 5 & 2 \\
+        $P_3$ & 8 & 2 \\
+        $P_4$ & 7 & 1 \\
+        $P_5$ & 3 & 3 \\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\begin{center}
+    \begin{tikzpicture}[node distance=-0.3pt]
+        \node [gray box=7] (p4) {\(P_{4}\)};
+        \node [gray box=5, right=of p4] (p2) {\(P_{2}\)};
+        \node [gray box=10, right=of p2] (p3) {\(P_{3}\)};
+        \node [gray box=2, right=of p3] (p2i) {\(P_{2}\)};
+        \node [gray box=1, right=of p2i] (p3i) {\(P_{3}\)};
+        \node [gray box=1, right=of p3i] (p2ii) {\(P_{2}\)};
+        \node [gray box=1, right=of p2ii] (p3ii) {\(P_{3}\)};
+        \node [gray box=1, right=of p3ii] (p1) {\(P_{1}\)};
+        \node [gray box=1, right=of p1] (p5) {\(P_{5}\)};
+        \node [gray box=1, right=of p5] (p1i) {\(P_{1}\)};
+        \node [gray box=1, right=of p1i] (p5i) {\(P_{5}\)};
+      
+        \node [annotation] at (p4.south west) {0};
+        \node [annotation] at (p4.south east) {7};
+        \node [annotation] at (p2.south east) {9};
+        \node [annotation] at (p3.south east) {11};
+        \node [annotation] at (p2i.south east) {13};
+        \node [annotation] at (p3i.south east) {15};
+        \node [annotation] at (p2ii.south east) {16};
+        \node [annotation] at (p3ii.south east) {20};
+        \node [annotation] at (p1.south east) {22};
+        \node [annotation] at (p5.south east) {24};
+        \node [annotation] at (p1i.south east) {26};
+        \node [annotation] at (p5i.south east) {27};
+    \end{tikzpicture}
+\end{center}
+
+\subsection*{Multilevel Queue}
+\begin{enumerate}
+    \item Numarul de queues
+    \item Algoritmul de scheduling pentru fiecare queue
+    \item Meoda de determinare a queue-ului in care procesul intra
+    \item Scheduling intre queues
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.3]{12_mqproctype.png}
+\end{center}
+
+\subsection*{Multilevel Feedback Queue}
+\paragraph*{}Un proces se poate misca prin queues diferite
+\begin{enumerate}
+    \item Numarul de cozi
+    \item Algoritmul de scheduling pentru fiecare coada
+    \item Metoda de determinare a upgradarii procesului
+    \item Metoda de determinare a demote procesului
+    \item Metoda de determinare a cozii in care un proces intra
+    \item Aging poate fi implementat folosind multilevel feedback queue
+\end{enumerate}
+
+\subsection*{Thread Scheduling}
+
+\begin{center}
+    \includegraphics[scale=0.3]{13_exmq.png}
+\end{center}
+
+\begin{enumerate}
+    \item Distinctie intre user-level si kernel-level threads
+    \item Cand threadurile sunt suportate, ele sunt scheduluite, nu procesele
+    \item \textbf{PCS} - process-contention scope pentru ca schdedulingul e facut per proces de obicei prin prioritate data de programator
+    \item Kernel thread scheduling este denumit si \textbf{SCS} system-contention scope pentru ca intra in competitie cu celelalte threaduri din sistem
+\end{enumerate}
+
+\paragraph*{Pthread scheduling} API-ul permite PCS sau SCS, dar pe Linux si macOS  doar \textbf{pthread\_scope\_system}
+
+\subsection*{Multiple-Processor Scheduling}
+\paragraph*{Poate fi}
+\begin{enumerate}
+    \item CPU multicore
+    \item Multithreaded cores
+    \item NUMA systems
+    \item Multiprocesare eterogena
+\end{enumerate}
+\paragraph*{SMP} - symmetric multiprocessing unde fiecare procesor face self scheduling fie prin common ready queue fie prin cozi private de threaduri pe ficare procesor
+\paragraph*{Multithreaded multicore system} - Fiecare core are $> 1$ threaduri hardware. Daca exista memory stall pe un thread, face switch la altul
+\subparagraph*{CMT} - chip-multithreading (Intel ii zice hyperthreading)
+\subparagraph*{Sunt 2 nivele:}
+\begin{enumerate}
+    \item OS decide ce software thread sa ruleze pe fiecare CPU
+    \item Fiecare core decide ce hardware thread sa ruleze pe core-ul fizic
+\end{enumerate}
+\subparagraph*{Load balancing} pentru a tine workloadul distribuit uniform se fac \textbf{push migrations} (de a lua de la un cpu overloaded la altul) si \textbf{pull migrations} (procesoarele idle preiau taskuri de la cele ocupate)
+\subparagraph*{Processor affinity} - cand un thread ruleaza pe un procesor, cacheul acelui procesor tine memoria accesata de thread fie prin \textbf{soft affinity} (OS-ul incearca fara garantii) sau \textbf{hard affinity} (permite unui proces sa specifice o multime de procesoare pe care sa ruleze). Load balancingul poate afecta processor affinity.
+
+\paragraph*{NUMA-aware} inseamna ca va asigna memoria apropiata de CPU-ul pe care ruleaza
+
+\paragraph*{Real-Time CPU Scheduling} pe sistemele \textbf{soft real-time} face ca taskurile real-time sa aiba prioritate mare, dar nu garanteaza ca vor fi schedeluite, iar pe cele \textbf{hard real-time} taskurile trebuie sa fie facute pana la deadline.
+\subparagraph*{2 tipuri de latenta} afecteaza performata: \textbf{interrupt latency}, timpul de la sosirea interruptului la startul rutinei care serveste interruptul, \textbf{dispatch latency}, timpul pe care se scurge de la luarea procesului curent de pe CPU si schimbarea cu altul.
+
+\paragraph*{Priority based-scheduling} pentru real-time scheduling trebuie sa suporte scheduling preemptive si priority-based, dar garanteaza numai soft real-time. Pentru hard real-time trebuie sa aiba abilitatea de a intruni deadlineurile.
+\subparagraph*{Periodic} - cere CPU la intervale constante. Pnetru timpul de procesare t, deadlineul d si perioada p ($0\leq t \leq d \leq p$) rata taskului periodic este $\frac{1}{p}$
+
+\paragraph*{Rate monotonic scheduling} - perioadele scurte au prioritate mare, cele lungi, prioritate mica. Se poate intampla ca un proces sa rateze deadlineul.
+\paragraph*{EDF (earliest deadline first scheduling)} - prioritatile se asigneaza in functie de deadlineuri (devereme - prioritate mare, tarziu - prioritate mica)
+\paragraph*{Proportional share scheduling} sunt T shares pentru toate procesele. O aplicatie primeste N shares ($N < T$) astfel incat sa primeasca $N/T$ din timpul total de procesor.
+\paragraph*{POSIX Real-Time Scheduling} are un api cu 2 clase de scheduling
+\begin{enumerate}
+    \item SCHED\_FIFO - cu strategia FCFS si coada FIFO. Fara time-slicing pentru threaduri cu prioritate egala
+    \item SCHED\_RR - la fel ca prima, dar exista time-slicing pentru threaduri cu prioritate egala
+\end{enumerate}
+
+
+\subsection*{Linux scheduling}
+\paragraph*{Pana la 2.5} avea variatii ale algoritmului de scheduling standard din UNIX. De la 2.5 s-a mutat in timp constant O(1).
+\begin{enumerate}
+    \item Preemptive, priority based
+    \item 2 rangeuri de prioritati: time-sharing si real-time
+    \item real-time intre 0 si 99 si nice value de la 100 la 140
+    \item Taskul este runable cat timp mai are timp in time slice (active)
+    \item Daca nu mai are timp (expired) nu mai este runable pana cand celelalte taskuri isi folosesc sliceurile
+    \item Toate taskurile runable sunt tinute per-CPU in runqueue
+    \begin{enumerate}
+        \item 2 arrayuri de proritate (active, expired)
+        \item taskuri indexate pe prioritate
+        \item cand nu mai sunt active, arrayurile se schimba
+    \end{enumerate}
+    \item A mers bine, dar poor response times pentru procesele interactive
+\end{enumerate}
+\paragraph*{De la 2.6.23} se foloseste \textbf{CFS} (Completely Fair Scheduler) care introduce \textbf{clase}:
+\begin{enumerate}
+    \item Fiecare are prioritate specifica
+    \item Schedulerul se uita dupa taskul cu prioritate maxima in clasa cu prioritate maxima
+    \item In loc de quantum based, e bazat pe proportia din CPU time
+    \item 2 incluse (altele pot fi adaugate): default, real-time
+    \item Quantumul e calculat pe nice value de la -20 la +19 si calculeaza target latency (intervalul in care fiecare task trebuie sa ruleze macar 1 data)
+    \item Tine virtual run time per task (vruntime) si alege taskul cu cel mai mic virtual runtime
+    \item Tine totul intr-un red-black tree
+    \item Nice de -20 e prioritate globala de 100 si +19 de 139
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.4]{13_cfs.png}
+\end{center}
+
+\paragraph*{Linux scheduling} suporta load balancing, dar este si NUMA-aware, grupand multimile de coreuri de CPU care pot fi in balanta intr-un scheduling domain
+
+\subsection*{Selectarea algoritmului de evaluare}
+\paragraph*{Determinist} cu evaluare analitica
+\paragraph*{Formula lui Little}
+\begin{enumerate}
+    \item n = average queue length
+    \item W = average waiting time in queue
+    \item $\lambda$ = average arrival rate into queue
+    \item $ n = \lambda * W$
+\end{enumerate}
+\paragraph*{Simulari} dar au accuracy limitat
 
 \section[Ch6 Synchronization Tools]{Synchronization Tools}
 \section[Ch7 Synchronization Examples]{Synchronization Examples}

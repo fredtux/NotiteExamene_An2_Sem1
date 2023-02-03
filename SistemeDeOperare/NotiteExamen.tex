@@ -1,0 +1,772 @@
+% !TEX program = xelatex
+\documentclass{article}
+
+\title{Notite examen - Sisteme de Operare}
+\date{}
+\author{Dinu Florin-Silviu \\ grupa 231}
+
+\newcommand{\prim}{^\ensuremath{\prime}}
+\newcommand{\secund}{^{\ensuremath{\prime\prime}}}
+
+% \makeatletter
+% \renewcommand{\@seccntformat}[1]{}
+% \makeatother
+
+\newenvironment{textColor}[1]{%
+    \leavevmode\color{#1}\ignorespaces%
+}{%
+}%
+
+
+\usepackage{tikz}
+\usepackage{forest}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage[a4paper, margin=3cm]{geometry}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{pgfgantt}
+
+\graphicspath{ {./img/} }
+
+\newfontfamily{\ttconsolas}{Consolas}
+\lstset{
+%  tabsize=4,
+extendedchars=true,
+        basicstyle=\ttconsolas,
+        % %upquote=false,
+        % aboveskip=\baselineskip,
+        columns=fixed,
+        showstringspaces=false,
+        extendedchars=true,
+        breaklines=true,
+        % prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        showtabs=false,
+        showspaces=false,
+        identifierstyle=\ttfamily,
+        % keywordstyle=\color[rgb]{0,0,1},
+        % commentstyle=\color[rgb]{0.133,0.545,0.133},
+        % stringstyle=\color[rgb]{0.627,0.126,0.941},
+        % language=SQL
+        frame=lines,
+        literate=%
+    {€}{\euro}1%
+    {§}{\S}1%
+    {°}{\textdegree{}}1%
+    {ä}{{\"a}}1%
+    {ö}{{\"o}}1%
+    {ü}{{\"u}}1%
+    {ß}{{\ss}}1%
+    {Ä}{{\"A}}1%
+    {Ö}{{\"O}}1%
+    {Ü}{{\"U}}1%
+    {µ}{\textmu}1%
+    {¹}{{\textsuperscript{1}}}1%
+    {²}{{\textsuperscript{2}}}1%
+    {³}{{\textsuperscript{3}}}1%
+    {¼}{\textonequarter}1%
+    {½}{\textonehalf}1%
+    {¢}{\textcent}1%
+}
+
+
+\tikzstyle{red state}=[
+        draw = red,
+        thick,
+        fill = white,
+        minimum size = 4mm,
+        circle
+    ]
+
+\tikzstyle{blue state}=[
+    draw = blue,
+    thick,
+    fill = white,
+    minimum size = 4mm,
+    circle
+]
+
+\tikzstyle{green state}=[
+    draw = green,
+    thick,
+    fill = white,
+    minimum size = 4mm,
+    circle
+]
+
+\tikzset{
+  gray box/.style={
+    fill=gray!20,
+    draw=gray,
+    minimum width={1.5*#1ex},
+    minimum height={2em},
+  },
+  annotation/.style={
+    anchor=north,
+  }
+}
+
+\newtheorem*{theorem}{Teorema}
+\renewcommand\qedsymbol{QED}
+
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+
+\section[Ch3 Processes]{Processes}
+\subsection*{States}
+\begin{enumerate}
+    \item New - e creat
+    \item Running - se executa instructiunile
+    \item Waiting - asteapta un eveniment
+    \item Ready - asteapta sa fie asignat unui procesor
+    \item Terminated - a terminat executia
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.4]{1_procese.png}
+\end{center}
+
+\subsection*{Task control block}
+\begin{enumerate}
+    \item Process state
+    \item Program counter (location of next instruction)
+    \item CPU registers (contents of all process-centric registers)
+    \item CPU scheduling information (priorities, scheduling queue pointers)
+    \item Memory-management information (memory allocated to the process)
+    \item Accounting information (CPU used, clock time since start, time limits)
+    \item I/O status information (I/O devices allocated to the process, list of open files)
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.3]{2_taskcontrolblock.png}
+\end{center}
+
+\subsection*{Process scheduling}
+\paragraph*{Process scheduler} selects among available processes for next execution on CPU core
+\subparagraph*{Goal} - maximize CPU use, quickly switch processes onto CPU core
+\subparagraph*{Scheduling queues} Ready queue and wait queue
+
+\begin{center}
+    \includegraphics[scale=0.3]{3_processqueue.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[scale=0.3]{4_indepthprocsched.png}
+\end{center}
+
+\subsection*{Context switch} Ehen CPU switches to another process, the system must save the state of the old process and load the save state for the new process via a context switch
+\paragraph*{Contextul} unui proces este reprezentat in PCB
+
+\subsection*{Process creation}
+\paragraph*{Parintii} creaza copii care, la randul lor, pot crea alte procese, formand un arbore de procese
+\subparagraph*{PID} - process identifier ID
+\paragraph*{Partajarea de resurse - optiuni}
+\begin{enumerate}
+    \item Parintii si copiii partajeaza toate resursele
+    \item Copiii folosesc o submultime a resurselor parintilor
+    \item Parintii si copiii nu partajeaza nicio resursa
+\end{enumerate}
+\paragraph*{Executie - optiuni}
+\begin{enumerate}
+    \item Parintii si copiii se executa concurent
+    \item Parintele asteapta sa termine copilul
+\end{enumerate}
+
+\paragraph*{Spatiu de adresa}
+\begin{enumerate}
+    \item Copilul e un duplicat al parintelui
+    \item Copilul are un program incarcat in el
+\end{enumerate}
+
+\paragraph*{Exemple UNIX}
+\begin{enumerate}
+    \item fork() - syscall pentru crearea de noi procese
+    \item exec() - syscall dupa fork() ca sa inlocuiasca memory space-ul cu un alt program
+    \item wait() - parintele asteapta sa termine copilul
+\end{enumerate}
+
+\subsection*{Process termination}
+\paragraph*{exit()} - procesele executa ca ultima instructiune syscallul exit() care returneaza statusul catre parinte via wait() si resursele sunt dealocate de sistem
+\paragraph*{abort()} - parintele poate termina oricand copilul. Unele din motive sunt: copilul a depasit resursele alocate, ceea ce i s-a cerut copilului nu mai este necesar, parintele a apelat exit() si sistemul nu mai lasa copilul sa continue in acest caz (terminarea in cascada)
+\paragraph*{Zombie} nu mai are parinte care sa astepte (nu s-a invocat wait())
+\paragraph*{Orfan} parintele s-a terminat fara sa invoce wait()
+
+\subsection*{Interprocess Communication}
+\paragraph*{Procesele} pot fi independente sau sa coopereze
+\subparagraph*{Cooperarea} inseamna ca procesul poate fi afectate sau afecta alte procese, inclusiv datele partajate
+\paragraph*{Motive pentru cooperare}
+\begin{enumerate}
+    \item Partajarea de informatie
+    \item Viteza de calcul mai mare
+    \item Modularitate
+    \item Convenienta
+\end{enumerate}
+\paragraph*{IPC - 2 modele}
+\begin{enumerate}
+    \item memorie partajata
+    \item pasare de mesaje
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.3]{5_ipc.png}
+\end{center}
+
+\subsection*{Shared memory}
+
+\paragraph*{Producer-consumer}: producatorul produce informatie care e consumata de consumator
+\subparagraph*{2 variante}
+\begin{enumerate}
+    \item unbounded-buffer - nu are limite practice asupra marimii bufferului
+    \begin{enumerate}
+        \item producatorul nu asteapta
+        \item consumatorul asteapta daca nu e buffer de consumat
+    \end{enumerate}
+    \item bounded-buffer - toate bufferele au marime fixa
+    \begin{enumerate}
+        \item producatorul trebuie sa astepte daca toate bufferele sunt full
+        \item consumatorul asteapta daca nu e buffer pe care sa-l consume
+    \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Umplerea TUTUROR bufferelor} se face cu un counter care e 0, e incrementat de producator cu fiecare buffer si decrementat de consumator dupa ce il consuma
+
+\paragraph*{Race condition}
+
+\begin{center}
+    \includegraphics[scale=0.3]{6_racecondition.png}
+\end{center}
+
+
+\subsection*{Message passing}
+\paragraph*{2 operatii}: send(message), receive(message)
+\paragraph*{Communication link}
+\begin{enumerate}
+    \item Physical
+    \begin{enumerate}
+        \item Shared memory
+        \item Hardware bus
+        \item Network
+    \end{enumerate}
+    \item Logical
+    \begin{enumerate}
+        \item Direct sau indirect
+        \item Sincron sau asincron
+        \item Buffering automat sau explicit
+    \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Comunicarea directa}
+\subparagraph*{Se denumesc explicit} send(P, msg) sau receive(Q, msg)
+\subparagraph*{Avantaje}
+\begin{enumerate}
+    \item Linkurile sunt stabilite automat
+    \item Linkurile sunt asociate cu exact o pereche de procese care comunica
+    \item Intre 2 procese este exact 1 link
+    \item Linkul poate fi unidrectional, dar de obicei, e bidirectional
+\end{enumerate}
+
+\paragraph*{Comunicarea indirecta}
+\subparagraph*{Mesajele vin din mailboxes (ports)} Fiecare mailbox are ID unic, procesele pot comunica doar daca partajeaza un mailbox
+\subparagraph*{Proprietatile linkului de comunicare}
+\begin{enumerate}
+    \item Linkurile sunt stabilite doar daca e un mailbox comun
+    \item Un link poate fi asociat cu mai multe procese
+    \item Perechile de procese pot avea in comun mai multe linkuri
+    \item Linkul poate fi unidirectional sau bidirectional
+\end{enumerate}
+\subparagraph*{Operatii}
+\begin{enumerate}
+    \item Crearea de mailbox (port)
+    \item Send and receive
+    \item Delete
+\end{enumerate}
+\subparagraph*{Primitive} send(A, msg), receive(A, msg)
+
+\paragraph*{Pasarea de mesaje}
+\begin{enumerate}
+    \item Blocking
+    \begin{enumerate}
+        \item Blocking send
+        \item Blocking receive
+    \end{enumerate}
+    \item Non-blocking
+    \begin{enumerate}
+        \item Non-blocking send
+        \item Non-blocking receive
+    \end{enumerate}
+    \item Alte combinatii: daca avem send si receive blocking, avem \textbf{rendezvous}
+\end{enumerate}
+
+\paragraph*{Buffering}
+\subparagraph*{Queue} atasata unui link
+\subparagraph*{3 implementari:}
+\begin{enumerate}
+    \item Zero capcity - fara mesaje pe link. Senderul asteapta pentru receiver (rendezvous)
+    \item Bounded capacity - lungime finita de n mesaje. Senderul asteapta daca linkul e full
+    \item Unbounded capacity - lungime infinita. Senderul nu asteapta niciodata
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.3]{7_sharedmem.png}
+\end{center}
+
+\subsection*{Mach}
+\paragraph*{Message based}
+\begin{enumerate}
+    \item syscallurile sunt mesaje
+    \item toate taskurile au 2 porturi la creare: kernel si notify
+    \item mesajele sunt trimise si primite cu mach\_msg()
+    \item portul e creat cu mach\_port\_allocate()
+    \item send si receive sunt flexibile, 4 optiuni daca mailboxul e full
+    \begin{enumerate}
+        \item asteapta nedefinit
+        \item asteapta max n ms
+        \item returneaza imediat
+        \item cachuieste un mesaj temporar
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{Pipes}
+\paragraph*{Comunicare intre 2 procese}
+\subsection*{Ordinary pipes}
+\paragraph*{Nu pot fi accesate din afara procesului care le-a creat}
+\begin{enumerate}
+    \item Comunicare standard in stil producer-consumer
+    \item Producerul: write-end of the pipe
+    \item Consumerul: read-end of the pipe
+    \item Unidirectionale
+    \item Au nevoie de parent-child
+\end{enumerate}
+
+\subsection*{Named pipes}
+\paragraph*{Pot fi accesate fara relatie parent-child}
+\begin{enumerate}
+    \item Comunicarea e bidirectionoala
+    \item Nu e nevoie de parent-child
+    \item Mai multe procese pot folosi acelasi pipe
+\end{enumerate}
+
+\subsection*{Sistemele client-server}
+\paragraph*{Sockets}
+\begin{enumerate}
+    \item endpoint de comunicare
+    \item IP:PORT
+    \item <1024 well known
+    \item 127.0.0.1 loopback
+\end{enumerate}
+\paragraph*{RPC}
+\begin{enumerate}
+    \item Abstractizeaza procedura callurilor dintre procese si sistemele din retea
+    \item foloseste porturi
+    \item stubs - client-side proxy pentru procedura actuala din server
+    \item stubul localizeaza serverul si marshalls parametrii
+    \item server-side stub primeste mesajul, dezpacheteaza parametrii si face procedura
+    \item reprezentarea datelor se face prin XDL (External Data Representation)
+    \item comunicarea are mai multe failure scenarios (mesajele pot fi trimise o SINGURA data sau CEL MULT o data)
+    \item OS-ul are un rendezvous (sau matchmaker) service ca sa conecteze clientul si serverul
+\end{enumerate}
+
+\section[Ch4 Threads and Concurrency]{Threads and Concurrency}
+\paragraph*{Beneficii}
+\begin{enumerate}
+    \item Responsivness - continuarea executiei daca o parte din proces e blocata (UI)
+    \item Resource Sharing - partajeaza cu procesele mai usor ca shared memory sau message passing
+    \item Economie - mai ieftin decat crearea proceselor, iar threa switching mai ieftin ca message passing
+    \item Scalabilitate - procesele pot folosi arhitecturile multicore
+\end{enumerate}
+
+\paragraph*{Paralelism} - un sistem poate face mai mult de 1 lucru simultan
+\paragraph*{Concurrency} - sustine mai mult de un task care face progres (single processor/core - scheduler providing concurrency)
+
+\paragraph*{Tipuri de paralelism}
+\begin{enumerate}
+    \item Data paralelism - distribuie submultimi ale datelor pe mai multe coreuri, aceeasi operatie pentru fiecare
+    \item Task parallelism - distribuie threadurile pe coreuri, fiecare thread facand o actiune unica
+\end{enumerate}
+
+\paragraph*{Legea lui Amdahl}
+
+\begin{center}
+    \begin{math}
+        speedup \leq \frac{1}{S+\frac{(1-S)}{N}}
+    \end{math}
+\end{center}
+
+\subparagraph*{title} S = portiunea seriala, N = numarul de coreuri
+
+\paragraph*{User vs Kernel Threads}
+
+\subsection*{Modele multithreading}
+\begin{enumerate}
+    \item Many-to-One
+    \item One-to-One
+    \item Many-to-Many
+\end{enumerate}
+
+\paragraph*{Many-to-one}
+\begin{enumerate}
+    \item Mai multe threaduri user-level mapate pe un thread de kernel
+    \item Un thread blocking le face pe toate sa se blocheze
+    \item Mai multe threaduri pot sa nu ruleze in paralel pe un sistem multicore pentru ca numai unul poate fi in kernel la un moment dat
+    \item Exemple: Solaris Green Threads, GNU Portable Threads
+\end{enumerate}
+\paragraph*{One-to-One}
+\begin{enumerate}
+    \item Fiecare thread user-level mapeaza pe un thread al kernelului
+    \item Crearea unui thread la user level creaza un thread in kernel
+    \item Mai multa concurenta decat many-to-one
+    \item Numarul de threaduri pe proces restrictionat din cauza overheadului
+\end{enumerate}
+\paragraph*{Many-to-Many}
+\begin{enumerate}
+    \item Mai multe user level threads mapate pe mai multe kernel threads
+    \item Sistemul poate crea un numar suficient de threaduri de kernel
+    \item Exemplu (necomun): ThreadFiber pe Windows
+\end{enumerate}
+\paragraph*{Two-level Model} Ca M:M, doar ca un user thread poate fi bound catre un kernel thread
+
+\begin{center}
+    \includegraphics[scale=0.3]{8_twolevelmodel.png}
+\end{center}
+
+\subsection*{Pthreads}
+\begin{enumerate}
+    \item User-level sau kernel-level
+    \item Un API POSIX standard pentru crearea si sincronizarea threadurilor
+    \item Specificatie, nu implementare
+    \item API-ul specifica comportamentul librariei, nu al implementarii
+    \item Comun in UNIX 
+\end{enumerate}
+
+\subsection*{Implicit threading}
+\begin{enumerate}
+    \item Thread Pools
+    \item Fork-Join
+    \item OpenMP
+    \item Grand Central Dispatch
+    \item Intel Threading BUilding Blocks
+\end{enumerate}
+
+\paragraph*{Thread Pools} Creaza un numar de threaduri intr-o piscina unde asteapta munca
+\begin{enumerate}
+    \item De obicei ceva mai rapide sa preia un request cu unul existent decat cu crearea unuia nou
+    \item Nr de threaduri maxim marimea poolului
+    \item Separarea taskurilor de mecanismele de creare a taskurilor permit diferite strategii de run (ex: periodical schedule)
+\end{enumerate}
+
+\paragraph*{Fork-join Parallelism} Mai mult threaduri sunt forkuite, apoi joinate
+
+\begin{center}
+    \includegraphics[scale=0.3]{9_forkjoin.png}
+\end{center}
+
+\subparagraph*{Algoritmul general}
+\begin{center}
+    \begin{lstlisting}
+Task(problem){
+    if (problem is small enough){
+        solve directly;
+    } else {
+        subtask1 = fork (new Task (subset of problem));
+        subtask2 = fork (new Task (subset of problem));
+
+        result1 = join(subtask1);
+        result2 = join(subtask2);
+
+        return combined results;
+    }
+}
+    \end{lstlisting}
+\end{center}
+
+\begin{center}
+    \includegraphics[scale=0.3]{10_forkjoin.png}
+\end{center}
+
+\paragraph*{OpenMP}
+\begin{enumerate}
+    \item O multime de directive de compilator si un API pentru C, C++, FROTRAN
+    \item Suport pentru programarea paralela in mediile cu shared-memory
+    \item Identifica regiunile paralele (blocheaza codul paralel)
+    \item Se creaza threaduri pe cat de multe coreuri sunt
+\end{enumerate}
+
+\paragraph*{Grand Central Dispatch}
+\begin{enumerate}
+    \item Apple technology for macOS and iOS
+    \item Extensii C, C++ si Objective-C, API si librarie run-time
+    \item Permite identificarea sectiunilor paralele
+    \item Gestioneaza majoritatea detaliilor in threading
+    \item Blocul este intre \^\ \{\}
+    \item Blocurile sunt puse in dispatch queue si sunt asignate unui thread disponibil din pool cand sunt scoase din coada
+    \item Doua tipuri de dispatch queues
+    \begin{enumerate}
+        \item serial - FIFO, queue per proces, numit main queue
+        \item concurent - FIFO, dar mai multe o data
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{Threading issues}
+\paragraph*{Semantica fork() si exec()}
+\subparagraph*{Fork()} de obicei duplica doar calling thread (Linux), dar pe alte sisteme, toate threadurile
+\subparagraph*{Exec()} de obicei inlocuieste procesul care ruleaza inclusiv threadurile sale
+
+\paragraph*{Signal handling} folosit pentru procesarea semnalelor
+\begin{enumerate}
+    \item Semnal generat de un anumit eveniment
+    \item Semnalul este dat unui proces
+    \item Semnalul este ahndeluit de 1 din cele doua handleluri
+    \begin{enumerate}
+        \item default
+        \item user-defined
+    \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Thread Cancellation} Terminarea unui thread (numit si target thread) inainte de sfarsit
+\subparagraph*{2 metode:} Asincrona (imediata), Deferred (target threadul verifica periodic daca trebuie cancelat). Tipul implicit e deferred. Pe Linux thread cancellation e obtinut prin semnale
+
+\paragraph*{TLS (Thread Local Storage)} permite fiecarui thread sa aiba copia proprie a datelor si e folositor la thread pooluri (unde nu ai control asupra crearii)
+
+\subsection*{Scheduler Activations}
+M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de threaduri de Kernel. De obicei se foloseste o structura de date intermediara intre threadurile de user si de kernel LWP (lightweight process). Acesta apare ca un procesor virtual unde procesele pot face scheduleing pentru rularea user threadurilor, fiecare LWP e atasat unui thread de kernel. Scheduler activations au upcalls (un mecanism de comunicare de la kernel la upcall handler)
+
+\subsection*{Linux threads}
+\begin{enumerate}
+    \item Li se zice tasks
+    \item Se fac prin syscallul clone()
+    \item clone() permite taskurilor copil sa partajeze address space-ul parintelui (procesului)
+\end{enumerate}
+
+\section[Ch5 CPU Scheduling]{CPU Scheduling}
+\paragraph*{CPU - I/O Burst cycle} un ciclu de cpu execution si I/O wait
+
+\begin{center}
+    \includegraphics[scale=0.3]{11_cpuioburstcycle.png}
+\end{center}
+
+\subsection*{CPU Scheduler} Selecteaza din procesele din queue (ordonata in moduri diferite) si aloca un core de CPU unuia
+\subparagraph*{Deciziile pot avea loc atunci cand:}
+\begin{enumerate}
+    \item Running $\rightarrow$ waiting
+    \item Running $\rightarrow$ ready
+    \item Waiting $\rightarrow$ ready
+    \item Terminates
+\end{enumerate}
+\subparagraph*{Optiuni:} Pentru 1 \& 4 \textbf{NU} exista, pentru 2 \& 3 exista. Asadar pentru 1 \& 4 este nonpreemptive (o data alocat, procesul pastreaza CPU-ul pana se termina sau se schimba la waiting), altfel este preemptive. 
+\subparagraph*{Preemptive} poate duce la race conditions
+
+\subsection*{Dispatcher}
+\paragraph*{Dispatcher-ul} da controlul CPU-ului procesului selectat de \textbf{scheduler}. Acest lucru inseamna: schimbarea de context, schimbarea in user mode, jump la locatia din programul userului pentru a restarta programul
+\paragraph*{Dispatch latency} - timpul care ii ia dispatcher-ului sa opreasca un proces, apoi sa ruleze altul
+
+\subsection*{Scheduling criteria}
+\begin{enumerate}
+    \item \textbf{CPU utilizations} - sa fie cat mai ocupat
+    \item \textbf{Throughput} - nr de procese care isi completeaza executia per unitate de timp
+    \item \textbf{Turnaround time} - timpul de executie al unui proces
+    \item \textbf{Waiting time} - timpul pe care un proces l-a petrecut in ready queue
+    \item \textbf{Response time} - timpul pe care un proces il petrece de cand a facut o cerere pana cand primul raspuns este produs
+\end{enumerate}
+
+\subsection*{FCFS (First-Come, First-Served)}
+\paragraph*{Convoy effect} - short process behind long process
+\begin{center}
+    \begin{tabularx}{0.8\textwidth} {
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            |}
+        \hline
+          Process & Burst Time \\
+        \hline
+        $P_1$ & 24 \\
+        $P_2$ & 3 \\
+        $P_3$ & 3 \\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\begin{center}
+    \begin{tikzpicture}[node distance=-0.5pt]
+        \node [gray box=24] (p1) {\(P_{1}\)};
+        \node [gray box=3, right=of p1] (p2) {\(P_{2}\)};
+        \node [gray box=3, right=of p2] (p3) {\(P_{3}\)};
+      
+        \node [annotation] at (p1.south west) {0};
+        \node [annotation] at (p1.south east) {24};
+        \node [annotation] at (p2.south east) {27};
+        \node [annotation] at (p3.south east) {30};
+    \end{tikzpicture}
+\end{center}
+\paragraph*{Waiting time:} $P_1 = 0$; $P_2 = 24$; $P_3 = 27$
+\paragraph*{Average waiting time:} $\frac{(0+24+27)}{3} = 17$
+
+\subsection*{SJF (Shortest-Job-First)}
+\paragraph*{SJF e optim} - are media timpurilor de asteptare pentru o multime de procese ca fiind minima
+\paragraph*{Shortest-remaining-time-first} este numele versiunii preemptive
+
+\begin{center}
+    \begin{tabularx}{0.8\textwidth} {
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            |}
+        \hline
+          Process & Burst Time \\
+        \hline
+        $P_1$ & 6 \\
+        $P_2$ & 8 \\
+        $P_3$ & 7 \\
+        $P_4$ & 3 \\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\begin{center}
+    \begin{tikzpicture}[node distance=-0.5pt]
+        \node [gray box=3] (p4) {\(P_{4}\)};
+        \node [gray box=6, right=of p4] (p1) {\(P_{1}\)};
+        \node [gray box=7, right=of p1] (p3) {\(P_{3}\)};
+        \node [gray box=8, right=of p3] (p2) {\(P_{2}\)};
+      
+        \node [annotation] at (p4.south west) {0};
+        \node [annotation] at (p4.south east) {3};
+        \node [annotation] at (p1.south east) {9};
+        \node [annotation] at (p3.south east) {16};
+        \node [annotation] at (p2.south east) {24};
+    \end{tikzpicture}
+\end{center}
+
+\paragraph*{Average waiting time:} $\frac{(3+16+9+0)}{4} = 7$
+
+\paragraph*{Cum determinam lungimea CPU burst?} 
+\subparagraph*{Estimare:} ar trebui sa fie asemanatoare cu cele anterioare. Poate fi folosita cu exponential averaging
+\begin{enumerate}
+    \item $t_n$ = lungimea reala a celui de-al n-ulea CPU burst
+    \item $\tau_{n+1}$ = valoarea prezisa pentru urmatorul CPU burst
+    \item $\alpha,0 \leq \alpha \leq 1$ (de obicei e setat la $\frac{1}{2}$)
+    \item Definim: $\tau_{n+1} = \alpha t_n + (1-\alpha) \tau_{n}$
+\end{enumerate}
+
+\subsection*{Shortest Remaning Time First}
+\paragraph*{SJN} - versiunea preemtiva. Cand ajunge in coada de ready, decizia de a-l programa urmatorul este refacuta cu alogirtmul SJN
+
+\begin{center}
+    \begin{tabularx}{0.8\textwidth} {
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            |}
+        \hline
+          Process & Arrival Time & Burst Time \\
+        \hline
+        $P_1$ & 0 & 8 \\
+        $P_2$ & 1 & 4 \\
+        $P_3$ & 2 & 9 \\
+        $P_4$ & 3 & 5 \\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\begin{center}
+    \begin{tikzpicture}[node distance=-0.3pt]
+        \node [gray box=1] (p1) {\(P_{1}\)};
+        \node [gray box=5, right=of p1] (p2) {\(P_{2}\)};
+        \node [gray box=10, right=of p2] (p4) {\(P_{4}\)};
+        \node [gray box=17, right=of p4] (p11) {\(P_{1}\)};
+        \node [gray box=26, right=of p11] (p3) {\(P_{3}\)};
+      
+        \node [annotation] at (p1.south west) {0};
+        \node [annotation] at (p1.south east) {1};
+        \node [annotation] at (p2.south east) {5};
+        \node [annotation] at (p4.south east) {10};
+        \node [annotation] at (p11.south east) {17};
+        \node [annotation] at (p3.south east) {26};
+    \end{tikzpicture}
+\end{center}
+
+\begin{center}
+    \begin{tabularx}{0.8\textwidth} {
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            |}
+        \hline
+          Process & Completion Time & Turnaround Time (CT-AT) & Waiting time (TAT-BT) \\
+        \hline
+        $P_1$ & 17 & 17 & 9 \\
+        $P_2$ & 5 & 4 & 0\\
+        $P_3$ & 26 & 24 & 15\\
+        $P_4$ & 10 & 7 & 2\\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\paragraph*{Average waiting time:} $[9+0+15+2]/4 = 26/4 = 6.5$
+
+\subsection*{Round Robin (RR)}
+\begin{enumerate}
+    \item Fiecare proces ia o unitate mica de timp pe CPU (\textbf{time quantum} $q$), de obicei intre 10-100 ms. Dupa aceast timp, procesul este preempted si adaugat la sfarsitul queueului de ready
+    \item Daca sunt n procese si time quantum este q, atunci ficare proces ia bucati de $\frac{1}{n}$ din timpul CPU-ului de cel mult q unitati de timp o data. Niciun proces nu asteapta mai mult de $(n-1)q$ unitati de timp
+    \item Exista un timer care intrerupe fiecare quantum pentru scheduleing pe noul proces
+    \item Performanta:
+    \begin{enumerate}
+        \item q mare $\approx$ FIFO(FCFS)
+        \item q mic $\approx$ RR
+    \end{enumerate}
+\end{enumerate}
+
+\begin{center}
+    \begin{tabularx}{0.8\textwidth} {
+            | >{\centering\arraybackslash}X
+            | >{\centering\arraybackslash}X
+            |}
+        \hline
+          Process & Burst Time \\
+        \hline
+        $P_1$ & 24 \\
+        $P_2$ & 3\\
+        $P_3$ & 3\\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\begin{center}
+    \begin{tikzpicture}[node distance=-0.3pt]
+        \node [gray box=4] (p1) {\(P_{1}\)};
+        \node [gray box=3, right=of p1] (p2) {\(P_{2}\)};
+        \node [gray box=3, right=of p2] (p3) {\(P_{3}\)};
+        \node [gray box=4, right=of p3] (p11) {\(P_{1}\)};
+        \node [gray box=4, right=of p11] (p111) {\(P_{1}\)};
+        \node [gray box=4, right=of p111] (p1111) {\(P_{1}\)};
+        \node [gray box=4, right=of p1111] (p11111) {\(P_{1}\)};
+      
+        \node [annotation] at (p1.south west) {0};
+        \node [annotation] at (p1.south east) {4};
+        \node [annotation] at (p2.south east) {7};
+        \node [annotation] at (p3.south east) {10};
+        \node [annotation] at (p11.south east) {14};
+        \node [annotation] at (p111.south east) {22};
+        \node [annotation] at (p1111.south east) {26};
+        \node [annotation] at (p11111.south east) {30};
+    \end{tikzpicture}
+\end{center}
+
+\paragraph*{De obicei $TAT \ge SJF$, dar raspuns mai bun}
+\paragraph*{q trebuie sa fie mai mare decat timpul de context switch.} De obicei q intre 10ms si 100ms, iar context switch $\le 10 \mu s$
+
+\section[Ch6 Synchronization Tools]{Synchronization Tools}
+\section[Ch7 Synchronization Examples]{Synchronization Examples}
+
+\end{document}     

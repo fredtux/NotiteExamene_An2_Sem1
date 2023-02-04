@@ -3,4 +3,8 @@
 \contentsline {section}{\numberline {2}Ch4 Threads and Concurrency}{7}{section.2}%
 \contentsline {section}{\numberline {3}Ch5 CPU Scheduling}{11}{section.3}%
 \contentsline {section}{\numberline {4}Ch6 Synchronization Tools}{19}{section.4}%
-\contentsline {section}{\numberline {5}Ch7 Synchronization Examples}{19}{section.5}%
+\contentsline {section}{\numberline {5}Ch7 Synchronization Examples}{26}{section.5}%
+\contentsline {section}{\numberline {6}Ch9 Main memory}{27}{section.6}%
+\contentsline {section}{\numberline {7}Ch10 Virtual memory}{27}{section.7}%
+\contentsline {section}{\numberline {8}Ch13 File system interface}{27}{section.8}%
+\contentsline {section}{\numberline {9}Ch14 File system implementation}{27}{section.9}%

@@ -980,6 +980,396 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
 \paragraph*{Simulari} dar au accuracy limitat
 
 \section[Ch6 Synchronization Tools]{Synchronization Tools}
+\subsection*{Critical section problem}
+\paragraph*{Procesele} trebuie sa ceara permisiune de intrare in critical section in \textbf{entry section}, pot continua cu \textbf{exit section}, apoi cu \textbf{remainder section}.
+\paragraph*{Requirements}
+\begin{enumerate}
+    \item Mutula exclusion - daca $P_i$ este in critical section, niciun alt proces nu mai poate executa cod de acolo
+    \item Progress - daca niciun proces nu executa din critical section si exista procese care cer acces, acest lucru nu poate fi amanat pe termen nedeterminat
+    \item Bounded waiting - exista o limitare a numarului de dati in care alte procese pot intra in critical section pana ca un proces care a facut cererea de a intra este lasat sa o faca
+\end{enumerate}
+\paragraph*{Solutia 1.} Pentru 2 procese. Presupunem ca load si store sunt instructiuni machine-language atomice care shareuiesc o variabila \textbf{int turn}. Initial turn are valoarea i.
+\begin{lstlisting}
+while(true){
+    while(turn == j);
+
+    /* critical section */
+    turn = j;
+    /* remainder section */
+}
+\end{lstlisting}
+\subparagraph*{Mutual exclusion} e pastrat, nu si progress requirement sau bounded-waiting requirement.
+\paragraph*{Solutia lui Peterson.} 2 procese. La fel cu load si store sunt atomice. Au 2 variabile \textbf{int turn; boolean flag[2];}. Turn spune cui ii este randul, flag spune daca un proces e gata sa intre in critical section.
+
+\begin{lstlisting}
+while(true){
+    flag[i] == true;
+    turn = j;
+    while(flag[j] && turn == j);
+
+    /* critical section */
+    flag[i] = false;
+    /* remainder section */
+}
+\end{lstlisting}
+\subparagraph*{Cele 3 CS requirements sunt indeplinite.} Mutual exclusion, progress requirement si bounded-waiting requirement. Totusi, pentru multithreaded poate produce rezultate neasteptate.
+
+\begin{center}
+    \includegraphics[scale=0.3]{14_peterson2threads.png}
+\end{center}
+\subparagraph*{Reordonarea} celor 2 instructiuni din Threadul 2 se poate intampla pentru ca flag si x sunt independente, asa ca outputul poate fi 0.
+
+\begin{center}
+    \includegraphics[scale=0.4]{15_ptersonrevisited.png}
+\end{center}
+\subparagraph*{Memory Barrier} e folosit pentru acest caz astfel incat sa nu intre ambele procese in critical section.
+
+\subsection*{Memory barrier}
+Garantiile pe care arhitectura calculatoarelor le face pentru programe.
+\begin{enumerate}
+    \item Strongly ordered - o modificare a memoriei pe un procesor e imediat vizibila si celorlalte procesoare
+    \item Weakly ordered - nu e imediat vizibila
+\end{enumerate}
+\paragraph*{Memory barrier} - o instructiune care foteaza orice modificare in memorie sa fie propagata si celorlalte procesoare.
+
+\begin{center}
+    \includegraphics[scale=0.3]{16_membarrier.png}
+\end{center}
+
+
+\subsection*{Synchronization Hardware}
+\begin{enumerate}
+    \item Uniprocessors - executa codul running fara preemption, dar sunt ineficiente si OS-urile care folosesc asta nu sunt scalabile
+    \item Hardware instructions
+    \item Atomic variables
+\end{enumerate}
+
+\paragraph*{Hardware instructions} - test-and-set sau compare-and-swap atomice
+\begin{lstlisting}
+boolean test_and_set (boolean *target){
+    boolean rv = *target;
+    *target = true;
+    return rv;
+}
+\end{lstlisting}
+\begin{enumerate}
+    \item Se executa atomic
+    \item Returneaza valoarea originala a parametrului
+    \item Seteaza noua valoare a parametrului ca true
+\end{enumerate}
+
+\begin{lstlisting}
+do {
+    while(test_and_set(&lock)); /* do nothing */
+    /* cs */
+    lock = false;
+    /* remainder section */
+} while (true);
+\end{lstlisting}
+
+\begin{lstlisting}
+int compare_and_swap (int *value, int expected, int new_value){
+    int temp = *value;
+    if (*value == expected)
+        *value = new_value;
+    return temp;
+}
+\end{lstlisting}
+\begin{enumerate}
+    \item Executat atomic
+    \item Returneaza valoarea originala din value
+    \item Seteaza value cu new\_value, numai daca *value == expected
+\end{enumerate}
+
+\begin{lstlisting}
+while(true){
+    while(compare_and_swap(&lock, 0, 1) != 0); /* do nothing */
+    /* cs */
+    lock = 0;
+
+    /* remainder section */
+}
+\end{lstlisting}
+
+\paragraph*{Bounded-waiting cu compare-and-swap}\
+\begin{lstlisting}
+while(true){
+    waiting[i] = true;
+    key = 1;
+    while(waiting[i] && key == 1)
+        key = compare_and_swap(&lock, 0 ,1);
+    waiting[i] = false;
+    /* cs */
+    j = (i+1) % n;
+    while((j!=i) && !waiting[j])
+        j = (j+1) % n;
+    if(j == i)
+        lock = 0;
+    else
+        waiting[j] = false;
+    /* remainder section */
+}
+\end{lstlisting}
+
+\paragraph*{Atomic variables}
+Presupunem ca sequence e o variabila atomica, iar increment() este o operatie atomica pe sequence. Asadar increment(\&sequence) face ca sequence sa fie incrementat fara intrerupere.
+
+\begin{center}
+    \begin{lstlisting}
+void increment(atomic_int *v){
+    int temp;
+    do{
+        temp = *v;
+    } while(temp!= (compare_and_swap(v, temp, temp+1)));
+}
+    \end{lstlisting}
+\end{center}
+
+\paragraph*{Mutex locks} Sunt ceva mai simple. Protejeaza cs cu acquire() si realease() care sunt atomice (de obice instructiuni hardware atomice cum ar fi compare-and-swap). Foloseste \textbf{busy waiting}, de aceea lockul se numeste \textbf{spinlock}
+
+\begin{center}
+    \begin{lstlisting}
+while(true){
+    /* acquire lock */
+        /* cs */
+    /* release lock */
+    /* remainder section */
+}
+    \end{lstlisting}
+\end{center}
+
+\paragraph*{Semaphore} Mai sofisticat decat mutex locks. Semaforul S este integer si poate fi accesat via 2 operatii atomice wait() si signal()
+
+\begin{center}
+    \begin{lstlisting}
+wait(S){
+    while(S <= 0); // busy wait
+    S--;
+}
+    \end{lstlisting}
+\end{center}
+\begin{center}
+    \begin{lstlisting}
+signal(S){
+    S++;
+}
+    \end{lstlisting}
+\end{center}
+\subparagraph*{Pot fi 2:} counting sempahore (integer peste un domeniu nerestrictionat) sau binary semaphore (intre 0 si 1, asemanator cu un mutex lock). Un counting sempahore poate fi implementat ca un binary semaphore.
+
+\subparagraph*{Waiting queue} asociat cu fiecare semafor. Fiecare item are value (integer) si pointer (catre urmatorul item). Se fac 2 operatii: block (procesul care invoca operatia este bagat in coada) si wakeup (scoate din waiting queue procesul si il pune in ready queue). Asa se poate face fara busy waiting.
+\begin{center}
+    \begin{lstlisting}
+typdef struct{
+    int value;
+    struct process *list;
+} semaphore;
+
+wait(semaphore *S){
+    S->value--;
+    if(S->value < 0){
+        adauga la S->list;
+        block();
+    }
+}
+
+signal(semaphore *S){
+    S->value++;
+    if(S->value <= 0){
+        scoate P din S->list;
+        wakeup(P);
+    }
+}
+    \end{lstlisting}
+\end{center}
+
+\paragraph*{Monitors} Hihg-level abstraction. Numai 1 procesor poate fi activ cu un monitor la un moment dat
+\begin{center}
+    \begin{lstlisting}
+monitor monitor-name{
+    // shared variable declarations
+    procedure P1(...){...}
+    procedure P2(...){...}
+
+    procedure Pn(...){...}
+
+    initialization code(...) {...}
+}
+    \end{lstlisting}
+\end{center}
+
+\subparagraph*{Implementarea de monitoare cu semafoare.} Variabilele \textbf{semaphore mutex; mutex = 1;}. Fiecare procedura P va avea structura:
+\begin{center}
+    \begin{lstlisting}
+wait(mutex);
+        ...
+        body of P;
+        ...
+signal(mutex);
+    \end{lstlisting}
+\end{center}
+
+\paragraph*{Condition variables.} condition x,y; Sunt 2 operatii: x.wait() si x.signal(). Ultima rezuma procesul care a invocat.
+\subparagraph*{Folosire} Consideram $P_1$ si $P_2$ care trebuie sa execute $S_1$ si $S_2$ (statementuri) astfel incat $S_1$ sa se intample inainte de $S_2$. Cream un monitor cu doua proceduri $F_1$ invocata de $P_1$ si $F_2$ invocata de $P_2$. O variabila conditionala x initializata cu 0. O variabila booleana \textbf{done}.
+
+\begin{center}
+    \begin{lstlisting}
+F1:
+        S1;
+        done=true;
+        x.signal();
+F2:
+        if done == false
+            x.wait()
+        S2;
+    \end{lstlisting}
+\end{center}
+
+\paragraph*{Implementare monitoare cu semafoare}
+\subparagraph*{Variabile:}
+\begin{center}
+    \begin{lstlisting}
+semaphore mutex; // initial 1
+semaphore next; // initial 0
+int next_count = 0; // numarul de procese in waiting in monitor
+    \end{lstlisting}
+\end{center}
+
+\subparagraph*{Fiecare functie P va fi }
+\begin{center}
+    \begin{lstlisting}
+wait(mutex);
+        ...
+        body of P;
+        ...
+if(next_count > 0)
+        signal(next);
+else
+        signal(mutex);
+    \end{lstlisting}
+\end{center}
+
+\paragraph*{Implementare de condition variables}
+\subparagraph*{Fie x} condition variable avem:
+\begin{center}
+    \begin{lstlisting}
+semaphore x_sem; // initial 0
+int x_count = 0;
+    \end{lstlisting}
+\end{center}
+\subparagraph*{x.wait()}
+\begin{center}
+    \begin{lstlisting}
+x_count++;
+if(next_count > 0)
+        signal(next);
+else
+        signal(mutex);
+wait(x_sem);
+x_count--;
+    \end{lstlisting}
+\end{center}
+\subparagraph*{x.signal()}
+\begin{center}
+    \begin{lstlisting}
+if(x_count > 0){
+    next_count++;
+    signal(x_sem);
+    wait(next);
+    next_count--;
+}
+    \end{lstlisting}
+\end{center}
+
+\paragraph*{Rezumarea proceselor dintr-un monitor} Daca mai multe procese au facut coada in condition variable x, atunci ce se executa dupa x.signal()? FCFS nu e adecvat. Se foloseste \textbf{conditional-wait} sub forma x.wait(c). C este un integer (numar de prioritate).
+
+\paragraph*{Single Resource allocation}
+\begin{center}
+    \begin{lstlisting}
+R.acquire(t);
+        ...
+        access the resource;
+        ...
+R.release;
+    \end{lstlisting}
+\end{center}
+\paragraph*{Monitor pentru alocarea single resource}
+\begin{center}    
+\begin{lstlisting}
+monitor ResourceAllocator 
+{ 
+    boolean busy; 
+    condition x; 
+    void acquire(int time) { 
+        if (busy) 
+            x.wait(time); 
+        busy = true; 
+    } 
+    void release() { 
+        busy = false; 
+        x.signal(); 
+    } 
+    initialization code() {
+        busy = false; 
+    }
+}		
+\end{lstlisting}
+\end{center}
+\subsection*{Liveness}
+\paragraph*{Liveness} se refera la faptul ca un sistem trebuie sa obtina progres pe procese. Waiting indefinit este liveness failure
+\paragraph*{Deadlock} - 2 sau mai multe procese asteapta nedefinit pentru un eveniment care poate fi cauzat doar de unul dintre cele din coada de waiting
+
+\begin{center}
+    \includegraphics[scale=0.4]{16_deadlock.png}
+\end{center}
+
+\subparagraph*{Alte forme de deadlock:} starvation (indefinite blocking - un proces poate sa nu fie scos niciodata din semaphore queue), priority inversion - cand un proes cu lower-priority are un lock necesar unui proces cu higher-priority (rezolvat prin priority-inheritance protocol).
 \section[Ch7 Synchronization Examples]{Synchronization Examples}
+\subsection*{Bounded-buffer problem}
+\begin{enumerate}
+    \item \textbf{n} buffere au un hold pe un item
+    \item semaforul \textbf{mutex} este initializat cu 1
+    \item semaforul \textbf{full} este intializat cu 0
+    \item semaforul \textbf{empty} este initializat cu valoarea n
+\end{enumerate}
+\paragraph*{Structura prcesului producer}
+\begin{center}
+    \begin{lstlisting}
+while (true) { 
+    ...
+    /* produce an item in next_produced */ 
+    ... 
+    wait(empty); 
+    wait(mutex); 
+        ...
+    /* add next produced to the buffer */ 
+        ... 
+    signal(mutex); 
+    signal(full); 
+}
+    \end{lstlisting}
+\end{center}
+\paragraph*{Structura procesului consumer}
+\begin{center}
+    \begin{lstlisting}
+while (true) { 
+    wait(full); 
+    wait(mutex); 
+        ...
+    /* remove an item from buffer to next_consumed */ 
+        ... 
+    signal(mutex); 
+    signal(empty); 
+        ...
+    /* consume the item in next consumed */ 
+        ...
+    }
+    \end{lstlisting}
+\end{center}
+
+\section[Ch9 Main memory]{Main memory}
+\section[Ch10 Virtual memory]{Virtual memory}
+\section[Ch13 File system interface]{File system interface}
+\section[Ch14 File system implementation]{File system implementation}
 
 \end{document}     

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  3 FEB 2023 21:18
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  4 FEB 2023 16:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -865,17 +865,39 @@ Overfull \hbox (47.3098pt too wide) in paragraph at lines 898--899
 [16] [17]
 File: ./img//13_cfs.png Graphic file (type bmp)
 <./img//13_cfs.png>
- [18] [19] (./NotiteExamen.aux)
-Package rerunfilecheck Info: File `NotiteExamen.out' has not changed.
-(rerunfilecheck)             Checksum: 83DCA51083452D720B4DB7BE11AE253A;800.
+ [18]
+File: ./img//14_peterson2threads.png Graphic file (type bmp)
+<./img//14_peterson2threads.png>
+ [19]
+File: ./img//15_ptersonrevisited.png Graphic file (type bmp)
+<./img//15_ptersonrevisited.png>
+File: ./img//16_membarrier.png Graphic file (type bmp)
+<./img//16_membarrier.png>
+ [20] [21] [22]
+Overfull \hbox (0.75534pt too wide) in paragraph at lines 1158--1159
+ []\TU/lmr/bx/n/10 Pot fi 2: \TU/lmr/m/n/10 counting sempahore (integer peste un domeniu nerestrictionat) sau binary semaphore
+ []
+
+[23] [24] [25]
+File: ./img//16_deadlock.png Graphic file (type bmp)
+<./img//16_deadlock.png>
+ [26] [27] (./NotiteExamen.aux)
+
+Package rerunfilecheck Warning: File `NotiteExamen.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `NotiteExamen.out':
+(rerunfilecheck)             Before: 83DCA51083452D720B4DB7BE11AE253A;800
+(rerunfilecheck)             After:  8AF1A65CA9FEF1EAF3E730682F6603C6;1457.
  ) 
 Here is how much of TeX's memory you used:
- 36393 strings out of 478158
- 837599 string characters out of 5853401
- 1234782 words of memory out of 5000000
- 56470 multiletter control sequences out of 15000+600000
- 476147 words of font info for 78 fonts, out of 8000000 for 9000
+ 36431 strings out of 478158
+ 838750 string characters out of 5853401
+ 1309782 words of memory out of 5000000
+ 56503 multiletter control sequences out of 15000+600000
+ 476155 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 100i,9n,104p,1673b,1040s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 100i,9n,104p,1673b,1759s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on NotiteExamen.pdf (20 pages).
+Output written on NotiteExamen.pdf (28 pages).

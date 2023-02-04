@@ -1324,13 +1324,20 @@ monitor ResourceAllocator
 \end{center}
 
 \subparagraph*{Alte forme de deadlock:} starvation (indefinite blocking - un proces poate sa nu fie scos niciodata din semaphore queue), priority inversion - cand un proes cu lower-priority are un lock necesar unui proces cu higher-priority (rezolvat prin priority-inheritance protocol).
+
+
 \section[Ch7 Synchronization Examples]{Synchronization Examples}
+
+
 \subsection*{Bounded-buffer problem}
+\begin{center}
+    \includegraphics[scale=0.3]{17_boundedbuffer.png}
+\end{center}
 \begin{enumerate}
     \item \textbf{n} buffere au un hold pe un item
-    \item semaforul \textbf{mutex} este initializat cu 1
-    \item semaforul \textbf{full} este intializat cu 0
-    \item semaforul \textbf{empty} este initializat cu valoarea n
+    \item semaforul \textbf{mutex} este initializat cu 1 - binar, folosit ca sa faca acquire si release pe lock
+    \item semaforul \textbf{full} este intializat cu 0 - cate sloturi sunt folosite in buffer
+    \item semaforul \textbf{empty} este initializat cu valoarea n - nr de sloturi din buffer
 \end{enumerate}
 \paragraph*{Structura prcesului producer}
 \begin{center}
@@ -1339,13 +1346,13 @@ while (true) {
     ...
     /* produce an item in next_produced */ 
     ... 
-    wait(empty); 
-    wait(mutex); 
+    wait(empty);  // wait until empty > 0, then decrement empty
+    wait(mutex);  // acquire the lock
         ...
     /* add next produced to the buffer */ 
         ... 
-    signal(mutex); 
-    signal(full); 
+    signal(mutex); // release the lock
+    signal(full); // increment full
 }
     \end{lstlisting}
 \end{center}
@@ -1353,13 +1360,13 @@ while (true) {
 \begin{center}
     \begin{lstlisting}
 while (true) { 
-    wait(full); 
-    wait(mutex); 
+    wait(full); // wait until full > 0 and decrement full
+    wait(mutex); // acquire lock
         ...
     /* remove an item from buffer to next_consumed */ 
         ... 
-    signal(mutex); 
-    signal(empty); 
+    signal(mutex); // release lock
+    signal(empty); // increment empty
         ...
     /* consume the item in next consumed */ 
         ...
@@ -1367,7 +1374,219 @@ while (true) {
     \end{lstlisting}
 \end{center}
 
+\subsection*{Readers-Writers Problem}
+\paragraph*{Un data set} este shareuit intre mai multe procese concurente. Unele sunt \textbf{Readers} care pot doar citi, altii sunt \textbf{Writers} care pot citi si scrie. Problema: permite ca mai multi readeri sa citeasca in acelasi timp, iar 1 singur writer poate accesa data in acelasi timp. 
+
+\subparagraph*{Shared data}
+\begin{enumerate}
+    \item Data Set
+    \item semaforul rw\_mutex initializat cu 1 - comun intre readeri si writeri
+    \item semaforul mutex initializat cu 1 - mutual exclusion cand read\_count e actualizat (cand readerii intra sau ies din cs)
+    \item integer reader\_count initializat cu 0 - cate procese citesc din data set
+\end{enumerate}
+
+\subparagraph*{Writer}
+\begin{center}
+    \begin{lstlisting}
+while (true) {
+    wait(rw_mutex);  // request cs
+            ...
+    /* writing is performed */ 
+            ... 
+    signal(rw_mutex); // leaves cs
+}
+    \end{lstlisting}
+\end{center}
+
+\subparagraph*{Reader}
+\begin{center}
+    \begin{lstlisting}
+while (true){
+    wait(mutex); // lock pentru read_count
+    read_count++; // increase the number of readers by 1
+    if (read_count == 1) /* first reader */ 
+            wait(rw_mutex); // no writer can enter if there is even 1 reader
+            signal(mutex); // other readers can enter while the current reader is inside the cs
+        ...
+    /* reading is performed */ 
+        ... 
+    wait(mutex);
+    read_count--; // a reader wants to leave
+    if (read_count == 0) /* last reader */
+        signal(rw_mutex); // writers can enter
+    signal(mutex); // reader leaves
+}
+    \end{lstlisting}
+\end{center}
+
+\paragraph*{Probleme.} Aceasta rezolvare e numita "first reader-writer problem" pentru ca poate rezulta intr-un writer care sa nu scrie niciodata. "Second reader-writer problem" e o variatie care spune ca "O data ce un writer e gata sa scrie, niciun reader nou nu poate fi lasat sa citeasca". Ambele pot rezulta in starvation. Problema este rezolvata in unele sisteme prin reader-writer locks in kernel.
+
+\subsection*{Dining-Philosophers Problem}
+\begin{enumerate}
+    \item N filozifi stau la o masa rotunda cu un castron de orez la mijloc
+    \item Ei alterneaza intre mancat si gandit
+    \item Nu interactioneaza cu vecinii
+    \item Uneori incearca sa ia 2 chopstickuri (cate unul pe rand). Au nevoie de 2 ca sa manance si le dau release cand termina.
+    \item Shared data: castronul cu orez (data set), semaforul chopstick[n] initializat cu 1
+\end{enumerate}
+
+\paragraph*{Solutia cu semafoare.} Filosoful i:
+\begin{center}
+    \begin{lstlisting}
+while (true){ 
+    wait (chopstick[i] );
+    wait (chopStick[ (i + 1) % n] ); // N are nevoie de (n-1) si 0
+
+    /* eat for a while */
+
+    signal (chopstick[i] );
+    signal (chopstick[ (i + 1) % n] );
+
+    /* think for a while */
+
+}
+    \end{lstlisting}
+\end{center}
+\subparagraph*{Deadlock} Ne asigura ca nu exista 2 vecini care sa manance simultan, dar tot poate crea deadlock. Sa zicem ca toti filosofii vor sa manance in acelasi timp, asta inseamna ca toate elementele din chopstick[n] vor fi 0, dar cand fiecare filosof vrea sa ia chopstickul din dreapta va astepta la nesfarsit.
+\subparagraph*{Remedii deadlock}
+\begin{enumerate}
+    \item Tacamuri pentru n, dar numai n-1 filosofi
+    \item Un filosof ar trebui sa poata lua ambele chopstickuri numai daca ambele sunt disponibile (trebuie sa le ia in cs)
+    \item Solutie asimetrica: impar ia mai intai stanga, apoi dreapta, iar par mai intai dreapta, apoi stanga
+\end{enumerate}
+
+\paragraph*{Solutia cu monitoare}
+\subparagraph*{Restrictie:} un filosof poate sa ia chopstickurile, numai daca ambele sunt disponibile
+\begin{center}
+    \begin{lstlisting}
+monitor DiningPhilosophers
+{ 
+    /* cele 3 stateuri in care un filosof se poate afla */
+    enum {THINKING; HUNGRY, EATING} state [5]; 
+    condition self [5];
+
+    void pickup (int i) { 
+            state[i] = HUNGRY;
+            test(i); // verifica vecinii daca mananca
+            /* Daca nu e eating in urma testului, asteapta semnalul altora care vine din putdown */
+            if (state[i] != EATING)
+                self[i].wait;
+    }
+    
+    void putdown (int i) { 
+            /* Isi schimba statusul */
+            state[i] = THINKING;
+                    // test left and right neighbors
+            /* Cheama test pe vecini pentru ca si ei sa poata sa manance */
+            test((i + 4) % 5); // vecinl din stanga
+            test((i + 1) % 5); // vecinul din dreapta
+    }
+    void test (int i) { 
+        /* Daca in stanga nu mananca, in dreapta nu mananca si actualul e hungry */
+        if (
+            (state[(i + 4) % 5] != EATING) &&
+            (state[i] == HUNGRY) &&
+            (state[(i + 1) % 5] != EATING) 
+        ) { 
+            /* Mananca */
+            state[i] = EATING;
+
+            /* A terminat de mancat si spune ca pot veni si altii */
+            self[i].signal();
+        }
+    }
+
+   initialization_code() { 
+       for (int i = 0; i < 5; i++)
+       state[i] = THINKING;
+     }
+}
+
+/* Asa se servesc filosofii */
+DiningPhilosophers.pickup(i);
+
+    /** EAT **/
+
+DiningPhilosophers.putdown(i);
+    \end{lstlisting}
+\end{center}
+
+\subparagraph*{Starvation} e posibil, dar nu are deadlock
+
+\subsection*{Transactional Memory}
+\paragraph*{Memory transaction} e o secventa de operatii read-write atomica.
+
+\subparagraph*{Cu mutex locks}
+\begin{center}
+    \begin{lstlisting}
+void update(){
+    acquire();
+
+    /* modify shared data */
+
+    release();
+}
+    \end{lstlisting}
+\end{center}
+
+\subparagraph*{Cu memory transaction}
+\begin{center}
+    \begin{lstlisting}
+void update(){
+    atomic{
+        /* modify shared data */
+    }
+}
+    \end{lstlisting}
+\end{center}
+
+\subsection*{OpenMP}
+\paragraph*{} O multime de directive de compilator si API care suporta programarea paralela.
+
+\begin{center}
+    \begin{lstlisting}
+void update(int value)
+{
+    /* codul de mai jos e tratat ca un cs si facut atomic */
+    #pragma omp critical
+    {
+        count += value
+    }
+}
+    \end{lstlisting}
+\end{center}
+
+\subsection*{Limbaje functionale}
+\begin{enumerate}
+    \item Limbajele de PF au o alta paradigma, aceea ca nu mentin stateul
+    \item Variabilele sunt imutabile si nu isi pot schimba stateul o data ce au avut asignata o valoare
+    \item Au o abordare mai interesanta a data races
+\end{enumerate}
+
 \section[Ch9 Main memory]{Main memory}
+\subsection*{Protection}
+Un proces trebuie sa acceseze numai adresele din spatiul lui de adrese. Se pot adauga registri de \textbf{base} si \textbf{limit}.
+\paragraph*{Hardware Address Protection} - CPU-ul trebuie sa verifice daca fiecare acces de memorie generat in user mode este intre base si base + limit.
+\subsection*{Address Binding}
+Programele de pe disc care sunt gata de a fi aduse in memroie sunt executate ca un \textbf{input queue}.
+\paragraph*{Reprezentarea adreselor}
+\begin{enumerate}
+    \item Codul sursa foloseste de obicei adrese simbolice
+    \item Codul compilat binduieste catre adrese relocabile
+    \item Linkerul sau loaderul va bindui adresele relocabile la adrese aboslute
+    \item Fiecare binding mapeaza un address space catre altul
+\end{enumerate}
+\paragraph*{Momentele din timp in care se binduiesc instructiunile si data in memorie}
+\begin{enumerate}
+    \item Compile time - daca adresa de memorie e cunoscuta a priori, poate fi generat \textbf{absolute code}
+    \item Load time - trebuie sa genereze \textbf{relocatable code} daca locatia de memorie nu e cunoscuta la compilare
+    \item Execution time - bindigul e amanat pana la run time daca procesul poate fi mutat in timpul executiei dintr-un segment de memorie in altul (e nevoie de suport hardware pentru address maps)
+\end{enumerate}
+
+
+
+
+
 \section[Ch10 Virtual memory]{Virtual memory}
 \section[Ch13 File system interface]{File system interface}
 \section[Ch14 File system implementation]{File system implementation}

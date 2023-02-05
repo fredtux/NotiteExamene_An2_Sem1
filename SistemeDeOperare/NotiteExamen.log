@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  5 FEB 2023 12:56
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  5 FEB 2023 15:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -914,17 +914,47 @@ File: ./img//28-32paemem.png Graphic file (type bmp)
 <./img//28-32paemem.png>
 File: ./img//29-64mem.png Graphic file (type bmp)
 <./img//29-64mem.png>
- [39] (./NotiteExamen.aux)
+ [39]
+File: ./img//30-vas.png Graphic file (type bmp)
+<./img//30-vas.png>
+File: ./img//31-vib.png Graphic file (type bmp)
+<./img//31-vib.png>
+ [40]
+File: ./img//32-pagefault.png Graphic file (type bmp)
+<./img//32-pagefault.png>
+ [41] [42]
+File: ./img//33-pagereplacement.png Graphic file (type bmp)
+<./img//33-pagereplacement.png>
+ [43]
+File: ./img//34-fifopf.png Graphic file (type bmp)
+<./img//34-fifopf.png>
+File: ./img//35-optpf.png Graphic file (type bmp)
+<./img//35-optpf.png>
+File: ./img//36-lrupf.png Graphic file (type bmp)
+<./img//36-lrupf.png>
+ [44] [45]
+File: ./img//37-fixedalloc.png Graphic file (type bmp)
+<./img//37-fixedalloc.png>
+ [46]
+File: ./img//38-numa.png Graphic file (type bmp)
+<./img//38-numa.png>
+ [47]
+File: ./img//39-slab.png Graphic file (type bmp)
+<./img//39-slab.png>
+ [48]
+File: ./img//40-progstruct.png Graphic file (type bmp)
+<./img//40-progstruct.png>
+ [49] [50] (./NotiteExamen.aux)
 Package rerunfilecheck Info: File `NotiteExamen.out' has not changed.
 (rerunfilecheck)             Checksum: 8AF1A65CA9FEF1EAF3E730682F6603C6;1457.
  ) 
 Here is how much of TeX's memory you used:
- 36548 strings out of 478158
- 841438 string characters out of 5853401
+ 36647 strings out of 478158
+ 843853 string characters out of 5853401
  1374783 words of memory out of 5000000
- 56607 multiletter control sequences out of 15000+600000
+ 56695 multiletter control sequences out of 15000+600000
  476155 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  100i,9n,104p,1673b,1759s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on NotiteExamen.pdf (40 pages).
+Output written on NotiteExamen.pdf (51 pages).

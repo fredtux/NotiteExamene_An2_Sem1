@@ -1837,6 +1837,335 @@ Un proces poate fi \textbf{swapped} temporar din memorie catre un backing store 
 
 
 \section[Ch10 Virtual memory]{Virtual memory}
+Separarea dintre memoria logica a utilizatorului de memoria fizica
+\begin{enumerate}
+    \item Doar o parte din program trebuie sa fie in memorie pentru executie
+    \item Logical address space $\geq$ physical address space
+    \item Address spaces shareuite intre procese
+    \item Crearea de procese mai eficienta
+    \item Mai multe programe pot rula in acelasi timp
+    \item Mai putin I/O necesar pentru a face load sau swap pe procese
+\end{enumerate}
+
+\paragraph*{Implementare prin}
+\begin{enumerate}
+    \item Demand paging
+    \item Demand segmentation
+\end{enumerate}
+
+\paragraph*{Virtual-address Space}
+\begin{enumerate}
+    \item De obicei spatiul de adresare logic pentru stack incepe la Max logical address si creste "in jos", in timp ce heapul creste "in sus" maximizand folosirea address space-ului, iar spatiul de adresare dintre ele este un hole (nu e nevoie de memorie fizica pana cand heapul sau stackul cresc peste o noua pagina)
+    \item Foloseste sparese address spaces cu gauri lasate pentru crestere, dll-uri etc
+    \item Librariile de sistem sunt shareuite prin mapping in virtual address space
+    \item Memorie partajata prin maparea paginilor read-write in virtual address space
+    \item Paginile pot fi shareuite in timpul unui fork() pentru a grabi crearea procesului
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.3]{30-vas.png}
+\end{center}
+
+\subsection*{Demand paging}
+\begin{enumerate}
+    \item Poate aduce intreg procesul in memorie la load sau doar o pagina cand este nevoie
+    \item Similar cu paging cu swapping
+    \item Daca o pagina e necesara $\rightarrow$ refer-o: referinta invalida $\rightarrow$ abort, not-in-memory $\rightarrow$ bring to memory
+    \item \textbf{Lazy swapper} - nu swapeaza o pagina in memorie decat daca e necesara. Swapperul care se ocupa de pagini este \textbf{pager}
+\end{enumerate}
+
+\paragraph*{Concepte de baza} - Pagerul ghiceste ce pagini vor fi folosite pana sa le swapeze
+\paragraph*{Valid-invalid bit} - cu fiecare intrare in page table se determina bitul valid-invalid asociat (v $\rightarrow$ in memorie, i $\rightarrow$ nu e in memorie). Daca MMU determina ca bitul este i, atunci da page fault
+\begin{center}
+    \includegraphics[scale=0.3]{31-vib.png}
+\end{center}
+
+\paragraph*{Pasi in rezolvarea page fault}
+\begin{enumerate}
+    \item Daa este o referinta la o pagina, prima referinta va fi trapata in OS: page fault
+    \item OS se uita in alt tabel ca sa decida daca este referinta invalida (abort) sau doar nu este in memorie
+    \item Gaseste un frame liber
+    \item Swapeaza pagina in frame via scheduled disk operation
+    \item Reseteaza tabelele sa indice ca pagina este acum in memorie si seteaza validation bit la v
+    \item Reporneste instructiunea care a cauzat page fault
+\end{enumerate}
+\begin{center}
+    \includegraphics[scale=0.3]{32-pagefault.png}
+\end{center}
+
+\paragraph*{Aspecte ale demand paging}
+\begin{enumerate}
+    \item Caz extrem: porneste procesul fara pagini in memorie. OS seteaza IP catre prima instructiune a procesului si da page fault, apoi pentru celelalte pagini la primul acces (\textbf{pure demand paging})
+    \item O instructiune poate referinta mai multe pagini. De exemplu fetch si decode a unei instructiuni care aduna 2 numere si stocheaza rezultatul in memorie. Se poate folosi pentru optimizare \textbf{locality of reference}
+    \item Suport hardware necesar pentru demand paging
+    \begin{enumerate}
+        \item Page table cu bit valid/invalid
+        \item Memorie secundara (device de swap cu swap space)
+        \item Instructiunea restart
+    \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Free-frame list} - in caz de page fault, OS-ul trebuie sa aduca pagina dorita in memorie din secondary storage. Se implementeaza free-frame list - un pool de free frames pentru astfel de cerinte
+\subparagraph*{Zero-fill-on-demand} - continutul frameurilor scos inainte de a fi alocat
+\subparagraph*{Start up} - toata memoria disponibila e pusa pe un free-frame list
+
+\paragraph*{Stadiile demand paging - cazul cel mai rau}
+\begin{enumerate}
+    \item Trap in OS
+    \item Salveaza user registers si process state
+    \item Determina daca interruptul a fost page fault
+    \item Verifica daca acel page reference a fost legal pentru a determina locatia paginii pe disc
+    \item Citeste de pe disc intr-un free frame
+    \begin{enumerate}
+        \item Asteapta in coada pentru dispozitiv pana cand toate requesturile de read au fost efectuate
+        \item Asteapta dupa latenta dispozitivului si timpul de seek
+        \item Incepe transferul paginii intr-un free frame
+    \end{enumerate}
+    \item Cat timp astepti, aloca CPU altui user
+    \item Primeste un interrupt de la subsistemul disk I/O (completata)
+    \item Salveaza registrii si process state pentru celelalt utilizator
+    \item Determina daca interruptul a fost de la disk
+    \item Corecteaza page table-ul cu alte tabele pentru a arata ca pagina este acum in memorie
+    \item Asteapta ca CPU-ul sa fie alocat acestui proces din nou
+    \item Restaureaza user registers, process state si noul page table, apoi rezuma instructiunea intrerupta
+\end{enumerate}
+
+\paragraph*{Performanta}: page fault rate $0 \leq p \leq 1$ (0 - fara, 1 - toate referintele sunt page faults)
+\begin{center}
+    \begin{math}
+EAT = (1-p) * memory\_access + p * (page\_fault\_overhead + swap\_page\_out + swap\_page\_in)
+    \end{math}
+\end{center}
+
+\paragraph*{Optimizari}
+\begin{enumerate}
+    \item Viteza mai mare de swap space I/O fata de sistemul I/O chiar daca e pe acelasi dispozitiv (swap in bucati mai mari pentru ca e mai putin management necesar decat file system)
+    \item Copiaza intreg procesul in swap space la load time, apoi page in si page out din swap space (versiuni mai vechi de BSD Unix)
+    \item Cere page din binarul programului de pe disc, dar da discard decat paging out cand eliberezi un frame. Inca e nevoie de swap space: paginile neasociate cu un fisier (stack sau heap) sunt memorie anonima, paginile pot fi modificate in memorie, dar nu scrise imediat pe file system (Solaris si BSD-ul actual)
+    \item Mobilele nu suporta swapping, dar cer pagina din file system si iau doar read-only pages (cum ar fi codul)
+\end{enumerate}
+
+\paragraph*{COW (copy-on-write)} - parintele si copiii shareuiesc initial aceleasi pagini in memorie (daca unul schimba o pagina, doar atunci e copiata). 
+\subparagraph*{}In general paginile libere sunt alocate dintr-un pool de zero-fill-on-demand pages
+\subparagraph*{vfork()} e un syscall in care parintele suspenda folosirea de copil a COW in address space-ul parintelui (copilul poate executa exec() si e foarte eficient)
+\paragraph*{Page replacement} (daca nu exista free frame)
+\begin{enumerate}
+    \item Previne supraalocarea memoriei prin modificarea rutinei de page-fault pentru a include page replacement
+    \item Foloseste modify (dirty) bit pentru a reduce overheadul transfeurlui de pagini (doar paginile modificate sunt scrise pe disc)
+    \item Completeaza separarea dintre memoria logica si cea fizica
+\end{enumerate}
+\subparagraph*{Algoritmul}
+\begin{enumerate}
+    \item Gaseste locatia paginii necesare pe disc
+    \item Gaseste free frame (daca nu exista, foloseste replacement pentru a selecta victim frame si scrie victim frame pe disk daca e dirty)
+    \item Adu pagina dorita intr-un nou free frame, actualizaeaza pagina si frame tables
+    \item Continua procesul prin restartarea instructiunii care a cauzat trapul
+\end{enumerate}
+\subparagraph*{2 potentiale page transfers pentru page fault $\rightarrow$ EAT mai mare}
+\begin{center}
+    \includegraphics[scale=0.3]{33-pagereplacement.png}
+\end{center}
+
+\paragraph*{Algoritmii pentru page si frame replacement}
+\subparagraph*{Frame-allocation} determina cate frameuri sa dea fiecarui proces si ce frameuri sa inlocuiasca
+\subparagraph*{Page-replacement} Vrea page-fault rate minim atat la primul acces cat si la reaccesare
+
+\paragraph*{FIFO}
+\begin{enumerate}
+    \item Stringul de referinte: 7,0,1,2,0,3,0,4,2,3,0,3,0,3,2,1,2,0,1,7,0,1
+    \item 3 frameuri (3 pagini pot fi in memorie per proces)
+\end{enumerate}
+
+\subparagraph*{15 page faults}
+\begin{center}
+    \includegraphics[scale=0.4]{34-fifopf.png}
+\end{center}
+\subparagraph*{Anomalia lui Belady} mai multe frameuri pot produce mai multe page faults
+
+\paragraph*{Optimal Algorithm} Replace doar pe pagina care nu va fi folosita mai des in viitor
+\begin{center}
+    \includegraphics[scale=0.4]{35-optpf.png}
+\end{center}
+
+\paragraph*{LRU (least recently used)} - paginile cele mai vechi
+\begin{center}
+    \includegraphics[scale=0.4]{36-lrupf.png}
+\end{center}
+\subparagraph*{12 faults} - mai bun ca FIFO, mai rau ca OPT
+\subparagraph*{Implementare LRU}
+\begin{enumerate}
+    \item Counter
+    \begin{enumerate}
+        \item Fiecare pagina are un counter in care punem clock cand intra
+        \item Cand trebuie schimbata o pagina, ne uitam la countere dupa valoarea cea mai mica (e nevoie de search table)
+    \end{enumerate}
+    \item Stack
+    \begin{enumerate}
+        \item Pastreaza o stiva cu double link
+        \item Cand o pagina e referntiata: mut-o sus
+        \item Fiecare update e mai scump, dar nu e nevoie de search pentru replacement
+    \end{enumerate}
+\end{enumerate}
+
+\paragraph*{LRU si OPT} sunt cazuri de stack algorithms care nu au anomalia lui Belady
+
+\paragraph*{LRU approximation algorithms} - e nevoie de hardware special si e tot incet
+\subparagraph*{Reference bit} - fiecare pagina are un bit initial 0, cand e referntiata se face 1, apoi se face replacement pe orice pagina cu bit de referinta 0 (daca exista, daca nu, nu stim ordinea)
+\subparagraph*{Second-chance algorithm} - in general FIFO plus reference bit pe hardware. Daca reference bit = 0 $\rightarrow$ replace, daca reference bit = 1 $\rightarrow$ seteaza-l ca 0 si las-o in memorie, treci la pagina urmatoare (aceleasi reguli)
+
+\subparagraph*{Enhanced second-chance algorithm} - cu 2 biti: reference si modify
+\begin{enumerate}
+    \item Se ia perechea ordonata (reference, modify)
+    \item (0,0) $\rightarrow$ nici folosita, nici modificata - cea mai buna
+    \item (0,1) $\rightarrow$ nefolosita, dar modificata - trebuie write out inainte de replacement
+    \item (1,0) $\rightarrow$ folosita recent, dar curata - probabil va fi folosita curand
+    \item (1,1) $\rightarrow$ Recent folosita si modificata - probabil va fi folosita curand si trebuie write out pana la replacement
+\end{enumerate}
+
+\paragraph*{Counting algorithms} - se pastreaza un counter cu numarul de referinte care au fost facute catre o pagina (nu e comun). \textbf{LFU} (least frequently used) - replacement pe pagina cu counterul cel mai mic, \textbf{MFU} - replacement cu counterul cel mai mare (se considera ca cea cu counterul cel mai mic doar a fost adusa si trebuie folosita)
+
+\paragraph*{Page-buffering algorithms}
+\begin{enumerate}
+    \item Tine un pool de free frames
+    \begin{enumerate}
+        \item Cand un frame e necesar, e valabil
+        \item Citeste pagina intr-un free frame si selecteaza victima evacuarii si adaugarii in free pool
+        \item Cand e convenient, evacueaza victima
+    \end{enumerate}
+    \item Tine o lista de pagini modificate (posibil) - cand backing store este idle, scrie paginile acolo si seteaza-le ca non-dirty
+    \item TIne o lista de continut intact de free frames si noteaza ce e in el - daca e referntiata pana sa fie refolosita, nu e enevoie sa iei continutul din nou de pe disc, folosit in special pentru a reduce penalizarea daca victima gresita a fost selectata
+\end{enumerate}
+
+\subsection*{Allocation of frames}
+2 scheme majore de alocare (cu mai multe variante)
+\begin{enumerate}
+    \item Fixed allocation
+    \item Priority allocation
+\end{enumerate}
+
+\paragraph*{Fixed Allocation}
+\begin{enumerate}
+    \item Fixa: 100 frameuri, 5 procese, da 20 frameuri per proces (se pot tine unele libere in buffer pool)
+    \item Proportionala: in functie de marimea procesului (poate fi dinamic, pentru ca procesele isi pot schimba marimea)
+\end{enumerate}
+\subparagraph*{Exemplu}
+\begin{enumerate}
+    \item $s_i$ = marimea procesului $p_i$
+    \item $S = \sum s_i$
+    \item m = numarul total de frameuri
+    \item $a_i$ = alocarea pentru $p_i$, $a_i = \frac{s_i}{S}*m$
+\end{enumerate}
+\begin{center}
+    \includegraphics[scale=0.4]{37-fixedalloc.png}
+\end{center}
+
+\paragraph*{Global vs. Local Allocation}
+\subparagraph*{Global replacement} - procesul selecteaza un replacement frame din multimea tuturor (poate lua frameul altuia) - execution time per proces poate varia semnificativ, dar are throughput mai mare deci e mai comun
+\subparagraph*{Local replacement} - fiecare proces selecteaza din multimea frameurilor alocate - mai consistent in performanta per-proces, dar posibil sa subutilizeze memoria
+
+\subsection*{Reclaiming pages}
+\begin{enumerate}
+    \item Strategie de a implementa global page-replacement policy
+    \item Toate cererile din memorie sunt satisfacute din free-frame list, nu se asteapta ca lista sa ajunga la 0 pana incepem sa selectam pagini pentru replacement
+    \item Replacement trigger cand lista e mai mica de un prag
+    \item Strategia incearca sa faca posibil spatiu suficient de memorie pentru noi cereri in orice moment
+\end{enumerate}
+
+\subsection*{NUMA}
+Viteza de acces la memorie variaza. Performanta optima cand se aloca memorie "aproape" de CPU-ul in care threadul e scheduled. Solaris a introdus \textbf{lgroups} - structura care trackuieste CPU/Memory low latency groups si cand e posibil, pune toate threadurile unui proces si aloca toata memoria acelui proces intr-un lgroup
+\begin{center}
+    \includegraphics[scale=0.4]{38-numa.png}
+\end{center}
+
+\subsection*{Thrashing}
+Daca un proces nu are "suficiente" pagini, page-fault e foarte mare
+\begin{enumerate}
+    \item Page fault ca sa ia pagina
+    \item Replacement pe frameul existent
+    \item E nevoie de replacement frame inapoi rapid
+    \item Duce la
+    \begin{enumerate}
+        \item CPU utilizat putin
+        \item OS crede ca trebuie sa creasca gradul de multiprogramming
+        \item Inca un proces este adaugat in sistem
+    \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Locality} - o multime de pagini folosite impreuna. Modelul localitatii spune ca atunci cand un proces se executa, se muta dintr-o localitate in alta (unele pot sa se suprapuna). De exemplu, cand o functia este apelata, se defineste o noua localitate, iar cand iese, atunci si procesul iese din acea localitate
+
+\subparagraph*{Working-Set Model} - daca alocam suficiente frameuri pentru a acomoda localitatea curenta, va da page fault doar cand se muta intr-o alta, dar daca alocam mai putine decat localitatea curenta, procesul are sanse sa faca thrashing.
+\subparagraph*{D} - total demand pentru frameuri si WSS este working setul pentru procesul i. $D=\sum WSS_i$
+\begin{enumerate}
+    \item $D>m$ (total demand > numarul de frameuri), atunci va fi trashing pentru ca un proces nu poate avea suficiente frameuri
+    \item $D\leq m$, nu va fi trashing
+\end{enumerate}
+
+\subparagraph*{Page-fault frequency} - abordare mai directa decat WSS. Se stabileste o rata acceptabila de PFF si o politica de replacement locala. Daca rata e joasa, procesele pierd frame, daca e prea mare, primesc frame
+
+\subsection*{Allocating Kernel Memory}
+Tratata diferit de user memory si alocata de obice intr-un pool de free-memory.
+
+\paragraph*{Buddy System} - aloca memorie dintr-un segment cu marime fixa consistand in pagini fizice continue. Se aloca folosind \textbf{power-of-2 allocator}.
+\subparagraph*{Avantaj} - coalesce rapid din bucatile nefolosite intr-o bucata mai mare
+\subparagraph*{Dezavantaj} - fragmentare
+
+\paragraph*{Slab Allocator} - strategie alternanta
+\subparagraph*{Slab} e una sau mai multe pagini fizice continue
+\subparagraph*{Cache} contine mai multe slaburi
+\begin{enumerate}
+    \item Un cache pentru o structura de date unica a kernelului
+    \item Fiecare cache e umplut cu obiecte
+    \item Cand e creat e marcat cu obiecte free
+    \item Cand sunt stocate structurile de date, obiectele sunt marcate ca used
+    \item Daca slabul e full cu obiecte, urmatorul obiect e alocat unui slab vid (daca nu e niciunul vid, se aloca altul)
+    \item Avantaj: fara fragmentare si stasiface accesul rapid la memorie
+\end{enumerate}
+
+\subparagraph*{Dupa Linux 2.2} avem SLOB (simple list of blocks - tine 3 obiecte pentru obiecte mici, medii si mari) si SLUB (salb optimizat pentru performanta, pentru ca nu are cozi per-CPU, iar metadata e stocata in structura paginii)
+
+\begin{center}
+    \includegraphics[scale=0.4]{39-slab.png}
+\end{center}
+
+\subsection*{Prepaging}
+Pentru a reduce numarul mare de page faults care se intampla la startupul unui porces. Daca sunt nefolosite, I/O si memoria au fost risipite.
+\paragraph*{Presupunem} s pagini prepaged si $\alpha$ procentul de pagini folosite. Atunci $s*\alpha$ este costul de a salva page faults si $s*(1-\alpha)$ numarul de pagini nenecesare. Asadar, cand $\alpha$ e aproape de zero $\rightarrow$ apar pierderi din prepaging
+
+\subsection*{Page Size}
+\paragraph*{Consideratii necesare}
+\begin{enumerate}
+    \item fragmentare
+    \item page table size
+    \item resolution
+    \item I/O overhead
+    \item numarul de page faults
+    \item localitatea
+    \item marimea TLB si eficienta sa
+    \item Mereu puteri ale lui 2
+    \item In medie, cresc in timp
+\end{enumerate}
+
+\subsection*{TLB Reach}
+Cantitatea de memorie accesibila din TLB
+\begin{center}
+    \begin{math}
+TLB\ Reach = (TLB\ Size) * (Page\ Size)
+    \end{math}
+\end{center}
+\begin{enumerate}
+    \item De obicei intreg wss-ul unui proces e stocat in TLB, atlfel are multe page faults
+    \item Creste page size poate duce la cresterea fragmentarii
+    \item Mai multe page sizes face posibil ca aplicatiile sa ceara page sizes mai mari fara sa creasca fragmentarea
+\end{enumerate}
+
+\subsection*{Program structure}
+\begin{center}
+    \includegraphics[scale=0.4]{40-progstruct.png}
+\end{center}
+
+\subsection*{I/O Interlock}
+Uneori paginile trebuie sa fie blocate in memorie. De exemplu la copierea fisierelor dintr-un dispozitiv, paginile trebuie sa fie blocakte (locked) de a fi evacuate de replacement. Se poate face pinning paginilor ce trebuie sa fie blocate in memorie.
+
 \section[Ch13 File system interface]{File system interface}
 \section[Ch14 File system implementation]{File system implementation}
 

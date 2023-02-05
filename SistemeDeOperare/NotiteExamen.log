@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  4 FEB 2023 20:52
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  5 FEB 2023 12:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -883,17 +883,48 @@ File: ./img//16_deadlock.png Graphic file (type bmp)
 <./img//16_deadlock.png>
 File: ./img//17_boundedbuffer.png Graphic file (type bmp)
 <./img//17_boundedbuffer.png>
- [26] [27] [28] [29] [30] [31] (./NotiteExamen.aux)
+ [26] [27] [28] [29] [30]
+File: ./img//18_mmu.png Graphic file (type bmp)
+<./img//18_mmu.png>
+ [31] [32] [33]
+File: ./img//19_pages.png Graphic file (type bmp)
+<./img//19_pages.png>
+ [34]
+File: ./img//20_tlbhardware.png Graphic file (type bmp)
+<./img//20_tlbhardware.png>
+ [35]
+File: ./img//21_hpt.png Graphic file (type bmp)
+<./img//21_hpt.png>
+File: ./img//22-fmpt.png Graphic file (type bmp)
+<./img//22-fmpt.png>
+File: ./img//23-ats.png Graphic file (type bmp)
+<./img//23-ats.png>
+File: ./img//24-tps.png Graphic file (type bmp)
+<./img//24-tps.png>
+ [36]
+File: ./img//25-hpt.png Graphic file (type bmp)
+<./img//25-hpt.png>
+File: ./img//26-ipt.png Graphic file (type bmp)
+<./img//26-ipt.png>
+ [37]
+File: ./img//27-32mem.png Graphic file (type bmp)
+<./img//27-32mem.png>
+ [38]
+File: ./img//28-32paemem.png Graphic file (type bmp)
+<./img//28-32paemem.png>
+File: ./img//29-64mem.png Graphic file (type bmp)
+<./img//29-64mem.png>
+ [39] (./NotiteExamen.aux)
 Package rerunfilecheck Info: File `NotiteExamen.out' has not changed.
 (rerunfilecheck)             Checksum: 8AF1A65CA9FEF1EAF3E730682F6603C6;1457.
  ) 
 Here is how much of TeX's memory you used:
- 36440 strings out of 478158
- 839026 string characters out of 5853401
+ 36548 strings out of 478158
+ 841438 string characters out of 5853401
  1374783 words of memory out of 5000000
- 56511 multiletter control sequences out of 15000+600000
+ 56607 multiletter control sequences out of 15000+600000
  476155 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  100i,9n,104p,1673b,1759s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on NotiteExamen.pdf (32 pages).
+Output written on NotiteExamen.pdf (40 pages).

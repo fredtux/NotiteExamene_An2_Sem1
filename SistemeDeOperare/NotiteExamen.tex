@@ -229,15 +229,15 @@ extendedchars=true,
 \subparagraph*{2 variante}
 \begin{enumerate}
     \item unbounded-buffer - nu are limite practice asupra marimii bufferului
-    \begin{enumerate}
-        \item producatorul nu asteapta
-        \item consumatorul asteapta daca nu e buffer de consumat
-    \end{enumerate}
+          \begin{enumerate}
+              \item producatorul nu asteapta
+              \item consumatorul asteapta daca nu e buffer de consumat
+          \end{enumerate}
     \item bounded-buffer - toate bufferele au marime fixa
-    \begin{enumerate}
-        \item producatorul trebuie sa astepte daca toate bufferele sunt full
-        \item consumatorul asteapta daca nu e buffer pe care sa-l consume
-    \end{enumerate}
+          \begin{enumerate}
+              \item producatorul trebuie sa astepte daca toate bufferele sunt full
+              \item consumatorul asteapta daca nu e buffer pe care sa-l consume
+          \end{enumerate}
 \end{enumerate}
 
 \paragraph*{Umplerea TUTUROR bufferelor} se face cu un counter care e 0, e incrementat de producator cu fiecare buffer si decrementat de consumator dupa ce il consuma
@@ -254,17 +254,17 @@ extendedchars=true,
 \paragraph*{Communication link}
 \begin{enumerate}
     \item Physical
-    \begin{enumerate}
-        \item Shared memory
-        \item Hardware bus
-        \item Network
-    \end{enumerate}
+          \begin{enumerate}
+              \item Shared memory
+              \item Hardware bus
+              \item Network
+          \end{enumerate}
     \item Logical
-    \begin{enumerate}
-        \item Direct sau indirect
-        \item Sincron sau asincron
-        \item Buffering automat sau explicit
-    \end{enumerate}
+          \begin{enumerate}
+              \item Direct sau indirect
+              \item Sincron sau asincron
+              \item Buffering automat sau explicit
+          \end{enumerate}
 \end{enumerate}
 
 \paragraph*{Comunicarea directa}
@@ -297,15 +297,15 @@ extendedchars=true,
 \paragraph*{Pasarea de mesaje}
 \begin{enumerate}
     \item Blocking
-    \begin{enumerate}
-        \item Blocking send
-        \item Blocking receive
-    \end{enumerate}
+          \begin{enumerate}
+              \item Blocking send
+              \item Blocking receive
+          \end{enumerate}
     \item Non-blocking
-    \begin{enumerate}
-        \item Non-blocking send
-        \item Non-blocking receive
-    \end{enumerate}
+          \begin{enumerate}
+              \item Non-blocking send
+              \item Non-blocking receive
+          \end{enumerate}
     \item Alte combinatii: daca avem send si receive blocking, avem \textbf{rendezvous}
 \end{enumerate}
 
@@ -330,12 +330,12 @@ extendedchars=true,
     \item mesajele sunt trimise si primite cu mach\_msg()
     \item portul e creat cu mach\_port\_allocate()
     \item send si receive sunt flexibile, 4 optiuni daca mailboxul e full
-    \begin{enumerate}
-        \item asteapta nedefinit
-        \item asteapta max n ms
-        \item returneaza imediat
-        \item cachuieste un mesaj temporar
-    \end{enumerate}
+          \begin{enumerate}
+              \item asteapta nedefinit
+              \item asteapta max n ms
+              \item returneaza imediat
+              \item cachuieste un mesaj temporar
+          \end{enumerate}
 \end{enumerate}
 
 \subsection*{Pipes}
@@ -447,7 +447,7 @@ extendedchars=true,
     \item Un API POSIX standard pentru crearea si sincronizarea threadurilor
     \item Specificatie, nu implementare
     \item API-ul specifica comportamentul librariei, nu al implementarii
-    \item Comun in UNIX 
+    \item Comun in UNIX
 \end{enumerate}
 
 \subsection*{Implicit threading}
@@ -512,10 +512,10 @@ Task(problem){
     \item Blocul este intre \^\ \{\}
     \item Blocurile sunt puse in dispatch queue si sunt asignate unui thread disponibil din pool cand sunt scoase din coada
     \item Doua tipuri de dispatch queues
-    \begin{enumerate}
-        \item serial - FIFO, queue per proces, numit main queue
-        \item concurent - FIFO, dar mai multe o data
-    \end{enumerate}
+          \begin{enumerate}
+              \item serial - FIFO, queue per proces, numit main queue
+              \item concurent - FIFO, dar mai multe o data
+          \end{enumerate}
 \end{enumerate}
 
 \subsection*{Threading issues}
@@ -528,10 +528,10 @@ Task(problem){
     \item Semnal generat de un anumit eveniment
     \item Semnalul este dat unui proces
     \item Semnalul este ahndeluit de 1 din cele doua handleluri
-    \begin{enumerate}
-        \item default
-        \item user-defined
-    \end{enumerate}
+          \begin{enumerate}
+              \item default
+              \item user-defined
+          \end{enumerate}
 \end{enumerate}
 
 \paragraph*{Thread Cancellation} Terminarea unui thread (numit si target thread) inainte de sfarsit
@@ -564,7 +564,7 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
     \item Waiting $\rightarrow$ ready
     \item Terminates
 \end{enumerate}
-\subparagraph*{Optiuni:} Pentru 1 \& 4 \textbf{NU} exista, pentru 2 \& 3 exista. Asadar pentru 1 \& 4 este nonpreemptive (o data alocat, procesul pastreaza CPU-ul pana se termina sau se schimba la waiting), altfel este preemptive. 
+\subparagraph*{Optiuni:} Pentru 1 \& 4 \textbf{NU} exista, pentru 2 \& 3 exista. Asadar pentru 1 \& 4 este nonpreemptive (o data alocat, procesul pastreaza CPU-ul pana se termina sau se schimba la waiting), altfel este preemptive.
 \subparagraph*{Preemptive} poate duce la race conditions
 
 \subsection*{Dispatcher}
@@ -588,11 +588,11 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
             | >{\centering\arraybackslash}X
             |}
         \hline
-          Process & Burst Time \\
+        Process & Burst Time \\
         \hline
-        $P_1$ & 24 \\
-        $P_2$ & 3 \\
-        $P_3$ & 3 \\
+        $P_1$   & 24         \\
+        $P_2$   & 3          \\
+        $P_3$   & 3          \\
         \hline
     \end{tabularx}
 \end{center}
@@ -602,7 +602,7 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
         \node [gray box=24] (p1) {\(P_{1}\)};
         \node [gray box=3, right=of p1] (p2) {\(P_{2}\)};
         \node [gray box=3, right=of p2] (p3) {\(P_{3}\)};
-      
+
         \node [annotation] at (p1.south west) {0};
         \node [annotation] at (p1.south east) {24};
         \node [annotation] at (p2.south east) {27};
@@ -622,12 +622,12 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
             | >{\centering\arraybackslash}X
             |}
         \hline
-          Process & Burst Time \\
+        Process & Burst Time \\
         \hline
-        $P_1$ & 6 \\
-        $P_2$ & 8 \\
-        $P_3$ & 7 \\
-        $P_4$ & 3 \\
+        $P_1$   & 6          \\
+        $P_2$   & 8          \\
+        $P_3$   & 7          \\
+        $P_4$   & 3          \\
         \hline
     \end{tabularx}
 \end{center}
@@ -638,7 +638,7 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
         \node [gray box=6, right=of p4] (p1) {\(P_{1}\)};
         \node [gray box=7, right=of p1] (p3) {\(P_{3}\)};
         \node [gray box=8, right=of p3] (p2) {\(P_{2}\)};
-      
+
         \node [annotation] at (p4.south west) {0};
         \node [annotation] at (p4.south east) {3};
         \node [annotation] at (p1.south east) {9};
@@ -649,7 +649,7 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
 
 \paragraph*{Average waiting time:} $\frac{(3+16+9+0)}{4} = 7$
 
-\paragraph*{Cum determinam lungimea CPU burst?} 
+\paragraph*{Cum determinam lungimea CPU burst?}
 \subparagraph*{Estimare:} ar trebui sa fie asemanatoare cu cele anterioare. Poate fi folosita cu exponential averaging
 \begin{enumerate}
     \item $t_n$ = lungimea reala a celui de-al n-ulea CPU burst
@@ -668,12 +668,12 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
             | >{\centering\arraybackslash}X
             |}
         \hline
-          Process & Arrival Time & Burst Time \\
+        Process & Arrival Time & Burst Time \\
         \hline
-        $P_1$ & 0 & 8 \\
-        $P_2$ & 1 & 4 \\
-        $P_3$ & 2 & 9 \\
-        $P_4$ & 3 & 5 \\
+        $P_1$   & 0            & 8          \\
+        $P_2$   & 1            & 4          \\
+        $P_3$   & 2            & 9          \\
+        $P_4$   & 3            & 5          \\
         \hline
     \end{tabularx}
 \end{center}
@@ -685,7 +685,7 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
         \node [gray box=10, right=of p2] (p4) {\(P_{4}\)};
         \node [gray box=17, right=of p4] (p11) {\(P_{1}\)};
         \node [gray box=26, right=of p11] (p3) {\(P_{3}\)};
-      
+
         \node [annotation] at (p1.south west) {0};
         \node [annotation] at (p1.south east) {1};
         \node [annotation] at (p2.south east) {5};
@@ -703,12 +703,12 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
             | >{\centering\arraybackslash}X
             |}
         \hline
-          Process & Completion Time & Turnaround Time (CT-AT) & Waiting time (TAT-BT) \\
+        Process & Completion Time & Turnaround Time (CT-AT) & Waiting time (TAT-BT) \\
         \hline
-        $P_1$ & 17 & 17 & 9 \\
-        $P_2$ & 5 & 4 & 0\\
-        $P_3$ & 26 & 24 & 15\\
-        $P_4$ & 10 & 7 & 2\\
+        $P_1$   & 17              & 17                      & 9                     \\
+        $P_2$   & 5               & 4                       & 0                     \\
+        $P_3$   & 26              & 24                      & 15                    \\
+        $P_4$   & 10              & 7                       & 2                     \\
         \hline
     \end{tabularx}
 \end{center}
@@ -721,10 +721,10 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
     \item Daca sunt n procese si time quantum este q, atunci ficare proces ia bucati de $\frac{1}{n}$ din timpul CPU-ului de cel mult q unitati de timp o data. Niciun proces nu asteapta mai mult de $(n-1)q$ unitati de timp
     \item Exista un timer care intrerupe fiecare quantum pentru scheduleing pe noul proces
     \item Performanta:
-    \begin{enumerate}
-        \item q mare $\approx$ FIFO(FCFS)
-        \item q mic $\approx$ RR
-    \end{enumerate}
+          \begin{enumerate}
+              \item q mare $\approx$ FIFO(FCFS)
+              \item q mic $\approx$ RR
+          \end{enumerate}
 \end{enumerate}
 
 \begin{center}
@@ -733,11 +733,11 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
             | >{\centering\arraybackslash}X
             |}
         \hline
-          Process & Burst Time \\
+        Process & Burst Time \\
         \hline
-        $P_1$ & 24 \\
-        $P_2$ & 3\\
-        $P_3$ & 3\\
+        $P_1$   & 24         \\
+        $P_2$   & 3          \\
+        $P_3$   & 3          \\
         \hline
     \end{tabularx}
 \end{center}
@@ -752,7 +752,7 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
         \node [gray box=4, right=of p112] (p111) {\(P_{1}\)};
         \node [gray box=4, right=of p111] (p1111) {\(P_{1}\)};
         \node [gray box=4, right=of p1111] (p11111) {\(P_{1}\)};
-      
+
         \node [annotation] at (p1.south west) {0};
         \node [annotation] at (p1.south east) {4};
         \node [annotation] at (p2.south east) {7};
@@ -783,13 +783,13 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
             | >{\centering\arraybackslash}X
             |}
         \hline
-          Process & Burst Time & Priority \\
+        Process & Burst Time & Priority \\
         \hline
-        $P_1$ & 10 & 3 \\
-        $P_2$ & 1 & 1 \\
-        $P_3$ & 2 & 4 \\
-        $P_4$ & 1 & 5 \\
-        $P_5$ & 5 & 2 \\
+        $P_1$   & 10         & 3        \\
+        $P_2$   & 1          & 1        \\
+        $P_3$   & 2          & 4        \\
+        $P_4$   & 1          & 5        \\
+        $P_5$   & 5          & 2        \\
         \hline
     \end{tabularx}
 \end{center}
@@ -801,7 +801,7 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
         \node [gray box=10, right=of p5] (p1) {\(P_{1}\)};
         \node [gray box=2, right=of p1] (p3) {\(P_{3}\)};
         \node [gray box=1, right=of p3] (p4) {\(P_{4}\)};
-      
+
         \node [annotation] at (p2.south west) {0};
         \node [annotation] at (p2.south east) {1};
         \node [annotation] at (p5.south east) {6};
@@ -819,13 +819,13 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
             | >{\centering\arraybackslash}X
             |}
         \hline
-          Process & Burst Time & Priority \\
+        Process & Burst Time & Priority \\
         \hline
-        $P_1$ & 4 & 3 \\
-        $P_2$ & 5 & 2 \\
-        $P_3$ & 8 & 2 \\
-        $P_4$ & 7 & 1 \\
-        $P_5$ & 3 & 3 \\
+        $P_1$   & 4          & 3        \\
+        $P_2$   & 5          & 2        \\
+        $P_3$   & 8          & 2        \\
+        $P_4$   & 7          & 1        \\
+        $P_5$   & 3          & 3        \\
         \hline
     \end{tabularx}
 \end{center}
@@ -843,7 +843,7 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
         \node [gray box=1, right=of p1] (p5) {\(P_{5}\)};
         \node [gray box=1, right=of p5] (p1i) {\(P_{1}\)};
         \node [gray box=1, right=of p1i] (p5i) {\(P_{5}\)};
-      
+
         \node [annotation] at (p4.south west) {0};
         \node [annotation] at (p4.south east) {7};
         \node [annotation] at (p2.south east) {9};
@@ -943,11 +943,11 @@ M:M si Two-level au nevoie de comunicare pentru a aloca numarul potrivit de thre
     \item Taskul este runable cat timp mai are timp in time slice (active)
     \item Daca nu mai are timp (expired) nu mai este runable pana cand celelalte taskuri isi folosesc sliceurile
     \item Toate taskurile runable sunt tinute per-CPU in runqueue
-    \begin{enumerate}
-        \item 2 arrayuri de proritate (active, expired)
-        \item taskuri indexate pe prioritate
-        \item cand nu mai sunt active, arrayurile se schimba
-    \end{enumerate}
+          \begin{enumerate}
+              \item 2 arrayuri de proritate (active, expired)
+              \item taskuri indexate pe prioritate
+              \item cand nu mai sunt active, arrayurile se schimba
+          \end{enumerate}
     \item A mers bine, dar poor response times pentru procesele interactive
 \end{enumerate}
 \paragraph*{De la 2.6.23} se foloseste \textbf{CFS} (Completely Fair Scheduler) care introduce \textbf{clase}:
@@ -1294,8 +1294,8 @@ R.release;
     \end{lstlisting}
 \end{center}
 \paragraph*{Monitor pentru alocarea single resource}
-\begin{center}    
-\begin{lstlisting}
+\begin{center}
+    \begin{lstlisting}
 monitor ResourceAllocator 
 { 
     boolean busy; 
@@ -1375,7 +1375,7 @@ while (true) {
 \end{center}
 
 \subsection*{Readers-Writers Problem}
-\paragraph*{Un data set} este shareuit intre mai multe procese concurente. Unele sunt \textbf{Readers} care pot doar citi, altii sunt \textbf{Writers} care pot citi si scrie. Problema: permite ca mai multi readeri sa citeasca in acelasi timp, iar 1 singur writer poate accesa data in acelasi timp. 
+\paragraph*{Un data set} este shareuit intre mai multe procese concurente. Unele sunt \textbf{Readers} care pot doar citi, altii sunt \textbf{Writers} care pot citi si scrie. Problema: permite ca mai multi readeri sa citeasca in acelasi timp, iar 1 singur writer poate accesa data in acelasi timp.
 
 \subparagraph*{Shared data}
 \begin{enumerate}
@@ -1583,12 +1583,261 @@ Programele de pe disc care sunt gata de a fi aduse in memroie sunt executate ca 
     \item Execution time - bindigul e amanat pana la run time daca procesul poate fi mutat in timpul executiei dintr-un segment de memorie in altul (e nevoie de suport hardware pentru address maps)
 \end{enumerate}
 
+\subsection*{Logical vs Physical Address Space}
+\paragraph*{Logical address} - generata de CPU, cunoscuta si ca \textbf{virtual address}
+\paragraph*{Physical address} - adresa vazuta de unitatea de memorie
+\paragraph*{Adresele logice si fizice} sunt aceleasi la compile-time si load-time, dar difera la execution-time
 
+\paragraph*{Logical address space} - multimea tuturor adreselor logice generate de un program
+\paragraph*{Physical address space} - multimea tuturor adreselor fizice generate de un program
 
+\subsection*{MMU (Memory Management Unit)}
+Dispozitivul hardware care mapeaza adresele virtuale catre cele fizice. Sunt posibile mai multe metode.
+\paragraph*{Un caz simplu (generalizarea base-register scheme): }  base register e acum numit \textbf{relocation register}. Valoarea din relocation register e adaugata catre toate adresele generate de un proces in momentul in care este trimis in memorie. Programul userului lucreaza cu adrese logice si nu le vede pe cele reale fizice. Are loc execution-time bindig cand referinta este facuta la o locatie din memorie, iar adresele logice sunt legate de cele fizice.
+
+\begin{center}
+    \includegraphics[scale=0.4]{18_mmu.png}
+\end{center}
+
+\paragraph*{Dynamic Loading}
+\begin{enumerate}
+    \item Nu tot programul trebuie sa fie in memorie ca sa fie executat
+    \item Rutinile nu sunt incarcate pana nu sunt apelate
+    \item Utilizare mai buna a memory-space
+    \item Toate rutinele sunt tinute pe disc in relocatable load format
+    \item Folositor cand bucati mari de cod sunt necesare pentru a gestiona cazuri rare
+    \item Nu e nevoie de suport special din partea OS (se implementeaza prin designul programului, dar OS-ul poate ajuta prin librarii care sa implementeze dynamic loading)
+\end{enumerate}
+
+\paragraph*{Dynamic Linking}
+\begin{enumerate}
+    \item Static linking - librariile si codul programului combinate de loader intr-o imagine binara a programului
+    \item Dynamic linking - linkingul amanat pana la execution tim
+    \item Stub - o bucata mica de cod care localizeaza rutina necesara din libraria ce rezida in memorie si apoi se inlocuieste cu adresa rutine si o executa
+    \item OS verifica daca rutina este in adresa de memorie a programului (daca nu e in address space, o adauga)
+    \item Dynamic linking e folositoare pentru librarii
+    \item Sistemul e cunoscut ca \textbf{shared libraries}
+    \item Pentru patchingul librariilor e nevoie de versionare
+\end{enumerate}
+
+\paragraph*{Contiguous Allocation}
+\begin{enumerate}
+    \item Main memory trebuie sa suport atat OS-ul cat si procesele utilizatorului
+    \item Resurse limitate, trebuie alocate eficient
+    \item E o metoda incipienta
+    \item Imparte main memory in 2 partitii
+          \begin{enumerate}
+              \item Resident operating system (low memory cu interrupt vector)
+              \item User processes (high memory, fiecare proces cu o zona continua de memorie)
+          \end{enumerate}
+    \item Registrii de relocare protejeaza procesele userilor unul de altul si de schimbarea codului si datelor OS-ului
+          \begin{enumerate}
+              \item Base register contine valoarea celei mai mici adrese fizice
+              \item Limit register contine un range de adrese logice (fiecare adresa logica trebuie sa fie mai mica decat el)
+              \item MMU mapeaza adresele logice dinamic
+              \item Poate suport codul kernelului sa fie transient si kernelul sa isi schimbe dimensiunile
+          \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Variable partitions}
+\begin{enumerate}
+    \item Multiprogramming limitat de numarul de partiti
+    \item Marimi variabile pentru eficienta
+    \item Hole - bloc de memorie disponibil, gaurile de memorie sunt imprastiate prin intreg sistemul
+    \item Cand vine un proces, i se acorda loc dintr-o gaura suficient de mare ca sa incapa
+    \item Exit - paritita se elibereaza, iar partiile libere adiacente se combina
+    \item OS tine informatii despre
+          \begin{enumerate}
+              \item Partitii alocate
+              \item Partitii libere (hole)
+          \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Dynamic storage-allocation problem}
+\begin{enumerate}
+    \item First fit - aloca prima gaura suficient de mare
+    \item Best fit - aloca cea mai mica gaura suficient de mare (trebuie sa caute in intraga lista daca nu este ordonata dupa marime)
+    \item Worst fit - aloca cea mai mare gaura (la fel trebuie sa caute in intreaga lista)
+\end{enumerate}
+
+\paragraph*{Fragmentare}
+\subparagraph*{Fragmentare externa} - spatiul total de memorie exista ca sa satisfaca o cerere, dar nu e continuu
+\subparagraph*{Fragmentare interna} - memoria alocata poate fi un pic mai mare decat cea ceruta, diferenta fiind interna unei partitii, dar nefiind folosita
+\subparagraph*{Analiza first fit} poate da N blocuri alocate, dar 0.5 N sunt pierdute fragmentarii (1/3 pot fi neutilizabile $\rightarrow$ 50-percent rule)
+\subparagraph*{Compaction} - metoda de a reduce fragmentarea externa. Se aranjeaza memoria astfel incat toata memoria libera sa fie impreuna intr-un bloc mare. Compactarea e posibila numai daca relocarea e dinamica si se face la execution time. Poate aparea problem I/O (leaga un job in memorie cat timp este implicat in I/O sau fa I/O in buffere de OS)
+
+\subsection*{Paging}
+Spatiul de adresare fizic al unui proces poate fi necontinuu, iar procesului ii poate fi alocata memorie fizica atunci cand are nevoie sau este disponibila.
+\begin{enumerate}
+    \item Se protejeaza impotriva fragmentarii si a bucatilor de memorie de marimi variabile
+    \item \textbf{Frames} - memoria fizica e divizata in blocuri fixe de marimea puterilor lui 2
+    \item \textbf{Pages} - la fel dar pe memoria logica
+    \item Pentru un program de N pagini, trebuie N frameuri libere
+    \item Se face un page table care sa traduca adresele logice in fizice
+    \item Backing store impartit in pagini
+    \item Inca exista fragmentare interna
+\end{enumerate}
+
+\paragraph*{Address translation scheme}
+Adresa generata de CPU este impartita in:
+\begin{enumerate}
+    \item page number (p) - un index intr-un \textbf{page table} care contine adresa base a fiecarei pagini in memoria fizica
+    \item page offset (d) - combinat cu adresa de baza pentru a defini adresa de memorie fizica care este trimisa unitatii de memorie
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.4]{19_pages.png}
+\end{center}
+
+\paragraph*{Calculul internal fragmentation}
+
+\begin{enumerate}
+    \item Page size = 2,048 bytes
+    \item Process size = 72,766 bytes
+    \item 35 pages + 1,086 bytes
+    \item Internal fragmentation of 2,048 - 1,086 = 962 bytes
+    \item Worst case fragmentation = 1 frame - 1 byte
+    \item On average fragmentation = 1 / 2 frame size
+    \item So small frame sizes desirable?
+    \item But each page table entry takes memory to track
+    \item Page sizes growing over time
+          \begin{enumerate}
+              \item Solaris supports two page sizes - 8 KB and 4 MB
+          \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Implementarea page table}
+\begin{enumerate}
+    \item PTBR (page-table base register) - pointeaza catre page table
+    \item PTLR (page-table length register) - indica marimea paginii tabelului
+    \item Cele 2 probleme de acces pot fi rezolvate prin \textbf{TLBs} (translation-look-aside buffers) numite si \textbf{memorie asociativa}
+\end{enumerate}
+
+\paragraph*{TLB} - unele stocheaza \textbf{ASIDs} (address-space identifiers) in fiecare TLB entry ca sa identifice in mod unic fiecare proces pentru a-i oferi address-space protection.
+\subparagraph*{Marimea} este de obicei mica (64 - 1024 intrari)
+\subparagraph*{TLB miss} - valoarea e incarcata in TLB pentru acces rapid data viitoare. Trebuie implementate politici de inlocuire. Unele intrari trebuie sa fie incastrate pentru acces permanent rapid
+
+\begin{center}
+    \includegraphics[scale=0.4]{20_tlbhardware.png}
+\end{center}
+
+\paragraph*{Effective Access Time} - hit ratio este procentul in care pagina e gasita in TLB
+\subparagraph*{Exemplu:} 10ns pentru acces la memorie. Daca nu e in TLB, se fac 2 accesari, adica 20ns. $EAT=0.80*10+0.20*20=12$
+
+\paragraph*{Memory protection} - poate fi implementata asociind un bit de protectie cu fiecare frame ca sa indice daca accesul read-only sau write-only este permis. De fapt, pot fi mai multi biti care sa indice page execute-only etc.
+\subparagraph*{Valid-invalid bit} - atasat fiecarei intrari din page table, unde valid inseamna ca se afla in logical address space-ul procesului, deci e pagina legala, iar invalid altfel. Sau se foloseste \textbf{PTLR} (page-table length register). Orice incalcare determina un trap in kernel
+
+\subsection*{Shared Pages}
+\paragraph*{Shared Code} - doar o copie a codului read-only (reentrant) e shareuit intre procese. De asemenea pentru IPC e folositor sa fie shareuite si read-write pages.
+\subparagraph*{Private code and data} - fiecare proces are o copie separata a codului si datelor, fiecare pagina pentru private code and data poate aparea oriunde in logical address space
+
+\subsection*{Structure of the Page Table}
+\begin{enumerate}
+    \item Hierarchical Paging
+    \item Hashed Page Tables
+    \item Inverted Page Tables
+\end{enumerate}
+
+\paragraph*{Hierarchical Page Tables}
+\begin{enumerate}
+    \item Imparte logical address space in mai multe pagini
+    \item O tehnica simpla e sa avem mai page table pe 2 nivele
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.3]{21_hpt.png}
+\end{center}
+
+\subparagraph*{2-level paging}
+\begin{enumerate}
+    \item O adresa logica pe 32biti are 4k si este divizata intr-un page number cu 20bits si page offset cu 12 bits
+    \item Din moment ce page tablelul e paged, page number e divizat in: 10bit page number si 10 bit offset
+\end{enumerate}
+\subparagraph*{Forward-mapped page table} $p_1$ este indexul catre outer page table, $p_2$ este displacementul in interiorul paginii pentru inner page table si $d$ este page offsetul
+
+\begin{center}
+    \includegraphics[scale=0.3]{22-fmpt.png}
+\end{center}
+
+\subparagraph*{Address-Translation scheme}
+\begin{center}
+    \includegraphics[scale=0.3]{23-ats.png}
+\end{center}
+
+\subparagraph*{3-level paging scheme pe 64bits}
+\subparagraph*{Address-Translation scheme}
+\begin{center}
+    \includegraphics[scale=0.3]{24-tps.png}
+\end{center}
+
+\paragraph*{Hashed page tables} - comune in address spaces > 32 bits. Virtual page number hashed in page table (page tableul contine un lant de lemente hashate catre aceeasi locatie).
+\subparagraph*{Fiecare element contine:} (1) virtual page number, (2) valoarea page frameului mapat, (3) un pointer la urmatorul element
+\subparagraph*{Virtual page numbers:} comparate in aceasta cautare in lant pentru un match (daca e gasit, se extrage physical frameul)
+\subparagraph*{CLustered page tables} e o variatie pentru 64-biti. La fel ca hashed, dar fiecare entry se refera la mai multe pagini (16). Foarte folositor pentru sparese address spaces (unde referintele la memorie nu sunt continue si sunt imprastiate)
+\begin{center}
+    \includegraphics[scale=0.3]{25-hpt.png}
+\end{center}
+
+\paragraph*{Inverted Page Table}
+\begin{enumerate}
+    \item In loc ca fiecare proces sa aiba un page table si sa tina cont de toate logical pages posibile, trackuieste toate physical pages
+    \item O intrare pentru fiecare pagina reala de memorie
+    \item Intrarea consista in adresa virtuala a paginii stocate in acea locatie reala de memorie, cu informatia despre procesul care o detine
+    \item Scade memoria pentru fiecare page table, dar creste timpul de cautare in tabel cand are o page reference
+    \item Se poate folosi hashtable ca sa se limiteze cautarea la una sau cateva page-table enteries
+\end{enumerate}
+\begin{center}
+    \includegraphics[scale=0.3]{26-ipt.png}
+\end{center}
+
+\subsection*{Swapping}
+Un proces poate fi \textbf{swapped} temporar din memorie catre un backing store si apoi adus in memorie pentru continuarea executiei (memoria fizica total a proceselor poate sa depaseasca memoria fizica)
+\paragraph*{Backing store} - disc rapid destul de mare cat sa acomodeze copii ale tuturor imaginiler din memorie pentru toti userii si sa dispuna de acces direct la aceste imagini de memorie
+\paragraph*{Roll out, roll in} - un tip de swapping pentru priority-based scheduling unde procesele cu lower-priority sunt swappate ca sa faca loc proceselor higher-priority
+\paragraph*{Transfer time} - cea mai mare parte din swap time
+\paragraph*{Ready queue} - sistemul mentine aceasta coada cu procesele ready-to-run care au imagini de memorie pe disc
+
+\paragraph*{Context switch time cu swapping} - daca urmatorul proces de pus pe cpu nu e in memorie, trebuie swapat cu altul, asa ca context switch time poate fi foarte mare. Sunt syscalluri de folosire a memoriei cu request\_memory() si release\_memory()
+\subparagraph*{Restrictii:} I/O in asteptare nu poate fi swapat pentru ca ar fi in alt proces sau se poate transfera I/O catre kernel space apoi pe dispozitivul I/O (double buffering).
+\subparagraph*{Strategia pe OS moderne:} swapeaza doar cand memoria libera e foarte mica
+
+\subsection*{IA-32 Arch}
+\begin{enumerate}
+    \item Segementation si segmantation cu paging
+    \item Fiecare segment e de 4GB, pana la 16K segmente per proces
+    \item Divizata in 2 partitii
+    \begin{enumerate}
+        \item Prima partitie pana la 8K segmente sunt procesele private (\textbf{LDT} - local descriptor table)
+        \item A doua paritie pana la 8K segmente partajate intre toate procesele (\textbf{GDT} - global descriptor table)
+    \end{enumerate}
+\end{enumerate}
+\begin{center}
+    \includegraphics[scale=0.3]{27-32mem.png}
+\end{center}
+
+\subsection*{IA-32 cu PAE}
+\begin{enumerate}
+    \item Pagingul are o schema cu 3 nivele
+    \item Primii 2 biti se refera la un \textbf{page directory pointer table}
+    \item Page-directory si page-table au intrari de 64biti
+    \item Efectul: cresterea spatiului de adresare la 36 biti - 64gb de memorie fizica
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.3]{28-32paemem.png}
+\end{center}
+
+\subsection*{Intel x86-64}
+\paragraph*{48 bit addressing} - in practica asta este standardul implementat
+\paragraph*{4 levels paging hierarchy}
+\paragraph*{PAE} pentru 52 biti
+\begin{center}
+    \includegraphics[scale=0.3]{29-64mem.png}
+\end{center}
 
 
 \section[Ch10 Virtual memory]{Virtual memory}
 \section[Ch13 File system interface]{File system interface}
 \section[Ch14 File system implementation]{File system implementation}
 
-\end{document}     
+\end{document}

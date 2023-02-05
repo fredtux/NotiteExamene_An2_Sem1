@@ -5,6 +5,6 @@
 \contentsline {section}{\numberline {4}Ch6 Synchronization Tools}{19}{section.4}%
 \contentsline {section}{\numberline {5}Ch7 Synchronization Examples}{26}{section.5}%
 \contentsline {section}{\numberline {6}Ch9 Main memory}{31}{section.6}%
-\contentsline {section}{\numberline {7}Ch10 Virtual memory}{31}{section.7}%
-\contentsline {section}{\numberline {8}Ch13 File system interface}{31}{section.8}%
-\contentsline {section}{\numberline {9}Ch14 File system implementation}{31}{section.9}%
+\contentsline {section}{\numberline {7}Ch10 Virtual memory}{39}{section.7}%
+\contentsline {section}{\numberline {8}Ch13 File system interface}{39}{section.8}%
+\contentsline {section}{\numberline {9}Ch14 File system implementation}{39}{section.9}%

@@ -201,7 +201,30 @@ extendedchars=true,
 \paragraph*{exit()} - procesele executa ca ultima instructiune syscallul exit() care returneaza statusul catre parinte via wait() si resursele sunt dealocate de sistem
 \paragraph*{abort()} - parintele poate termina oricand copilul. Unele din motive sunt: copilul a depasit resursele alocate, ceea ce i s-a cerut copilului nu mai este necesar, parintele a apelat exit() si sistemul nu mai lasa copilul sa continue in acest caz (terminarea in cascada)
 \paragraph*{Zombie} nu mai are parinte care sa astepte (nu s-a invocat wait())
+\begin{center}
+    \begin{lstlisting}
+pid_t pid = fork();
+if(pid)
+        sleep(5);
+else
+        exit(0);
+return 0;
+    \end{lstlisting}
+\end{center}
 \paragraph*{Orfan} parintele s-a terminat fara sa invoce wait()
+
+\begin{center}
+    \begin{lstlisting}
+pid_t pid = fork();
+if(pid)
+        exit(0);
+else{
+    sleep(5);
+}
+
+return 0;
+    \end{lstlisting}
+\end{center}
 
 \subsection*{Interprocess Communication}
 \paragraph*{Procesele} pot fi independente sau sa coopereze
@@ -2418,11 +2441,11 @@ Ownerul trebuie s controleze ce poate fi facut si de cine poate fi facut
 \begin{enumerate}
     \item Simplu - trebui doar locatia de start si lungimea
     \item Probleme
-    \begin{enumerate}
-        \item Gasirea spatiului pe disc pentru un fisier
-        \item Sa stii marimea exacta a unui fisier
-        \item Fragmentare externa (e nevoie de compaction off-line care presupune downtime sau on-line)
-    \end{enumerate}
+          \begin{enumerate}
+              \item Gasirea spatiului pe disc pentru un fisier
+              \item Sa stii marimea exacta a unui fisier
+              \item Fragmentare externa (e nevoie de compaction off-line care presupune downtime sau on-line)
+          \end{enumerate}
 \end{enumerate}
 
 \paragraph*{Extent-based systems} - aloca blocuri de disc in extents. Extent e un bloc continuu de disc. Un fisier poate avea unul sau mai multe extenturi. Ex: Veritas File System
@@ -2505,7 +2528,7 @@ HDD-urile pot face overwrite in place. NVM-urile sufera pentru ca trebuie sa ste
 \end{center}
 
 \subsection*{Recovery}
-\paragraph*{Consistency checking} - comapra data din directory structure cu data blocks pe disc si fixeaza incosistentele. 
+\paragraph*{Consistency checking} - comapra data din directory structure cu data blocks pe disc si fixeaza incosistentele.
 \paragraph*{Backup} pe un alt dispozitiv
 \paragraph*{Restoring} a datelor din backup
 

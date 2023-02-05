@@ -1806,10 +1806,10 @@ Un proces poate fi \textbf{swapped} temporar din memorie catre un backing store 
     \item Segementation si segmantation cu paging
     \item Fiecare segment e de 4GB, pana la 16K segmente per proces
     \item Divizata in 2 partitii
-    \begin{enumerate}
-        \item Prima partitie pana la 8K segmente sunt procesele private (\textbf{LDT} - local descriptor table)
-        \item A doua paritie pana la 8K segmente partajate intre toate procesele (\textbf{GDT} - global descriptor table)
-    \end{enumerate}
+          \begin{enumerate}
+              \item Prima partitie pana la 8K segmente sunt procesele private (\textbf{LDT} - local descriptor table)
+              \item A doua paritie pana la 8K segmente partajate intre toate procesele (\textbf{GDT} - global descriptor table)
+          \end{enumerate}
 \end{enumerate}
 \begin{center}
     \includegraphics[scale=0.3]{27-32mem.png}
@@ -1898,11 +1898,11 @@ Separarea dintre memoria logica a utilizatorului de memoria fizica
     \item Caz extrem: porneste procesul fara pagini in memorie. OS seteaza IP catre prima instructiune a procesului si da page fault, apoi pentru celelalte pagini la primul acces (\textbf{pure demand paging})
     \item O instructiune poate referinta mai multe pagini. De exemplu fetch si decode a unei instructiuni care aduna 2 numere si stocheaza rezultatul in memorie. Se poate folosi pentru optimizare \textbf{locality of reference}
     \item Suport hardware necesar pentru demand paging
-    \begin{enumerate}
-        \item Page table cu bit valid/invalid
-        \item Memorie secundara (device de swap cu swap space)
-        \item Instructiunea restart
-    \end{enumerate}
+          \begin{enumerate}
+              \item Page table cu bit valid/invalid
+              \item Memorie secundara (device de swap cu swap space)
+              \item Instructiunea restart
+          \end{enumerate}
 \end{enumerate}
 
 \paragraph*{Free-frame list} - in caz de page fault, OS-ul trebuie sa aduca pagina dorita in memorie din secondary storage. Se implementeaza free-frame list - un pool de free frames pentru astfel de cerinte
@@ -1916,11 +1916,11 @@ Separarea dintre memoria logica a utilizatorului de memoria fizica
     \item Determina daca interruptul a fost page fault
     \item Verifica daca acel page reference a fost legal pentru a determina locatia paginii pe disc
     \item Citeste de pe disc intr-un free frame
-    \begin{enumerate}
-        \item Asteapta in coada pentru dispozitiv pana cand toate requesturile de read au fost efectuate
-        \item Asteapta dupa latenta dispozitivului si timpul de seek
-        \item Incepe transferul paginii intr-un free frame
-    \end{enumerate}
+          \begin{enumerate}
+              \item Asteapta in coada pentru dispozitiv pana cand toate requesturile de read au fost efectuate
+              \item Asteapta dupa latenta dispozitivului si timpul de seek
+              \item Incepe transferul paginii intr-un free frame
+          \end{enumerate}
     \item Cat timp astepti, aloca CPU altui user
     \item Primeste un interrupt de la subsistemul disk I/O (completata)
     \item Salveaza registrii si process state pentru celelalt utilizator
@@ -1933,7 +1933,7 @@ Separarea dintre memoria logica a utilizatorului de memoria fizica
 \paragraph*{Performanta}: page fault rate $0 \leq p \leq 1$ (0 - fara, 1 - toate referintele sunt page faults)
 \begin{center}
     \begin{math}
-EAT = (1-p) * memory\_access + p * (page\_fault\_overhead + swap\_page\_out + swap\_page\_in)
+        EAT = (1-p) * memory\_access + p * (page\_fault\_overhead + swap\_page\_out + swap\_page\_in)
     \end{math}
 \end{center}
 
@@ -1945,7 +1945,7 @@ EAT = (1-p) * memory\_access + p * (page\_fault\_overhead + swap\_page\_out + sw
     \item Mobilele nu suporta swapping, dar cer pagina din file system si iau doar read-only pages (cum ar fi codul)
 \end{enumerate}
 
-\paragraph*{COW (copy-on-write)} - parintele si copiii shareuiesc initial aceleasi pagini in memorie (daca unul schimba o pagina, doar atunci e copiata). 
+\paragraph*{COW (copy-on-write)} - parintele si copiii shareuiesc initial aceleasi pagini in memorie (daca unul schimba o pagina, doar atunci e copiata).
 \subparagraph*{}In general paginile libere sunt alocate dintr-un pool de zero-fill-on-demand pages
 \subparagraph*{vfork()} e un syscall in care parintele suspenda folosirea de copil a COW in address space-ul parintelui (copilul poate executa exec() si e foarte eficient)
 \paragraph*{Page replacement} (daca nu exista free frame)
@@ -1995,16 +1995,16 @@ EAT = (1-p) * memory\_access + p * (page\_fault\_overhead + swap\_page\_out + sw
 \subparagraph*{Implementare LRU}
 \begin{enumerate}
     \item Counter
-    \begin{enumerate}
-        \item Fiecare pagina are un counter in care punem clock cand intra
-        \item Cand trebuie schimbata o pagina, ne uitam la countere dupa valoarea cea mai mica (e nevoie de search table)
-    \end{enumerate}
+          \begin{enumerate}
+              \item Fiecare pagina are un counter in care punem clock cand intra
+              \item Cand trebuie schimbata o pagina, ne uitam la countere dupa valoarea cea mai mica (e nevoie de search table)
+          \end{enumerate}
     \item Stack
-    \begin{enumerate}
-        \item Pastreaza o stiva cu double link
-        \item Cand o pagina e referntiata: mut-o sus
-        \item Fiecare update e mai scump, dar nu e nevoie de search pentru replacement
-    \end{enumerate}
+          \begin{enumerate}
+              \item Pastreaza o stiva cu double link
+              \item Cand o pagina e referntiata: mut-o sus
+              \item Fiecare update e mai scump, dar nu e nevoie de search pentru replacement
+          \end{enumerate}
 \end{enumerate}
 
 \paragraph*{LRU si OPT} sunt cazuri de stack algorithms care nu au anomalia lui Belady
@@ -2027,11 +2027,11 @@ EAT = (1-p) * memory\_access + p * (page\_fault\_overhead + swap\_page\_out + sw
 \paragraph*{Page-buffering algorithms}
 \begin{enumerate}
     \item Tine un pool de free frames
-    \begin{enumerate}
-        \item Cand un frame e necesar, e valabil
-        \item Citeste pagina intr-un free frame si selecteaza victima evacuarii si adaugarii in free pool
-        \item Cand e convenient, evacueaza victima
-    \end{enumerate}
+          \begin{enumerate}
+              \item Cand un frame e necesar, e valabil
+              \item Citeste pagina intr-un free frame si selecteaza victima evacuarii si adaugarii in free pool
+              \item Cand e convenient, evacueaza victima
+          \end{enumerate}
     \item Tine o lista de pagini modificate (posibil) - cand backing store este idle, scrie paginile acolo si seteaza-le ca non-dirty
     \item TIne o lista de continut intact de free frames si noteaza ce e in el - daca e referntiata pana sa fie refolosita, nu e enevoie sa iei continutul din nou de pe disc, folosit in special pentru a reduce penalizarea daca victima gresita a fost selectata
 \end{enumerate}
@@ -2084,11 +2084,11 @@ Daca un proces nu are "suficiente" pagini, page-fault e foarte mare
     \item Replacement pe frameul existent
     \item E nevoie de replacement frame inapoi rapid
     \item Duce la
-    \begin{enumerate}
-        \item CPU utilizat putin
-        \item OS crede ca trebuie sa creasca gradul de multiprogramming
-        \item Inca un proces este adaugat in sistem
-    \end{enumerate}
+          \begin{enumerate}
+              \item CPU utilizat putin
+              \item OS crede ca trebuie sa creasca gradul de multiprogramming
+              \item Inca un proces este adaugat in sistem
+          \end{enumerate}
 \end{enumerate}
 
 \paragraph*{Locality} - o multime de pagini folosite impreuna. Modelul localitatii spune ca atunci cand un proces se executa, se muta dintr-o localitate in alta (unele pot sa se suprapuna). De exemplu, cand o functia este apelata, se defineste o noua localitate, iar cand iese, atunci si procesul iese din acea localitate
@@ -2149,7 +2149,7 @@ Pentru a reduce numarul mare de page faults care se intampla la startupul unui p
 Cantitatea de memorie accesibila din TLB
 \begin{center}
     \begin{math}
-TLB\ Reach = (TLB\ Size) * (Page\ Size)
+        TLB\ Reach = (TLB\ Size) * (Page\ Size)
     \end{math}
 \end{center}
 \begin{enumerate}
@@ -2171,11 +2171,11 @@ Spatiul logic de adresare continuu.
 \subsection*{Tipuri}
 \begin{enumerate}
     \item Data
-    \begin{enumerate}
-        \item Numeric
-        \item Character
-        \item Binary
-    \end{enumerate}
+          \begin{enumerate}
+              \item Numeric
+              \item Character
+              \item Binary
+          \end{enumerate}
     \item Program
 \end{enumerate}
 
@@ -2239,11 +2239,11 @@ Un fisier e logical records de marime fixa
     \item read n
     \item write n
     \item position to n
-    \begin{enumerate}
-        \item read next
-        \item write next
-        \item rewrite n
-    \end{enumerate}
+          \begin{enumerate}
+              \item read next
+              \item write next
+              \item rewrite n
+          \end{enumerate}
 \end{enumerate}
 
 Numerele de block relative permit OS sa decida unde sa puna fisierul.
@@ -2291,10 +2291,10 @@ De obicei au un \textbf{index} pentru fisier pe care il tin in memorie ca sa det
 \begin{enumerate}
     \item Eficienta (localizarea rapida a unui fisier)
     \item Denumire
-    \begin{enumerate}
-        \item 2 utilizatori pot avea acelasi nume pentru fisiere diferite
-        \item Acelasi fisier poate avea mai multe nume
-    \end{enumerate}
+          \begin{enumerate}
+              \item 2 utilizatori pot avea acelasi nume pentru fisiere diferite
+              \item Acelasi fisier poate avea mai multe nume
+          \end{enumerate}
     \item Grupare
 \end{enumerate}
 
@@ -2329,16 +2329,16 @@ Au subdirectoare si fisiere shared
 \begin{enumerate}
     \item Aliasing (2 nume diferite)
     \item Daca dict sterge w/list $rightarrow$ dangling pointer
-    \begin{enumerate}
-        \item Se pot pune backpointeri ca sa stergem toti pointerii
-        \item Backpointeri cu daisy chain organization
-        \item Entry-hold-count
-    \end{enumerate}
+          \begin{enumerate}
+              \item Se pot pune backpointeri ca sa stergem toti pointerii
+              \item Backpointeri cu daisy chain organization
+              \item Entry-hold-count
+          \end{enumerate}
     \item Tip de director nou
-    \begin{enumerate}
-        \item link - un alt nume catre un fisier existent
-        \item resolve the link - urmareste pointerul pentru a localiza fisierul
-    \end{enumerate}
+          \begin{enumerate}
+              \item link - un alt nume catre un fisier existent
+              \item resolve the link - urmareste pointerul pentru a localiza fisierul
+          \end{enumerate}
 \end{enumerate}
 
 \subsection*{General Graph Directory}
@@ -2361,5 +2361,161 @@ Ownerul trebuie s controleze ce poate fi facut si de cine poate fi facut
 
 
 \section[Ch14 File system implementation]{File system implementation}
+\subsection*{FS Structure}
+\begin{enumerate}
+    \item Rezida pe secondary storage (disks)
+    \item e o interfata a utilizatorului catre sotrage, mapand logical catre physical
+    \item acces eficient si convenient la disc, permitand ca datele sa fie stocate, locate si scoase usor
+    \item Discul pune la dispozitie in-place rewrite si random access (de obicei transferurile sunt in blocuri de sectoare - de obicei 512bytes)
+    \item \textbf{FCB} (file control block) - structura de stocare care consista in informatii despre un fisier
+    \item Device driverul controleaza dipsozitivul fizic
+    \item FS organizat in layere
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.4]{47-layeredfs.png}
+\end{center}
+
+\subsection*{FS Layers}
+\paragraph*{Device drivers} gestioneaza dispozitivele I/O la layerul de control I/O
+\paragraph*{Basic file system} - primeste o comanda si o traduce driverului
+\paragraph*{Gestioneaza} buffere si cacheuri (bufferele tin datele in tranzit, cacheurile tin datele cele mai des folosite)
+\paragraph*{File organization module} - intelege fisierele, adresele logice si blocurile fizice. Traduce blocuri logice in blocuri fizice. Gestioneaza spatiul liber si alocarea pe disc
+\paragraph*{Logical file system} - gestioneaza metadatele. Traduce numele fisierului in file number, file handle si locatie prin gestionarea file control blocks (inodes in UNIX). Face managementul directoarelor si protectia.
+\paragraph*{Avantaj} - reduce complexitatea si redundanta
+\paragraph*{Dezavantaj} - are overhead
+\paragraph*{Layerele logice} pot fi implementate de catre designerul de OS
+
+\subsection*{FS Operations}
+\paragraph*{Boot control block} - contine informatiile necesare sistemului sa booteze OS din acel volum (necesar daca contine OS, de obicei e primul block al volumului)
+\paragraph*{Volume control block} - superblock, master file table - contine detaliile volumului
+\paragraph*{DIrectory structure} - nume si numere inode, MFT (master file table)
+
+\subsection*{FCB (File Control Block)}
+\paragraph*{OS-ul} mentine FCB per fisier
+
+\subsection*{In-Memory FS Structures}
+\paragraph*{Mount table} tine toate system mounts, mount points si FS types
+\paragraph*{System-wide open-file table} o copie a FCB pentru fiecare fisier si alte informatii
+\paragraph*{Per-process open-file table} contine pointer la intrari din system-wide open-file table, dar si alte informatii
+
+\subsection*{Directory implementation}
+\paragraph*{Linear list} de nume de fisiere cu pointeri catre blocurile de date.
+\begin{enumerate}
+    \item Simplu de programat
+    \item Costisitor ca executie (timp de cautare liniar, pot fi ordonate alfabetic cu o lista inlantuita sau cu un B+ tree)
+\end{enumerate}
+
+\paragraph*{Hash table} - lista liniara cu strucura datelor hashed
+\begin{enumerate}
+    \item Timp mai mic de cautare
+    \item Coliziuni - daca 2 nume de fisiere au acelasi hash catre aceeasi locatie
+    \item BUn doar daca intrarile sunt fixe sau se foloseste chained-overflow method
+\end{enumerate}
+
+\subsection*{Allocation Method}
+\paragraph*{Alocare continua} - fiecare fisier ocupa o multime continua de blocuri
+\begin{enumerate}
+    \item Simplu - trebui doar locatia de start si lungimea
+    \item Probleme
+    \begin{enumerate}
+        \item Gasirea spatiului pe disc pentru un fisier
+        \item Sa stii marimea exacta a unui fisier
+        \item Fragmentare externa (e nevoie de compaction off-line care presupune downtime sau on-line)
+    \end{enumerate}
+\end{enumerate}
+
+\paragraph*{Extent-based systems} - aloca blocuri de disc in extents. Extent e un bloc continuu de disc. Un fisier poate avea unul sau mai multe extenturi. Ex: Veritas File System
+
+\paragraph*{Linked allocation} - fiecare fisier e linkuita unei liste de blocuri si se termina la pointerul nul
+\begin{enumerate}
+    \item Nu exista fragmentare externa
+    \item Fiecare bloc contine pointer catre urmatorul
+    \item Fara compaction, external fragmentation
+    \item Cand e nevoie de un bloc, se cheama free space management system
+    \item Se poate imbunatati eficienta prin blocks clustering in grupuri, dar creste fragmentarea interna
+    \item Unreliable
+    \item Cautarea unui bloc poate sa ia multe seekuri de I/O
+\end{enumerate}
+\begin{center}
+    \includegraphics[scale=0.4]{48-linkedalloc.png}
+\end{center}
+
+\paragraph*{FAT} - inceputul volumului are un tabel indexat dupa block number. E ca o linked list, dar mai rapid si cacheable. Alocarea unui bloc nou e simpla.
+
+\paragraph*{Indexed Allocation Method} - fiecare fisier are propriul bloc de indecsi cu pointeri catre propriile data blocks
+\subparagraph*{Fisiere mici}
+\begin{enumerate}
+    \item E nevoie de un index table
+    \item Acces random
+    \item Acces dinamic fara fragmentare externa, dar are overhedului blocului de indecsi
+    \item Maparea din logic in fizic intr-un fisier de maximum 256KB si un bloc de 512bytes necesita doar 1 bloc pe tabel de indecsi
+\end{enumerate}
+\subparagraph*{Fisiere mari} - maparea se face cu linked scheme (link blocks of index table) si multi-level indexing
+
+\subsection*{Free space management}
+\paragraph*{Bit vector/bit map} de n blocuri
+\paragraph*{Se calculeaza} numarul de bits pe word * numarul de 0-valued words + offsetul primului bit
+\begin{center}
+    \includegraphics[scale=0.4]{49-linkedfreespacelist.png}
+\end{center}
+
+\paragraph*{Grouping} - se modifica linked list sa stocheze adresa urmatoarelor n-1 blocuri libere in primul bloc liber, plus un pointer catre primul bloc care contine free-block-pointers
+\paragraph*{Continuing} - pentru ca spatiul este frecvent folosit in mod continuu si eliberat cu alocare continua, extents sau clustering: se tine adresa primului bloc liber si numarul de blocuri care il urmeaza, iar lista spatiului liber are intrari care contin adrese si counts
+
+\paragraph*{Space maps}
+\begin{enumerate}
+    \item FOlosite in ZFS
+    \item considera metadatele I/O pe FS foarte mari - structuri mari ca bit maps nu pot intra in memorie ceea ce duce la multe I/O
+    \item divide spatiul in unitati metslabs si gestioneaza metslabs
+    \item fiecare metsalb e asociat cu un space map
+    \item tine evidenta in log file, nu in FS
+    \item activitatea metaslab e mapata ca un balanced-tree in memorie, indexata dupa offset (se poate da replay la log, se pot comnbina blocuri libere continue intr-o singura intrare)
+\end{enumerate}
+
+\paragraph*{TRIMing unused blocks}
+HDD-urile pot face overwrite in place. NVM-urile sufera pentru ca trebuie sa stearga inainte de a scrie, iar stergerile sunt incete. TRIM e un mecanism care infomreaza NV-urile ca acea pagina e libera pentru garbage collection sau daca blocul e liber, acum poate fi sters.
+
+\subsection*{Eficienta si performanta}
+\paragraph*{Eficienta}
+\begin{enumerate}
+    \item Alocarea pe disc si algoritmii de directoare
+    \item Tipuirle de date tinute in intrare de fisiere din director
+    \item Pre-alocarea sau alocarea as-needed metadatelor structurilor
+    \item Structuri cu marime fixa sau variabila
+\end{enumerate}
+
+\paragraph*{Performanta}
+\begin{enumerate}
+    \item Tinerea datelor si metadatelor impreuna
+    \item Buffer cache - sectiune separata in main memory pentru blocurile folosite des
+    \item Scrieri sincrone unoeri cerute de programe sau de OS (cele asincrone sunt mai comune, bufferabile si rapide)
+    \item Free-behind si read-ahead pentru a optimiza accesul secvential
+    \item Readuri mai incete ca writeuri
+\end{enumerate}
+
+\paragraph*{Page cache} - cacheuieste pagini in loc de disk blocks cu tehnici de memorie virtuala si adrese. I/O mapate in memorie folosesc page cache
+\begin{center}
+    \includegraphics[scale=0.4]{50-pagecache.png}
+\end{center}
+
+\paragraph*{Unified buffer cache} - foloseste acelasi page cache ca sa cacheuiasca atat paginile mapate in memorie cat si fisiere normale de system I/O pentru a evita double caching
+\begin{center}
+    \includegraphics[scale=0.4]{51-ubc.png}
+\end{center}
+
+\subsection*{Recovery}
+\paragraph*{Consistency checking} - comapra data din directory structure cu data blocks pe disc si fixeaza incosistentele. 
+\paragraph*{Backup} pe un alt dispozitiv
+\paragraph*{Restoring} a datelor din backup
+
+\subsection*{Log structured FS}
+\paragraph*{Log structured/journaling} tin un sistem actualizat de metadate in file system ca transactii
+\begin{enumerate}
+    \item Tranzactiile sunt logate - sunt considerate committed in momentul in care apar in log (secvential)
+    \item Tranzactiile din log sunt scrise asincron in structurile FS (cand structurile sunt modificate, sunt scoase din log)
+    \item Daca FS crashuieste, toate tranzactiile ramase in log trebuie facute
+    \item Recovery rapid de la crash cu sanse mici de inconsistente ale datelor
+\end{enumerate}
 
 \end{document}

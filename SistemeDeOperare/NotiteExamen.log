@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  5 FEB 2023 16:58
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  5 FEB 2023 19:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -959,17 +959,31 @@ File: ./img//45-agd.png Graphic file (type bmp)
  [54]
 File: ./img//46-ggd.png Graphic file (type bmp)
 <./img//46-ggd.png>
- [55] [56] (./NotiteExamen.aux)
+ [55]
+File: ./img//47-layeredfs.png Graphic file (type bmp)
+<./img//47-layeredfs.png>
+ [56] [57]
+File: ./img//48-linkedalloc.png Graphic file (type bmp)
+<./img//48-linkedalloc.png>
+ [58]
+File: ./img//49-linkedfreespacelist.png Graphic file (type bmp)
+<./img//49-linkedfreespacelist.png>
+ [59]
+File: ./img//50-pagecache.png Graphic file (type bmp)
+<./img//50-pagecache.png>
+File: ./img//51-ubc.png Graphic file (type bmp)
+<./img//51-ubc.png>
+ [60] [61] (./NotiteExamen.aux)
 Package rerunfilecheck Info: File `NotiteExamen.out' has not changed.
 (rerunfilecheck)             Checksum: 8AF1A65CA9FEF1EAF3E730682F6603C6;1457.
  ) 
 Here is how much of TeX's memory you used:
- 36701 strings out of 478158
- 844987 string characters out of 5853401
+ 36746 strings out of 478158
+ 846241 string characters out of 5853401
  1374783 words of memory out of 5000000
- 56743 multiletter control sequences out of 15000+600000
+ 56783 multiletter control sequences out of 15000+600000
  476155 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  100i,9n,104p,1673b,1759s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on NotiteExamen.pdf (57 pages).
+Output written on NotiteExamen.pdf (62 pages).

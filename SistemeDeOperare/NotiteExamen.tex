@@ -2167,6 +2167,199 @@ TLB\ Reach = (TLB\ Size) * (Page\ Size)
 Uneori paginile trebuie sa fie blocate in memorie. De exemplu la copierea fisierelor dintr-un dispozitiv, paginile trebuie sa fie blocakte (locked) de a fi evacuate de replacement. Se poate face pinning paginilor ce trebuie sa fie blocate in memorie.
 
 \section[Ch13 File system interface]{File system interface}
+Spatiul logic de adresare continuu.
+\subsection*{Tipuri}
+\begin{enumerate}
+    \item Data
+    \begin{enumerate}
+        \item Numeric
+        \item Character
+        \item Binary
+    \end{enumerate}
+    \item Program
+\end{enumerate}
+
+\subsection*{Atribute}
+\begin{enumerate}
+    \item Nume
+    \item Identifier
+    \item Type
+    \item Location
+    \item Size
+    \item Protection
+    \item Time, date, user identification
+    \item Poate include atribute extinse: checksum
+\end{enumerate}
+
+\subsection*{Directory Structure}
+Colectie de noduri care contin informatii despre toate fisierele. Atat structura de directoare cat si fisierele rezida pe disc
+
+\subsection*{Operatii}
+\begin{enumerate}
+    \item Create
+    \item Write (scrie la locatia pointerului)
+    \item Read (citeste la locatia pointerului)
+    \item Reposition within a file (seek)
+    \item Delete
+    \item Truncate
+    \item Open($F_i$) - cauta in directory structure intrarea $F_i$ si muta-i continutul in memorie
+    \item Close($F_i$) - muta continutul intrarii $F_i$ din memorie in structura de directoare de pe disc
+\end{enumerate}
+
+\subsection*{Open Files}
+\paragraph*{Open-file table} - tracking pe fisierele deschise
+\paragraph*{File pointer} - pointer la ultima locatie de read/write, per proces care are fisierul deschis
+\paragraph*{File-open count} - counter pe numarul de deschidere a fisierului (pentru a permite stergerea datelor din open-file table cand ultimul proces o inchide)
+\paragraph*{DIsk location} - cache de informatii de acces ale datelor
+\paragraph*{Access rights} - modul de acces al informatiei per proces
+
+\subsection*{File Locking}
+Folosit de unele OS si FS. Similar cu reader-writer locks.
+\paragraph*{Shared lock} - ca un reader-lock: mai multe procese pot folosi concurent
+\paragraph*{Exclusive lock} - ca un writer lock
+\paragraph*{Mediaza accesul la un fisier}
+\begin{enumerate}
+    \item Mandatory - accesul este respins in functie de lock-urile tinute si cele cerute
+    \item Advisory - procesul poate vedea statusul lockurilor si decide ce sa faca
+\end{enumerate}
+
+\subsection*{Logical records}
+Un fisier e logical records de marime fixa
+
+\subsection*{Sequential access}
+\begin{enumerate}
+    \item Read next
+    \item Write next
+    \item Reset
+    \item no read after last write (rewrite)
+\end{enumerate}
+
+\subsection*{Direct Access}
+\begin{enumerate}
+    \item read n
+    \item write n
+    \item position to n
+    \begin{enumerate}
+        \item read next
+        \item write next
+        \item rewrite n
+    \end{enumerate}
+\end{enumerate}
+
+Numerele de block relative permit OS sa decida unde sa puna fisierul.
+
+\subsection*{Alte metode de acces}
+De obicei au un \textbf{index} pentru fisier pe care il tin in memorie ca sa determine rapid unde sunt datele pe care sa opereze. Daca indexul e prea mare, se creaza un in-memory index care-l indexeaza pe cel de pe disc
+
+\subsection*{Disk structure}
+\paragraph*{Partitii} - discul poate fi subdivizat in partitii
+\paragraph*{RAID} - discul sau partitiile pot fi protejate de failure
+\paragraph*{Folosirea} raw sau formatata cu un FS
+\paragraph*{Sinonime pentru partitii:} minidisks, slices
+\paragraph*{Volume} - entitatea care contine FS
+\paragraph*{Tracking pe FS} - volumul trackuieste informatiile FS-ului in device directory sau volume table of contents
+\paragraph*{Special-purpose file systems} - folosite impreuna cu general-purpose file systems
+
+\subsection*{Program structure}
+\begin{center}
+    \includegraphics[scale=0.4]{41-fsorg.png}
+\end{center}
+
+\subsection*{Types of File Systems}
+\paragraph*{Solaris}
+\begin{enumerate}
+    \item tmpfs - memory based FS volatil pentru I/O rapid si temporar
+    \item objfs - interfata la memoria kernelului pentru a lua kernel symbols pentru debugging
+    \item ctfs - contract file system pentru daemoni
+    \item lofs - loopback fs care permite ca un FS sa fie accesat in locul altuia
+    \item procfs - interfata a kernelului catre structura de procese
+    \item ufs, zfs - general purpose file systems
+\end{enumerate}
+
+\subsection*{Operatii pe director}
+\begin{enumerate}
+    \item Search file
+    \item create file
+    \item delete file
+    \item list a directory
+    \item rename a file
+    \item traverse the FS
+\end{enumerate}
+
+\subsection*{Directory Organization}
+\paragraph*{Pentru a obtine}
+\begin{enumerate}
+    \item Eficienta (localizarea rapida a unui fisier)
+    \item Denumire
+    \begin{enumerate}
+        \item 2 utilizatori pot avea acelasi nume pentru fisiere diferite
+        \item Acelasi fisier poate avea mai multe nume
+    \end{enumerate}
+    \item Grupare
+\end{enumerate}
+
+\subsection*{Single-level directory}
+Acelasi director pentru toti userii
+\begin{center}
+    \includegraphics[scale=0.4]{42-sld.png}
+\end{center}
+
+\subsection*{2-level directory}
+Fiecare user cu director separat
+\begin{enumerate}
+    \item Poate avea fisiere cu nume identice pentru utilizatori diferiti
+    \item Searching eficient
+    \item Nu se pot grupa
+\end{enumerate}
+\begin{center}
+    \includegraphics[scale=0.4]{43-tld.png}
+\end{center}
+
+\subsection*{Tree-structured Directories}
+\begin{center}
+    \includegraphics[scale=0.4]{44-tsd.png}
+\end{center}
+
+\subsection*{Acyclic-Graph Directories}
+Au subdirectoare si fisiere shared
+\begin{center}
+    \includegraphics[scale=0.4]{45-agd.png}
+\end{center}
+
+\begin{enumerate}
+    \item Aliasing (2 nume diferite)
+    \item Daca dict sterge w/list $rightarrow$ dangling pointer
+    \begin{enumerate}
+        \item Se pot pune backpointeri ca sa stergem toti pointerii
+        \item Backpointeri cu daisy chain organization
+        \item Entry-hold-count
+    \end{enumerate}
+    \item Tip de director nou
+    \begin{enumerate}
+        \item link - un alt nume catre un fisier existent
+        \item resolve the link - urmareste pointerul pentru a localiza fisierul
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{General Graph Directory}
+\begin{center}
+    \includegraphics[scale=0.4]{46-ggd.png}
+\end{center}
+\paragraph*{Problema ciclurilor:} link catre fisiere, nu subdirectoare; garbage collection; la fiecare link foloseste un algoritm de detectie a ciclurilor pentru a vedea daca este ok
+
+\subsection*{File protection}
+Ownerul trebuie s controleze ce poate fi facut si de cine poate fi facut
+\paragraph*{Tipuri de acces}
+\begin{enumerate}
+    \item read
+    \item write
+    \item execute
+    \item append
+    \item delete
+    \item list
+\end{enumerate}
+
+
 \section[Ch14 File system implementation]{File system implementation}
 
 \end{document}

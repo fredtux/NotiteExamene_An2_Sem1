@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  6 FEB 2023 11:06
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  6 FEB 2023 14:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -860,7 +860,7 @@ File: ./img//12_mqproctype.png Graphic file (type bmp)
 File: ./img//13_exmq.png Graphic file (type bmp)
 <./img//13_exmq.png>
 
-Overfull \hbox (47.3098pt too wide) in paragraph at lines 1056--1057
+Overfull \hbox (47.3098pt too wide) in paragraph at lines 1057--1058
  []\TU/lmr/bx/n/10 Pthread scheduling \TU/lmr/m/n/10 API-ul permite PCS sau SCS, dar pe Linux si macOS doar \TU/lmr/bx/n/10 pthread_scope_system 
  []
 
@@ -872,10 +872,11 @@ File: ./img//14_peterson2threads.png Graphic file (type bmp)
 <./img//14_peterson2threads.png>
 File: ./img//15_ptersonrevisited.png Graphic file (type bmp)
 <./img//15_ptersonrevisited.png>
+ [22]
 File: ./img//16_membarrier.png Graphic file (type bmp)
 <./img//16_membarrier.png>
- [22] [23] [24]
-Overfull \hbox (0.75534pt too wide) in paragraph at lines 1316--1317
+ [23] [24]
+Overfull \hbox (0.75534pt too wide) in paragraph at lines 1317--1318
  []\TU/lmr/bx/n/10 Pot fi 2: \TU/lmr/m/n/10 counting sempahore (integer peste un domeniu nerestrictionat) sau binary semaphore
  []
 
@@ -884,10 +885,10 @@ File: ./img//16_deadlock.png Graphic file (type bmp)
 <./img//16_deadlock.png>
 File: ./img//17_boundedbuffer.png Graphic file (type bmp)
 <./img//17_boundedbuffer.png>
- [28] [29] [30] [31] [32]
+ [28] [29] [30] [31] [32] [33]
 File: ./img//18_mmu.png Graphic file (type bmp)
 <./img//18_mmu.png>
- [33] [34] [35]
+ [34] [35]
 File: ./img//19_pages.png Graphic file (type bmp)
 <./img//19_pages.png>
  [36]
@@ -898,66 +899,67 @@ File: ./img//21_hpt.png Graphic file (type bmp)
 <./img//21_hpt.png>
 File: ./img//22-fmpt.png Graphic file (type bmp)
 <./img//22-fmpt.png>
+ [38]
 File: ./img//23-ats.png Graphic file (type bmp)
 <./img//23-ats.png>
 File: ./img//24-tps.png Graphic file (type bmp)
 <./img//24-tps.png>
- [38]
 File: ./img//25-hpt.png Graphic file (type bmp)
 <./img//25-hpt.png>
+ [39]
 File: ./img//26-ipt.png Graphic file (type bmp)
 <./img//26-ipt.png>
- [39]
+ [40]
 File: ./img//27-32mem.png Graphic file (type bmp)
 <./img//27-32mem.png>
- [40]
 File: ./img//28-32paemem.png Graphic file (type bmp)
 <./img//28-32paemem.png>
+ [41]
 File: ./img//29-64mem.png Graphic file (type bmp)
 <./img//29-64mem.png>
- [41]
 File: ./img//30-vas.png Graphic file (type bmp)
 <./img//30-vas.png>
+ [42]
 File: ./img//31-vib.png Graphic file (type bmp)
 <./img//31-vib.png>
- [42]
+ [43]
 File: ./img//32-pagefault.png Graphic file (type bmp)
 <./img//32-pagefault.png>
- [43] [44]
+ [44] [45]
 File: ./img//33-pagereplacement.png Graphic file (type bmp)
 <./img//33-pagereplacement.png>
- [45]
 File: ./img//34-fifopf.png Graphic file (type bmp)
 <./img//34-fifopf.png>
 File: ./img//35-optpf.png Graphic file (type bmp)
 <./img//35-optpf.png>
+ [46]
 File: ./img//36-lrupf.png Graphic file (type bmp)
 <./img//36-lrupf.png>
- [46] [47]
+ [47]
 File: ./img//37-fixedalloc.png Graphic file (type bmp)
 <./img//37-fixedalloc.png>
  [48]
 File: ./img//38-numa.png Graphic file (type bmp)
 <./img//38-numa.png>
- [49]
+ [49] [50]
 File: ./img//39-slab.png Graphic file (type bmp)
 <./img//39-slab.png>
- [50]
+ [51]
 File: ./img//40-progstruct.png Graphic file (type bmp)
 <./img//40-progstruct.png>
- [51] [52] [53]
+ [52] [53] [54]
 File: ./img//41-fsorg.png Graphic file (type bmp)
 <./img//41-fsorg.png>
- [54] [55]
+ [55]
 File: ./img//42-sld.png Graphic file (type bmp)
 <./img//42-sld.png>
 File: ./img//43-tld.png Graphic file (type bmp)
 <./img//43-tld.png>
 File: ./img//44-tsd.png Graphic file (type bmp)
 <./img//44-tsd.png>
+ [56]
 File: ./img//45-agd.png Graphic file (type bmp)
 <./img//45-agd.png>
- [56]
 File: ./img//46-ggd.png Graphic file (type bmp)
 <./img//46-ggd.png>
  [57]
@@ -969,22 +971,22 @@ File: ./img//48-linkedalloc.png Graphic file (type bmp)
  [60]
 File: ./img//49-linkedfreespacelist.png Graphic file (type bmp)
 <./img//49-linkedfreespacelist.png>
- [61]
+ [61] [62]
 File: ./img//50-pagecache.png Graphic file (type bmp)
 <./img//50-pagecache.png>
 File: ./img//51-ubc.png Graphic file (type bmp)
 <./img//51-ubc.png>
- [62] [63] (./NotiteExamen.aux)
+ [63] [64] (./NotiteExamen.aux)
 Package rerunfilecheck Info: File `NotiteExamen.out' has not changed.
 (rerunfilecheck)             Checksum: 8AF1A65CA9FEF1EAF3E730682F6603C6;1457.
  ) 
 Here is how much of TeX's memory you used:
  36746 strings out of 478158
  846241 string characters out of 5853401
- 1367081 words of memory out of 5000000
+ 1351947 words of memory out of 5000000
  56783 multiletter control sequences out of 15000+600000
  476155 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  100i,9n,104p,1673b,1759s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on NotiteExamen.pdf (64 pages).
+Output written on NotiteExamen.pdf (65 pages).

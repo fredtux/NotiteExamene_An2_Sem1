@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  6 FEB 2023 10:57
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.10.30)  6 FEB 2023 11:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -835,66 +835,65 @@ File: ./img//4_indepthprocsched.png Graphic file (type bmp)
  [2]
 File: ./img//5_ipc.png Graphic file (type bmp)
 <./img//5_ipc.png>
- [3]
+ [3] [4] [5]
 File: ./img//6_racecondition.png Graphic file (type bmp)
 <./img//6_racecondition.png>
- [4] [5]
+ [6]
 File: ./img//7_sharedmem.png Graphic file (type bmp)
 <./img//7_sharedmem.png>
- [6] [7]
+ [7] [8] [9]
 File: ./img//8_twolevelmodel.png Graphic file (type bmp)
 <./img//8_twolevelmodel.png>
- [8]
+ [10]
 File: ./img//9_forkjoin.png Graphic file (type bmp)
 <./img//9_forkjoin.png>
- [9]
+ [11]
 File: ./img//10_forkjoin.png Graphic file (type bmp)
 <./img//10_forkjoin.png>
- [10]
+ [12] [13]
 File: ./img//11_cpuioburstcycle.png Graphic file (type bmp)
 <./img//11_cpuioburstcycle.png>
- [11] [12] [13] [14]
+ [14] [15] [16]
 File: ./img//12_mqproctype.png Graphic file (type bmp)
 <./img//12_mqproctype.png>
- [15]
+ [17]
 File: ./img//13_exmq.png Graphic file (type bmp)
 <./img//13_exmq.png>
 
-Overfull \hbox (47.3098pt too wide) in paragraph at lines 921--922
+Overfull \hbox (47.3098pt too wide) in paragraph at lines 1056--1057
  []\TU/lmr/bx/n/10 Pthread scheduling \TU/lmr/m/n/10 API-ul permite PCS sau SCS, dar pe Linux si macOS doar \TU/lmr/bx/n/10 pthread_scope_system 
  []
 
-[16] [17]
+[18] [19]
 File: ./img//13_cfs.png Graphic file (type bmp)
 <./img//13_cfs.png>
- [18]
+ [20] [21]
 File: ./img//14_peterson2threads.png Graphic file (type bmp)
 <./img//14_peterson2threads.png>
- [19]
 File: ./img//15_ptersonrevisited.png Graphic file (type bmp)
 <./img//15_ptersonrevisited.png>
 File: ./img//16_membarrier.png Graphic file (type bmp)
 <./img//16_membarrier.png>
- [20] [21] [22]
-Overfull \hbox (0.75534pt too wide) in paragraph at lines 1181--1182
+ [22] [23] [24]
+Overfull \hbox (0.75534pt too wide) in paragraph at lines 1316--1317
  []\TU/lmr/bx/n/10 Pot fi 2: \TU/lmr/m/n/10 counting sempahore (integer peste un domeniu nerestrictionat) sau binary semaphore
  []
 
-[23] [24] [25]
+[25] [26] [27]
 File: ./img//16_deadlock.png Graphic file (type bmp)
 <./img//16_deadlock.png>
 File: ./img//17_boundedbuffer.png Graphic file (type bmp)
 <./img//17_boundedbuffer.png>
- [26] [27] [28] [29] [30]
+ [28] [29] [30] [31] [32]
 File: ./img//18_mmu.png Graphic file (type bmp)
 <./img//18_mmu.png>
- [31] [32] [33]
+ [33] [34] [35]
 File: ./img//19_pages.png Graphic file (type bmp)
 <./img//19_pages.png>
- [34]
+ [36]
 File: ./img//20_tlbhardware.png Graphic file (type bmp)
 <./img//20_tlbhardware.png>
- [35]
+ [37]
 File: ./img//21_hpt.png Graphic file (type bmp)
 <./img//21_hpt.png>
 File: ./img//22-fmpt.png Graphic file (type bmp)
@@ -903,53 +902,53 @@ File: ./img//23-ats.png Graphic file (type bmp)
 <./img//23-ats.png>
 File: ./img//24-tps.png Graphic file (type bmp)
 <./img//24-tps.png>
- [36]
+ [38]
 File: ./img//25-hpt.png Graphic file (type bmp)
 <./img//25-hpt.png>
 File: ./img//26-ipt.png Graphic file (type bmp)
 <./img//26-ipt.png>
- [37]
+ [39]
 File: ./img//27-32mem.png Graphic file (type bmp)
 <./img//27-32mem.png>
- [38]
+ [40]
 File: ./img//28-32paemem.png Graphic file (type bmp)
 <./img//28-32paemem.png>
 File: ./img//29-64mem.png Graphic file (type bmp)
 <./img//29-64mem.png>
- [39]
+ [41]
 File: ./img//30-vas.png Graphic file (type bmp)
 <./img//30-vas.png>
 File: ./img//31-vib.png Graphic file (type bmp)
 <./img//31-vib.png>
- [40]
+ [42]
 File: ./img//32-pagefault.png Graphic file (type bmp)
 <./img//32-pagefault.png>
- [41] [42]
+ [43] [44]
 File: ./img//33-pagereplacement.png Graphic file (type bmp)
 <./img//33-pagereplacement.png>
- [43]
+ [45]
 File: ./img//34-fifopf.png Graphic file (type bmp)
 <./img//34-fifopf.png>
 File: ./img//35-optpf.png Graphic file (type bmp)
 <./img//35-optpf.png>
 File: ./img//36-lrupf.png Graphic file (type bmp)
 <./img//36-lrupf.png>
- [44] [45]
+ [46] [47]
 File: ./img//37-fixedalloc.png Graphic file (type bmp)
 <./img//37-fixedalloc.png>
- [46]
+ [48]
 File: ./img//38-numa.png Graphic file (type bmp)
 <./img//38-numa.png>
- [47]
+ [49]
 File: ./img//39-slab.png Graphic file (type bmp)
 <./img//39-slab.png>
- [48]
+ [50]
 File: ./img//40-progstruct.png Graphic file (type bmp)
 <./img//40-progstruct.png>
- [49] [50] [51]
+ [51] [52] [53]
 File: ./img//41-fsorg.png Graphic file (type bmp)
 <./img//41-fsorg.png>
- [52] [53]
+ [54] [55]
 File: ./img//42-sld.png Graphic file (type bmp)
 <./img//42-sld.png>
 File: ./img//43-tld.png Graphic file (type bmp)
@@ -958,34 +957,34 @@ File: ./img//44-tsd.png Graphic file (type bmp)
 <./img//44-tsd.png>
 File: ./img//45-agd.png Graphic file (type bmp)
 <./img//45-agd.png>
- [54]
+ [56]
 File: ./img//46-ggd.png Graphic file (type bmp)
 <./img//46-ggd.png>
- [55]
+ [57]
 File: ./img//47-layeredfs.png Graphic file (type bmp)
 <./img//47-layeredfs.png>
- [56] [57]
+ [58] [59]
 File: ./img//48-linkedalloc.png Graphic file (type bmp)
 <./img//48-linkedalloc.png>
- [58]
+ [60]
 File: ./img//49-linkedfreespacelist.png Graphic file (type bmp)
 <./img//49-linkedfreespacelist.png>
- [59]
+ [61]
 File: ./img//50-pagecache.png Graphic file (type bmp)
 <./img//50-pagecache.png>
 File: ./img//51-ubc.png Graphic file (type bmp)
 <./img//51-ubc.png>
- [60] [61] (./NotiteExamen.aux)
+ [62] [63] (./NotiteExamen.aux)
 Package rerunfilecheck Info: File `NotiteExamen.out' has not changed.
 (rerunfilecheck)             Checksum: 8AF1A65CA9FEF1EAF3E730682F6603C6;1457.
  ) 
 Here is how much of TeX's memory you used:
  36746 strings out of 478158
  846241 string characters out of 5853401
- 1368724 words of memory out of 5000000
+ 1367081 words of memory out of 5000000
  56783 multiletter control sequences out of 15000+600000
  476155 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  100i,9n,104p,1673b,1759s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on NotiteExamen.pdf (62 pages).
+Output written on NotiteExamen.pdf (64 pages).

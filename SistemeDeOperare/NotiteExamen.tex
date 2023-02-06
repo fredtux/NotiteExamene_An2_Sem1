@@ -2189,6 +2189,22 @@ Cantitatea de memorie accesibila din TLB
 \subsection*{I/O Interlock}
 Uneori paginile trebuie sa fie blocate in memorie. De exemplu la copierea fisierelor dintr-un dispozitiv, paginile trebuie sa fie blocakte (locked) de a fi evacuate de replacement. Se poate face pinning paginilor ce trebuie sa fie blocate in memorie.
 
+\subsection*{Operatori}
+\begin{enumerate}
+    \item REG - 0 frames
+    \item ADD MOV SUB - 1 frame
+    \item MUL DIV - 2 frames
+    \item (doar) [\dots] - 1 frame
+          \begin{enumerate}
+              \item ADD REG REG - 1 frame
+              \item MUL REG REG - 2 frames
+              \item ADD REG [\dots] - 2 frames
+              \item ADD [\dots] [\dots] - 3 frames
+              \item MUL REG [\dots] - 3 frames
+              \item MUL [\dots] [\dots] - 4 frames
+          \end{enumerate}
+\end{enumerate}
+
 \section[Ch13 File system interface]{File system interface}
 Spatiul logic de adresare continuu.
 \subsection*{Tipuri}
